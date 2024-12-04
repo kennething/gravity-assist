@@ -1,31 +1,30 @@
 {
-  "name": "nuxt-app",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "generate-image-paths": "npx tsx getImagePaths.ts",
-    "build": "npm run generate-image-paths && nuxt build",
-    "dev": "npm run generate-image-paths && nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "@ckpack/vue-color": "^1.5.0",
-    "@nuxtjs/meta": "^3.0.0-beta.16",
-    "@pinia/nuxt": "^0.5.1",
-    "lodash": "^4.17.21",
-    "nuxt": "^3.11.2",
-    "pinia": "^2.1.7",
-    "sass": "^1.77.2",
-    "tinycolor": "^0.0.1",
-    "tinycolor2": "^1.6.0",
-    "vue": "^3.4.27",
-    "vue-router": "^4.3.2"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.17.7",
-    "@types/tinycolor2": "^1.4.6",
-    "typescript": "^5.6.2"
-  }
+    "name": "nuxt-app",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare"
+    },
+    "dependencies": {
+        "@pinia/nuxt": "^0.7.0",
+        "flowbite": "^2.5.2",
+        "flyonui": "^1.1.0",
+        "nuxt": "^3.13.0",
+        "pinia": "^2.2.6",
+        "sass": "^1.82.0",
+        "vue": "latest",
+        "vue-router": "latest"
+    },
+    "devDependencies": {
+        "@nuxtjs/tailwindcss": "^6.12.2",
+        "daisyui": "^4.12.14",
+        "tailwindcss": "^3.4.16"
+    },
+    "overrides": {
+        "vue": "latest"
+    }
 }

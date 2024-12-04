@@ -1,184 +1,31 @@
 <template>
-    <div class="holder">
-        <div class="description">
-            <h3>by <a href="https://discord.com/invite/9mJ9b2Bbzx">DubNubz</a></h3>
-            <h3>Did you know: <span>{{ fact }}</span></h3>
-        </div>
-
-        <div class="cardHolder">
-            <LatestChange />
-            <div class="card" id="contact">
-                <h2>Contact Me!</h2>
-                <h3 class="contact"><span>DubNubz</span> (ingame)</h3>
-                <h3 class="contact"><span>@micromidget</span> (Discord)</h3>
-                <p class="message">All module information is crowdsourced.</p>
-                <p class="message">If you'd like to contribute, PM/DM me!</p>
-                <p class="message">All contributions, suggestions, and feedback are appreciated!</p>
+    <div class="flex flex-col items-center justify-center">
+        <h1>Home</h1>
+        <input class="du-input" type="text" />
+        <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <img class="w-4 h-4" src="/ui/credits.svg" alt="" />
             </div>
+            <input
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="sagsagsag"
+                type="text"
+            />
         </div>
+        <label class="fo-input-group max-w-sm">
+            <span class="fo-input-group-text">
+                <img class="w-4 h-4" src="/ui/credits.svg" alt="" />
+            </span>
+            <input type="text" class="fo-input grow" placeholder="John Doe" />
+        </label>
     </div>
 </template>
 
 <script setup lang="ts">
+const route = useRoute();
+const router = useRouter();
 
-useSeoMeta({
-    title: "Gravity Assist"
-});
-
-const fact = ref("");
-
-onMounted(() => {
-    fact.value = facts[getRandomIntInclusive(0, facts.length - 1)];
-});
-
+onMounted(() => {});
 </script>
 
-<style lang="scss" scoped>
-
-.holder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.description {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-
-    h3 {
-        color: white;
-        text-align: center;
-        margin: 0.25em;
-        width: 70%;
-
-        a {
-            color: var(--deepGreen);
-            text-decoration: underline;
-        }
-
-        span {
-            color: var(--gold);
-            font-size: 0.9em;
-        }
-    }
-}
-
-.linkButton {
-    margin-top: 3em;
-    width: 35em;
-    font-size: var(--p);
-    height: 6em;
-    border-radius: 1.5em;
-    transition: all 0.25s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10%;
-    filter: grayscale(0.33);
-    background-color: var(--deepGreen);
-  
-    h3 {
-      margin: 0;
-      text-align: center;
-      width: fit-content;
-      height: fit-content;
-      font-size: var(--h3);
-    }
-  
-    img {
-      width: 4.5em;
-      height: 4.5em;
-      background-color: transparent;
-    }
-}
-
-.cardHolder {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 100%;
-    margin-top: 5em;
-    gap: 1em;
-    flex-wrap: wrap;
-}
-
-.card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: rgb(45, 45, 45);
-    border-radius: 2.4em;
-    padding: 2.4em;
-    width: 45em;
-    min-height: 35em;
-
-    h2 {
-        margin-bottom: 0;
-        color: var(--gold);
-    }
-
-    .contact {
-        margin-top: 0.25em;
-        margin-bottom: 0;
-
-        span {
-            color: var(--cyan);
-        }
-    }
-
-    .message {
-        margin-bottom: 0;
-    }
-}
-
-#contact {
-    padding-bottom: 4em;
-}
-
-@media screen and (max-width: 1200px) {
-    .cardHolder {
-        flex-direction: column;
-
-        .card {
-            min-height: unset;
-            margin-bottom: 2em;
-        }
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    .cardHolder {
-        .card {
-            padding: 1em;
-            width: 35em;
-        }
-    }
-}
-
-@media screen and (max-width: 800px) {
-    .description {
-        width: 90svw;
-    }
-
-    .cardHolder {
-        width: 95svw;
-
-        .card {
-            width: 85svw;
-            padding: 2svw;
-            border-radius: 2svh;
-        }
-    }
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .linkButton:hover {
-        filter: grayscale(0);
-    }
-}
-
-</style>
+<style scoped></style>
