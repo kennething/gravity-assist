@@ -1,30 +1,31 @@
 {
-    "name": "nuxt-app",
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "build": "nuxt build",
-        "dev": "nuxt dev",
-        "generate": "nuxt generate",
-        "preview": "nuxt preview",
-        "postinstall": "nuxt prepare"
-    },
-    "dependencies": {
-        "@pinia/nuxt": "^0.7.0",
-        "flowbite": "^2.5.2",
-        "flyonui": "^1.1.0",
-        "nuxt": "^3.13.0",
-        "pinia": "^2.2.6",
-        "sass": "^1.82.0",
-        "vue": "latest",
-        "vue-router": "latest"
-    },
-    "devDependencies": {
-        "@nuxtjs/tailwindcss": "^6.12.2",
-        "daisyui": "^4.12.14",
-        "tailwindcss": "^3.4.16"
-    },
-    "overrides": {
-        "vue": "latest"
-    }
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.7.0",
+    "flowbite": "^2.5.2",
+    "flyonui": "^1.1.0",
+    "nuxt": "^3.13.0",
+    "pinia": "^2.2.6",
+    "sass": "^1.82.0",
+    "vue": "latest",
+    "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.2",
+    "daisyui": "^4.12.14",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "tailwindcss": "^3.4.16"
+  },
+  "overrides": {
+    "vue": "latest"
+  }
 }

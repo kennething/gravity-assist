@@ -1,0 +1,37 @@
+<template>
+  <footer class="fo-footer w-full bg-base-200/60 px-10 py-4 duration-[0.75s] ease-in-out">
+    <div class="flex w-full items-center justify-center">
+      <div class="flex w-1/3 items-center justify-start gap-1 text-xl font-bold">
+        <img class="size-8" src="/logo/logo.svg" aria-hidden="true" />
+        <img class="h-8" src="/logo/gravityAssist.svg" aria-hidden="true" />
+      </div>
+      <aside class="flex w-1/3 items-center justify-center">
+        <p>
+          Gravity Assist
+          <button @click="footerOpenChangelog" class="fo-link fo-link-neutral text-lg font-semibold text-base-content/90 no-underline hover:underline">
+            v{{ changelog[changelog.length - 1].version }}
+          </button>
+          by DubNubz
+        </p>
+      </aside>
+      <div class="flex h-5 w-1/3 justify-end gap-4">
+        <a href="https://github.com/DubNubz/gravity-assist" target="_blank" class="fo-link" aria-label="Github Link">
+          <img class="size-6 dark:invert" src="/logo/github.svg" aria-hidden="true" />
+        </a>
+        <a href="https://discord.com/invite/9mJ9b2Bbzx" target="_blank" class="fo-link" aria-label="Discord Link">
+          <img class="size-6 dark:invert" src="/logo/discord.svg" aria-hidden="true" />
+        </a>
+      </div>
+    </div>
+  </footer>
+</template>
+
+<script setup lang="ts">
+const router = useRouter();
+
+function footerOpenChangelog() {
+  router.push({ query: { v: changelog[changelog.length - 1].version } });
+}
+</script>
+
+<style scoped></style>

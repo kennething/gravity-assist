@@ -7,36 +7,12 @@
 @tailwind utilities;
 
 :root {
-    --gold: rgb(255, 215, 0);
-
-    --pastelRed: #ffaaaa;
-    --pastelOrange: #ffddaa;
-    --deepOrange: #ff9756;
-    --pastelYellow: #fbffaa;
-    --deepYellow: #ffe561;
-    --pastelGreen: #aaffaa;
-    --deepGreen: #56ff93;
-    --lightBlue: #6af1fd;
-    --cyan: #56ddff;
-    --pastelBlue: #aac8ff;
-    --normalText: #ccc9c6;
-    --darkGray: #878787;
-
-    --h1: 4.5em;
-    --h2: 3em;
-    --h3: 1.95em;
-    --h4: 1.75em;
-    --p: 1.5em;
-    --standard: 0.7em;
-
-    --godly: linear-gradient(to bottom right, #ff0000, #ffbb00, #bbff00, #00ff4c, #00c3ff, #ff00ff);
-    --godlyText: linear-gradient(to right, #ff0000, #ffbb00, #bbff00, #00ff4c, #00c3ff, #ff00ff);
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    min-height: 100vh;
-    overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
