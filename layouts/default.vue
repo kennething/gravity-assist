@@ -16,9 +16,7 @@
 
   <Transition name="menu">
     <div class="fixed left-0 top-0 z-20 flex h-svh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="showContributors" @click="showContributors = false">
-      <div id="menu" class="h-96 w-96 rounded-2xl bg-white p-10" @click.stop>
-        <h2>Contributors</h2>
-      </div>
+      <HomeContributors />
     </div>
   </Transition>
 

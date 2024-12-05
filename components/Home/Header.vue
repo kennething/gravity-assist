@@ -1,5 +1,5 @@
 <template>
-  <nav class="fo-navbar sticky top-0 z-10 w-screen justify-between gap-4 shadow dark:bg-body dark:shadow-gray-700 transition duration-500">
+  <nav class="fo-navbar sticky top-0 z-10 w-screen justify-between gap-4 shadow transition duration-500 dark:bg-body dark:shadow-gray-700">
     <div class="fo-navbar-start">
       <button type="button" class="fo-btn fo-btn-circle fo-btn-text" @click="emit('toggle')">
         <img class="size-8 dark:invert" src="/ui/menu.svg" alt="Toggle side menu" />

@@ -1,6 +1,6 @@
 <template>
   <div id="menu" class="flex w-[50rem] flex-col items-start justify-center gap-2 rounded-2xl bg-white p-10 dark:bg-neutral-800" @click.stop>
-    <h2 class="text-2xl font-bold dark:text-white">Changelog</h2>
+    <h2 class="text-2xl font-bold dark:text-white">Contributors</h2>
     <div class="h-96 w-full overflow-y-scroll p-4">
       <ol class="relative border-s border-gray-200 dark:border-gray-700">
         <li class="mb-10 ms-6" v-for="change in loadedChangelog" :key="change.version">

@@ -36,6 +36,8 @@ function footerOpenChangelog() {
 
 <style scoped>
 footer {
-  transition: sliding 0.75s ease-in-out, background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    sliding 0.75s ease-in-out,
+    background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>
