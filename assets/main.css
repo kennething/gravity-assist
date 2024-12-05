@@ -1,18 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+  --bg-color: #ffffff;
+}
+
+.dark {
+  --bg-color: #0a0a0a;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  min-height: 100vh;
-  overflow-x: hidden;
+  background-color: var(--bg-color);
+  @apply transition duration-500 w-screen min-h-svh m-0 p-0 overflow-x-hidden hidden;
+}
+
+button {
+  touch-action: manipulation;
 }

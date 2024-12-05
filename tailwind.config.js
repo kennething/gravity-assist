@@ -2,7 +2,9 @@
 export default {
   content: ["./app.vue", "./pages/**/*.{vue,js,ts,jsx,tsx}", "./components/**/*.{vue,js,ts,jsx,tsx}", "./layouts/**/*.{vue,js,ts,jsx,tsx}", "./node_modules/flowbite/**/*.js"],
   theme: {
-    extend: {}
+    colors: {
+      body: "var(--bg-color)"
+    }
   },
   plugins: [require("daisyui"), require("flowbite/plugin"), require("flyonui")],
   daisyui: {

@@ -1,14 +1,14 @@
 <template>
-  <footer class="fo-footer w-full bg-base-200/60 px-10 py-4 duration-[0.75s] ease-in-out">
+  <footer class="fo-footer w-full bg-base-200/60 px-10 py-4 dark:bg-neutral-900">
     <div class="flex w-full items-center justify-center">
       <div class="flex w-1/3 items-center justify-start gap-1 text-xl font-bold">
         <img class="size-8" src="/logo/logo.svg" aria-hidden="true" />
-        <img class="h-8" src="/logo/gravityAssist.svg" aria-hidden="true" />
+        <img class="h-8 dark:invert" src="/logo/gravityAssist.svg" aria-hidden="true" />
       </div>
       <aside class="flex w-1/3 items-center justify-center">
-        <p>
+        <p class="dark:text-white">
           Gravity Assist
-          <button @click="footerOpenChangelog" class="fo-link fo-link-neutral text-lg font-semibold text-base-content/90 no-underline hover:underline">
+          <button @click="footerOpenChangelog" class="fo-link fo-link-neutral text-lg font-semibold text-base-content/90 no-underline hover:underline dark:text-white dark:hover:text-white">
             v{{ changelog[changelog.length - 1].version }}
           </button>
           by DubNubz
@@ -34,4 +34,8 @@ function footerOpenChangelog() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+footer {
+  transition: sliding 0.75s ease-in-out, background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+</style>

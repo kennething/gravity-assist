@@ -1,13 +1,13 @@
 <template>
-  <nav class="fo-navbar sticky top-0 z-10 w-screen justify-between gap-4 shadow">
+  <nav class="fo-navbar sticky top-0 z-10 w-screen justify-between gap-4 shadow dark:bg-body dark:shadow-gray-700 transition duration-500">
     <div class="fo-navbar-start">
       <button type="button" class="fo-btn fo-btn-circle fo-btn-text" @click="emit('toggle')">
-        <img class="size-8" src="/ui/menu.svg" alt="Toggle side menu" />
+        <img class="size-8 dark:invert" src="/ui/menu.svg" alt="Toggle side menu" />
       </button>
     </div>
     <div class="fo-navbar-center flex items-center">
       <NuxtLink to="/home">
-        <img class="h-10" src="/logo/gravityAssist.svg" aria-hidden="true" />
+        <img class="h-10 dark:invert" src="/logo/gravityAssist.svg" aria-hidden="true" />
       </NuxtLink>
     </div>
     <div class="fo-navbar-end items-center gap-4">
@@ -22,9 +22,9 @@
       </label>
       <label class="du-swap du-swap-rotate">
         <!-- this hidden checkbox controls the state -->
-        <input type="checkbox" class="theme-controller hidden" value="synthwave" />
+        <input type="checkbox" class="theme-controller hidden" :checked="isDarkMode" @click="isDarkMode = !isDarkMode" />
         <img class="du-swap-off size-8" src="/ui/sun.svg" aria-hidden="true" />
-        <img class="du-swap-on size-8" src="/ui/moon.svg" aria-hidden="true" />
+        <img class="du-swap-on size-8 invert" src="/ui/moon.svg" aria-hidden="true" />
       </label>
     </div>
   </nav>
@@ -34,6 +34,9 @@
 const emit = defineEmits<{
   toggle: [void];
 }>();
+
+const store = useUserStore();
+const { isDarkMode } = storeToRefs(store);
 </script>
 
 <style scoped></style>

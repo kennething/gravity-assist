@@ -35,7 +35,7 @@ export default defineNuxtConfig({
           content: "space, infinite, lagrange, rts, game, tool, help, fleet, build, research, module, equipment, blueprint"
         }
       ],
-      link: [{ rel: "icon", type: "image/svg+xml", href: "/ui/radiant.svg" }],
+      link: [{ rel: "icon", type: "image/svg+xml", href: "/logo/logo.svg" }],
       script: [
         {
           src: "https://www.googletagmanager.com/gtag/js?id=G-41RFT8ZEZ8",

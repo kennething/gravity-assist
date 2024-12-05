@@ -8,7 +8,18 @@
 const route = useRoute();
 const router = useRouter();
 
-onMounted(() => {});
+const userStore = useUserStore();
+const { isDarkMode } = storeToRefs(userStore);
+watch(isDarkMode, () => {
+  document.body.classList.toggle("dark", isDarkMode.value);
+  localStorage.setItem("theme", isDarkMode.value ? "dark" : "light");
+});
+
+
+onMounted(() => {
+  if (localStorage.getItem("theme") === "dark") isDarkMode.value = true;
+  document.body.style.display = "block";
+});
 </script>
 
 <style scoped></style>
