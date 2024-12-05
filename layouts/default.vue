@@ -87,17 +87,6 @@ function handleQueries(query: LocationQuery) {
 </script>
 
 <style lang="scss" scoped>
-.alert-enter-active,
-.alert-leave-active {
-  transition: all 0.5s ease-in-out;
-}
-
-.alert-enter-from,
-.alert-leave-to {
-  opacity: 0;
-  transform: translateX(-20rem);
-}
-
 .sidebar-enter-active,
 .sidebar-leave-active {
   transition: all 0.5s ease-in-out;
