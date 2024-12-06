@@ -27,10 +27,8 @@
   </Transition>
 
   <Transition name="menu">
-    <div class="fixed left-0 top-0 z-20 flex h-svh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="showContact" @click="showContact = false">
-      <div id="menu" class="h-96 w-96 bg-white p-10" @click.stop>
-        <p>menu</p>
-      </div>
+    <div class="fixed left-0 top-0 z-20 flex h-svh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-show="showContact" @click="showContact = false">
+      <HomeContact />
     </div>
   </Transition>
 </template>
@@ -73,6 +71,12 @@ function handleQueries(query: LocationQuery) {
   const changelog = query.v;
   const contributors = query.ct;
   const contact = query.c;
+
+  if (changelog || contributors || contact) {
+    showContact.value = false;
+    showChangelog.value = false;
+    showContributors.value = false;
+  }
 
   if (contact) showContact.value = true;
   else if (changelog) {

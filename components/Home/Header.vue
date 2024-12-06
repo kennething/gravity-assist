@@ -11,14 +11,11 @@
       </NuxtLink>
     </div>
     <div class="fo-navbar-end items-center gap-4">
-      <button class="fo-btn fo-btn-circle fo-btn-text fo-btn-sm size-[2.125rem] sm:hidden">
-        <span class="icon-[tabler--search] size-[1.375rem]"></span>
-      </button>
-      <label class="fo-input-group hidden max-w-56 rounded-full sm:flex">
+      <label class="fo-input-group max-w-56 rounded-full transition duration-500 sm:flex dark:border-neutral-400 dark:bg-neutral-600 dark:hover:border-neutral-400">
         <span class="fo-input-group-text">
-          <span class="icon-[tabler--search] size-5 text-base-content/80"></span>
+          <img class="size-5 dark:invert" src="/ui/search.svg" aria-hidden="true" />
         </span>
-        <input type="search" class="fo-input grow rounded-e-full" placeholder="Search" />
+        <input type="text" class="fo-input grow rounded-e-full dark:text-white dark:placeholder:text-neutral-300" placeholder="Search" />
       </label>
       <label class="du-swap du-swap-rotate">
         <!-- this hidden checkbox controls the state -->
