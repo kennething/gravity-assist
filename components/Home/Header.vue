@@ -12,7 +12,7 @@
     </div>
     <div class="fo-navbar-end items-center gap-4">
       <label
-        class="bg-base fo-input-group hidden max-w-56 rounded-full border-neutral-500 transition duration-500 hover:border-neutral-500 md:flex dark:border-neutral-400 dark:bg-neutral-700 dark:hover:border-neutral-400"
+        class="fo-input-group hidden max-w-56 rounded-full border-neutral-500 bg-body transition duration-500 hover:border-neutral-500 md:flex dark:border-neutral-400 dark:bg-neutral-700 dark:hover:border-neutral-400"
       >
         <span class="fo-input-group-text">
           <img class="size-5 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />

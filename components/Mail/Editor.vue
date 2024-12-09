@@ -75,7 +75,7 @@
                     <div class="flex flex-col items-center justify-center">
                       <p class="text-lg text-white">Infringing words:</p>
                       <ul class="mb-4 flex w-full flex-col items-center justify-center text-base font-normal text-neutral-300">
-                        <li v-if="profaneWords.length > 0" v-for="word in profaneWords">{{ word }}</li>
+                        <li v-if="profaneWords.length > 0" v-for="word in profaneWords" class="text-neutral-200">{{ word }}</li>
                         <p v-else class="text-neutral-200">None!</p>
                       </ul>
                     </div>

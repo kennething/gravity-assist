@@ -59,6 +59,7 @@ onMounted(async () => {
     if (!quill || source !== "user") return;
 
     const selectionFormat = quill.getFormat();
+    if (!selectionFormat.color) quill.format("color", "#ffffff");
     emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
   });
 
