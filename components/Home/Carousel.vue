@@ -15,7 +15,7 @@
       ></button>
     </div>
   </div>
-  <HomeCarouselCard :showcase="carouselShowcases[currentCarouselIndex]" class="mt-4 block transition duration-500 lg:hidden dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800" />
+  <HomeCarouselCard :showcase="carouselShowcases[currentCarouselIndex]" class="mt-4 block transition duration-500 lg:hidden dark:bg-neutral-900 dark:hover:bg-neutral-800" />
 </template>
 
 <script setup lang="ts">

@@ -7,7 +7,7 @@
         aria-hidden="true"
       />
     </span>
-    <h3 class="mb-1 flex items-center text-lg font-semibold text-neutral-900 transition duration-500 dark:text-white">
+    <h3 class="mb-1 flex items-center text-lg font-semibold text-neutral-900 transition duration-500">
       v{{ change.version }}
       <span
         class="me-2 ms-3 rounded px-2.5 py-0.5 text-sm font-medium transition duration-500"

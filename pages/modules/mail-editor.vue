@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-full min-h-[calc(100svh-8rem)] w-full flex-col items-center justify-start p-8">
     <div class="flex w-full flex-col items-center justify-center md:w-[25rem] lg:w-[30rem]">
-      <h1 class="text-3xl font-bold transition duration-500 dark:text-white">Mail Editor</h1>
+      <h1 class="text-3xl font-bold transition duration-500">Mail Editor</h1>
       <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
         <span class="flex items-center justify-center"><img class="size-12 transition duration-500 dark:invert" src="/ui/mailEditor.svg" aria-hidden="true" /></span>
       </div>
@@ -31,7 +31,7 @@
               class="du-btn flex items-center justify-center gap-2 rounded-xl border-red-300 bg-red-100 transition duration-500 hover:scale-105 hover:border-red-400 hover:bg-red-200 dark:border-red-500 dark:hover:bg-red-700"
               :class="{ 'scale-105 border-red-400 bg-red-200 dark:bg-red-700': showClearDialog, 'dark:bg-red-800': !showClearDialog }"
             >
-              <span class="hidden text-base-content transition duration-500 sm:inline-flex md:hidden lg:inline-flex dark:text-white">Clear</span>
+              <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">Clear</span>
               <img class="size-5 transition duration-500 dark:invert" src="/ui/trash.svg" aria-hidden="true" />
             </button>
             <Transition name="fade">
@@ -39,17 +39,17 @@
                 <div
                   class="fo-tooltip-body flex w-64 flex-col items-center justify-center gap-3 rounded-lg border-2 border-red-300 bg-red-100 p-4 text-start shadow transition duration-500 dark:border-red-500 dark:bg-red-800"
                 >
-                  <p class="text-center text-lg font-medium text-black transition duration-500 dark:text-white">Are you sure you want to clear the editor?</p>
+                  <p class="text-center text-lg font-medium text-black transition duration-500">Are you sure you want to clear the editor?</p>
                   <div class="flex w-full items-center justify-between gap-2">
                     <button
                       @click="clearText"
-                      class="du-btn du-btn-outline grow rounded-xl border-black py-1 text-base text-black hover:border-neutral-900 hover:bg-neutral-900 hover:text-white dark:border-neutral-200 dark:text-white dark:hover:border-neutral-200 dark:hover:bg-neutral-200 dark:hover:text-black"
+                      class="du-btn du-btn-outline grow rounded-xl border-black py-1 text-base text-black hover:border-neutral-900 hover:bg-neutral-900 hover:text-white dark:border-neutral-200 dark:hover:border-neutral-200 dark:hover:bg-neutral-200 dark:hover:text-black"
                     >
                       Yes
                     </button>
                     <button
                       @click="showClearDialog = false"
-                      class="du-btn du-btn-outline grow rounded-xl border-black py-1 text-base text-black hover:border-neutral-900 hover:bg-neutral-900 hover:text-white dark:border-neutral-200 dark:text-white dark:hover:border-neutral-200 dark:hover:bg-neutral-200 dark:hover:text-black"
+                      class="du-btn du-btn-outline grow rounded-xl border-black py-1 text-base text-black hover:border-neutral-900 hover:bg-neutral-900 hover:text-white dark:border-neutral-200 dark:hover:border-neutral-200 dark:hover:bg-neutral-200 dark:hover:text-black"
                     >
                       No
                     </button>
@@ -64,7 +64,7 @@
               class="du-btn flex items-center justify-center gap-2 rounded-xl border-green-300 bg-green-100 transition duration-500 hover:scale-105 hover:border-green-400 hover:bg-green-200 dark:border-green-500 dark:hover:bg-green-700"
               :class="{ 'scale-105 border-green-400 bg-green-200 dark:bg-green-700': showCopyDialog, 'dark:bg-green-800': !showCopyDialog }"
             >
-              <span class="hidden text-base-content transition duration-500 sm:inline-flex md:hidden lg:inline-flex dark:text-white">Copy</span>
+              <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">Copy</span>
               <img class="size-5 transition duration-500 dark:invert" src="/ui/copy.svg" aria-hidden="true" />
             </button>
             <Transition name="fade">
@@ -72,7 +72,7 @@
                 <div
                   class="fo-tooltip-body flex w-52 flex-col items-center justify-center gap-3 rounded-lg border-2 border-green-300 bg-green-100 p-4 text-start shadow transition duration-500 dark:border-green-500 dark:bg-green-800"
                 >
-                  <p class="text-center text-lg font-medium text-black transition duration-500 dark:text-white">Copied to clipboard!</p>
+                  <p class="text-center text-lg font-medium text-black transition duration-500">Copied to clipboard!</p>
                   <img class="spin size-10 dark:invert" src="/ui/checkmarkCircle.svg" aria-hidden="true" />
                 </div>
               </div>
@@ -81,13 +81,13 @@
           <button
             class="du-btn flex items-center justify-center gap-2 rounded-xl border-blue-300 bg-blue-100 transition duration-500 hover:scale-105 hover:border-blue-400 hover:bg-blue-200 dark:border-blue-500 dark:bg-blue-800 dark:hover:bg-blue-700"
           >
-            <span class="hidden text-base-content transition duration-500 sm:inline-flex md:hidden lg:inline-flex dark:text-white">Save</span>
+            <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">Save</span>
             <img class="size-5 transition duration-500 dark:invert" src="/ui/save.svg" aria-hidden="true" />
           </button>
           <button
             class="du-btn flex items-center justify-center gap-2 rounded-xl border-blue-300 bg-blue-100 transition duration-500 hover:scale-105 hover:border-blue-400 hover:bg-blue-200 dark:border-blue-500 dark:bg-blue-800 dark:hover:bg-blue-700"
           >
-            <span class="hidden text-base-content transition duration-500 sm:inline-flex md:hidden lg:inline-flex dark:text-white">Share</span>
+            <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">Share</span>
             <img class="size-5 transition duration-500 dark:invert" src="/ui/share.svg" aria-hidden="true" />
           </button>
         </div>
@@ -105,7 +105,7 @@
       </div>
 
       <div role="tabpanel" :class="{ hidden: currentTab !== 1 }">
-        <p class="text-base-content/80">saved mail tab</p>
+        <p>saved mail tab</p>
       </div>
     </div>
   </div>

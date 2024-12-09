@@ -1,6 +1,6 @@
 <template>
   <div id="menu" class="flex w-[80vw] flex-col items-start justify-center gap-2 rounded-2xl bg-white p-4 md:w-[40rem] md:p-10 dark:bg-neutral-800" @click.stop>
-    <h2 class="text-2xl font-bold dark:text-white">Changelog</h2>
+    <h2 class="text-2xl font-bold">Changelog</h2>
     <div class="h-96 w-full overflow-y-scroll p-4">
       <ol class="relative border-s border-neutral-200 dark:border-neutral-700">
         <HomeChangelogItem class="mb-10 ms-6" v-for="change in loadedChangelog" :key="change.version" :change="change" />
@@ -14,7 +14,7 @@
         Load more
       </button>
     </div>
-    <p class="dark:text-white">
+    <p>
       Current version: <span class="text-lg font-medium">v{{ changelog[changelog.length - 1].version }}</span>
     </p>
   </div>

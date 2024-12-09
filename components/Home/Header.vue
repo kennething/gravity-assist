@@ -1,5 +1,5 @@
 <template>
-  <nav class="fo-navbar sticky top-0 z-10 w-screen justify-between gap-4 shadow transition duration-500 dark:bg-body dark:shadow-neutral-700">
+  <nav class="fo-navbar sticky top-0 z-10 w-screen justify-between gap-4 bg-body shadow transition duration-500 dark:shadow-neutral-700">
     <div class="fo-navbar-start">
       <button type="button" class="fo-btn fo-btn-circle fo-btn-text" @click="emit('toggle')">
         <img class="size-8 transition duration-500 dark:invert" src="/ui/menu.svg" alt="Toggle side menu" />
@@ -15,7 +15,7 @@
         <span class="fo-input-group-text">
           <img class="size-5 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
         </span>
-        <input type="text" class="fo-input grow rounded-e-full transition duration-500 dark:text-white dark:placeholder:text-neutral-300" placeholder="Search" />
+        <input type="text" class="fo-input grow rounded-e-full transition duration-500 dark:placeholder:text-neutral-300" placeholder="Search" />
       </label>
       <label class="du-swap du-swap-rotate">
         <!-- this hidden checkbox controls the state -->

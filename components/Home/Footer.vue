@@ -1,17 +1,14 @@
 <template>
-  <footer class="fo-footer w-full bg-base-200/60 px-10 py-4 dark:bg-neutral-800">
+  <footer class="fo-footer w-full bg-neutral-100 px-10 py-4 dark:bg-neutral-800">
     <div class="flex w-full items-center justify-center">
       <div class="flex w-1/6 items-center justify-start gap-1 text-xl font-bold sm:w-1/4 md:w-1/3 lg:w-1/4">
         <img class="size-8" src="/logo/logo.svg" aria-hidden="true" />
         <img class="hidden h-8 transition duration-500 sm:block dark:invert" src="/logo/gravityAssist.svg" aria-hidden="true" />
       </div>
       <aside class="flex w-4/6 items-center justify-center sm:w-1/2 md:w-1/3 lg:w-1/2">
-        <p class="text-center transition duration-500 dark:text-white">
+        <p class="text-center transition duration-500">
           Gravity Assist
-          <button
-            @click="footerOpenChangelog"
-            class="fo-link fo-link-neutral text-lg font-semibold text-base-content/90 no-underline transition duration-500 hover:underline hover:duration-150 dark:text-white dark:hover:text-white"
-          >
+          <button @click="footerOpenChangelog" class="fo-link text-lg font-semibold no-underline transition duration-500 hover:underline hover:duration-150 dark:hover:text-white">
             v{{ changelog[changelog.length - 1].version }}
           </button>
           by DubNubz
