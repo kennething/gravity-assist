@@ -71,8 +71,13 @@ onBeforeMount(() => {
 onMounted(() => {
   handleQueries(route.query);
 
+  let previousWidth = window.innerWidth;
   window.addEventListener("resize", () => {
+    const newWidth = window.innerWidth;
+    if (previousWidth === newWidth) return;
+
     showSidebar.value = window.innerWidth >= 768;
+    previousWidth = newWidth;
   });
 });
 
