@@ -59,20 +59,16 @@ onMounted(async () => {
     if (!quill || source !== "user") return;
 
     const selectionFormat = quill.getFormat();
-    if (!selectionFormat.color) quill.format("color", "#ffffff");
+    if (!selectionFormat.color) format();
     emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
   });
 
   quill.on("text-change", async (delta, oldDelta, source) => {
     if (!quill) return;
-    if (quill.getLength() === 1) format();
 
-    for (const op of delta.ops) {
-      if (op.insert !== "\n") continue;
+    const selectionFormat = quill.getFormat();
+    if (!selectionFormat.color || quill.getLength() === 1) format();
 
-      await nextTick();
-      return format();
-    }
     emit("output", quill.getContents());
   });
 });
