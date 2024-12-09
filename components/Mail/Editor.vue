@@ -181,7 +181,7 @@ function handleOutput(output: Delta) {
 
   let outputString = "";
   let previousIsUnderline = false;
-  let previousColor = "#cffffff";
+  let previousColor = "#ffffff";
 
   for (const op of output.ops) {
     let string = (op.insert as string).replaceAll("\n", "#r");
