@@ -34,6 +34,7 @@
 
 ```sh
 NUXT_BASE64_SERVICE_ACCOUNT = '...'
+NUXT_BASE_URL = ...
 ```
 
 2. Install dependencies and run locally
