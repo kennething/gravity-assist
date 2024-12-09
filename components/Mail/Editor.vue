@@ -54,13 +54,13 @@
           </div>
           <div class="flex flex-wrap items-center space-x-6 ps-4 lg:space-x-10 rtl:space-x-reverse">
             <p class="text-white">
-              <span class="hidden lg:inline">Output length: </span><strong>{{ outputText.length.toLocaleString() }}</strong
-              ><span>/{{ Number(1000).toLocaleString() }}</span>
+              <span class="hidden text-white lg:inline">Output length: </span><strong class="text-white">{{ outputText.length.toLocaleString() }}</strong
+              ><span class="text-white">/{{ Number(1000).toLocaleString() }}</span>
             </p>
             <div class="inline-flex items-center justify-center gap-1 text-white">
               <p>
-                <span class="hidden lg:inline">Profanity detected: </span><strong>{{ profaneWords.length }}</strong
-                ><span class="inline lg:hidden"> detections</span>
+                <span class="hidden text-white lg:inline">Profanity detected: </span><strong class="text-white">{{ profaneWords.length }}</strong
+                ><span class="inline text-white lg:hidden"> detections</span>
               </p>
               <div class="group relative">
                 <img class="size-5 invert" src="/ui/question.svg" alt="Profanity filter information" />
