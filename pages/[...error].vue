@@ -1,89 +1,30 @@
 <template>
-  <div class="flex w-full flex-col items-center justify-center">
-    <div class="imgHolder">
-      <img class="leftImg" :src="'/ships/cv3000.png'" aria-hidden="true" />
-      <img class="rightImg" :src="'/ships/marshalCrux.png'" aria-hidden="true" />
-    </div>
-    <img style="z-index: 10" src="/ships/solarWhale.png" aria-hidden="true" />
-    <h1 style="margin: 0">Uh oh!</h1>
-    <h2 style="margin: 0">A whale is blocking your path!</h2>
-    <p>You'll have to find your page somewhere else.</p>
-    <h2 style="margin-bottom: 10em; color: var(--gold)">404: Page not found</h2>
+  <div class="flex h-full min-h-[calc(100svh-8rem)] w-full flex-col items-center justify-start p-8">
+    <img class="w-[40rem]" src="/ships/solarWhale.png" alt="Solar Whale" />
+    <h1 class="text-5xl font-bold transition duration-500 dark:text-white">Uh oh!</h1>
+    <p class="mt-1 text-2xl transition duration-500 dark:text-white">A v4 whale is blocking your path!</p>
+    <p class="mt-5 text-xl transition duration-500 dark:text-white">You'll have to find your page somewhere else.</p>
+    <NuxtLink to="/home" class="fo-btn mt-6">Go Home</NuxtLink>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const config = useRuntimeConfig();
 
-<style lang="scss" scoped>
-.page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-}
+const description = "A v4 whale is blocking your path! You'll have to find your page somewhere else.";
+useSeoMeta({
+  title: "404 Not Found | Gravity Assist",
+  ogTitle: "404 Not Found",
+  description,
+  ogDescription: description,
+  twitterImage: () => config.public.baseUrl + "/ships/solarWhale.png",
+  twitterDescription: description
+});
 
-img {
-  width: 30em;
-  background: radial-gradient(rgba(255, 60, 0, 0.2), transparent 69%);
-}
+const route = useRoute();
+const router = useRouter();
 
-.imgHolder {
-  position: relative;
-  width: 40em;
-}
+onMounted(() => {});
+</script>
 
-.leftImg {
-  z-index: 9;
-  position: absolute;
-  left: -10em;
-}
-
-.rightImg {
-  z-index: 8;
-  position: absolute;
-  right: -10em;
-}
-
-@media screen and (max-width: 1100px) {
-  img {
-    width: 25em;
-  }
-
-  .imgHolder {
-    width: 30em;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  img {
-    width: 20em;
-  }
-
-  .imgHolder {
-    width: 25em;
-  }
-
-  .leftImg {
-    left: -7.5em;
-  }
-  .rightImg {
-    right: -7.5em;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  img {
-    width: 40vw;
-  }
-  .imgHolder {
-    width: 45vw;
-  }
-  .leftImg {
-    left: -20vw;
-  }
-  .rightImg {
-    right: -20vw;
-  }
-}
-</style>
+<style scoped></style>

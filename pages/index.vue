@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full flex-col items-center justify-center"></div>
+  <div class="flex min-h-[calc(100svh-8rem)] w-full flex-col items-center justify-start p-8"></div>
 </template>
 
 <script setup lang="ts">

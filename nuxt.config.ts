@@ -19,12 +19,19 @@ export default defineNuxtConfig({
       autoprefixer: {}
     }
   },
+  runtimeConfig: {
+    base64ServiceAccount: "",
+    public: {
+      baseUrl: ""
+    }
+  },
   app: {
     head: {
       title: "Gravity Assist",
       meta: [
         { charset: "UTF-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+        { name: "mobile-web-app-capable", content: "yes" },
         {
           hid: "description",
           name: "description",
@@ -32,10 +39,16 @@ export default defineNuxtConfig({
         },
         {
           name: "keywords",
-          content: "space, infinite, lagrange, rts, game, tool, help, fleet, build, research, module, equipment, blueprint"
+          content: "space, infinite, lagrange, rts, game, tool, help, fleet, build, research, module, equipment, blueprint, collection"
         }
       ],
-      link: [{ rel: "icon", type: "image/svg+xml", href: "/logo/logo.svg" }],
+      link: [
+        { rel: "icon", type: "image/svg+xml", href: "/logo/logo.svg" },
+        {
+          rel: "stylesheet",
+          href: "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.bubble.css"
+        }
+      ],
       script: [
         {
           src: "https://www.googletagmanager.com/gtag/js?id=G-41RFT8ZEZ8",

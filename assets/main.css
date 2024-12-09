@@ -10,9 +10,13 @@
   --bg-color: #0a0a0a;
 }
 
+* {
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
 body {
   background-color: var(--bg-color);
-  @apply transition duration-500 w-screen min-h-svh m-0 p-0 overflow-x-hidden hidden;
+  @apply m-0 hidden h-full w-screen overflow-x-hidden p-0 transition duration-500;
 }
 
 button {

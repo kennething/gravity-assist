@@ -1,12 +1,13 @@
 <template>
   <HomeHeader @toggle="showSidebar = !showSidebar" />
 
-  <div class="flex h-[calc(100svh-4rem)] w-full items-start justify-between">
+  <div class="flex h-full min-h-[calc(100svh-4rem)] w-full items-start justify-between">
     <Transition name="sidebar">
-      <HomeSideBar v-show="showSidebar" @contributors="showContributors = true" @changelog="showChangelog = true" @contact="showContact = true" />
+      <HomeSideBar v-show="showSidebar" @contributors="showContributors = true" @changelog="showChangelog = true" @contact="showContact = true" @close="closeSidebarMobile" />
     </Transition>
+    <div class="fixed left-0 top-0 z-10 h-svh w-screen md:hidden" v-if="showSidebar" @click="showSidebar = false"></div>
 
-    <div class="h-full shrink-0 transition-all duration-[0.75s]" :class="showSidebar ? 'w-72' : 'w-0'" aria-hidden="true"></div>
+    <div class="h-full w-0 shrink-0 transition-all duration-[0.75s]" :class="{ 'md:w-72': showSidebar }" aria-hidden="true"></div>
 
     <div class="flex w-full flex-col items-center justify-center">
       <slot></slot>
@@ -63,8 +64,16 @@ watch(
   }
 );
 
+onBeforeMount(() => {
+  if (window.innerWidth < 768) showSidebar.value = false;
+});
+
 onMounted(() => {
   handleQueries(route.query);
+
+  window.addEventListener("resize", () => {
+    showSidebar.value = window.innerWidth >= 768;
+  });
 });
 
 function handleQueries(query: LocationQuery) {
@@ -79,12 +88,12 @@ function handleQueries(query: LocationQuery) {
   }
 
   if (contact) showContact.value = true;
-  else if (changelog) {
-    showChangelog.value = true;
-    console.log(changelog);
-  } else if (contributors) {
-    showContributors.value = true;
-  }
+  else if (changelog) showChangelog.value = true;
+  else if (contributors) showContributors.value = true;
+}
+
+function closeSidebarMobile() {
+  if (window.innerWidth < 768) showSidebar.value = false;
 }
 </script>
 

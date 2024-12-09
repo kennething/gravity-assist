@@ -380,8 +380,15 @@ export const changelog: Changelog[] = [
   },
   {
     type: "release",
-    version: "1.4.0",
+    version: "2.0.0",
     release: "2024-12-04",
-    notes: ["Redesigned entire site"]
+    notes: [
+      "Redesigned entire site",
+      "Heavily optimized site for mobile devices",
+      "Added Inostrancevia to RA Helper",
+      "Added Blueprint Tracker",
+      "Revamped Color Generator",
+      "Combined Module Library and Equipment Library into Encyclopedia"
+    ]
   }
 ];

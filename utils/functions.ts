@@ -15,6 +15,6 @@ export function getRandomInt(min: number, max: number) {
 }
 
 /** Returns a random item from an array. */
-export function getRandomItem<T>(array: T[]) {
+export function getRandomItem<T>(array: T[] | string) {
   return array[getRandomInt(0, array.length - 1)];
 }

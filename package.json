@@ -11,16 +11,20 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.7.0",
+    "firebase-admin": "^13.0.1",
     "flowbite": "^2.5.2",
     "flyonui": "^1.1.0",
     "nuxt": "^3.13.0",
+    "obscenity": "^0.4.1",
     "pinia": "^2.2.6",
+    "quill": "^2.0.3",
     "sass": "^1.82.0",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.2",
+    "@types/quill": "^2.0.14",
     "daisyui": "^4.12.14",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwindcss": "^3.4.16"

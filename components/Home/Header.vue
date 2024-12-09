@@ -1,21 +1,21 @@
 <template>
-  <nav class="fo-navbar sticky top-0 z-10 w-screen justify-between gap-4 shadow transition duration-500 dark:bg-body dark:shadow-gray-700">
+  <nav class="fo-navbar sticky top-0 z-10 w-screen justify-between gap-4 shadow transition duration-500 dark:bg-body dark:shadow-neutral-700">
     <div class="fo-navbar-start">
       <button type="button" class="fo-btn fo-btn-circle fo-btn-text" @click="emit('toggle')">
-        <img class="size-8 dark:invert" src="/ui/menu.svg" alt="Toggle side menu" />
+        <img class="size-8 transition duration-500 dark:invert" src="/ui/menu.svg" alt="Toggle side menu" />
       </button>
     </div>
     <div class="fo-navbar-center flex items-center">
       <NuxtLink to="/home">
-        <img class="h-10 dark:invert" src="/logo/gravityAssist.svg" aria-hidden="true" />
+        <img class="h-10 transition duration-500 dark:invert" src="/logo/gravityAssist.svg" aria-hidden="true" />
       </NuxtLink>
     </div>
     <div class="fo-navbar-end items-center gap-4">
-      <label class="fo-input-group max-w-56 rounded-full transition duration-500 sm:flex dark:border-neutral-400 dark:bg-neutral-600 dark:hover:border-neutral-400">
+      <label class="fo-input-group hidden max-w-56 rounded-full transition duration-500 md:flex dark:border-neutral-400 dark:bg-neutral-700 dark:hover:border-neutral-400">
         <span class="fo-input-group-text">
-          <img class="size-5 dark:invert" src="/ui/search.svg" aria-hidden="true" />
+          <img class="size-5 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
         </span>
-        <input type="text" class="fo-input grow rounded-e-full dark:text-white dark:placeholder:text-neutral-300" placeholder="Search" />
+        <input type="text" class="fo-input grow rounded-e-full transition duration-500 dark:text-white dark:placeholder:text-neutral-300" placeholder="Search" />
       </label>
       <label class="du-swap du-swap-rotate">
         <!-- this hidden checkbox controls the state -->
