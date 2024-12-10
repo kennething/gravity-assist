@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full min-h-[calc(100svh-8rem)] w-full flex-col items-center justify-start p-8">
+  <div class="flex h-full min-h-[calc(100dvh-8rem)] w-full flex-col items-center justify-start p-8">
     <div class="flex items-center justify-center gap-2" aria-label="Gravity Assist">
       <img class="size-16 sm:size-20 md:size-24 lg:size-32 xl:size-40" src="/logo/logo.svg" aria-hidden="true" />
       <img class="h-16 transition duration-500 sm:h-20 md:h-24 lg:h-32 xl:h-40 dark:invert" src="/logo/gravityAssist.svg" aria-hidden="true" />

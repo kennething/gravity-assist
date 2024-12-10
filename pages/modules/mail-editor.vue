@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full min-h-[calc(100svh-8rem)] w-full flex-col items-center justify-start p-8">
+  <div class="flex h-full min-h-[calc(100dvh-8rem)] w-full flex-col items-center justify-start p-8">
     <div class="flex w-full flex-col items-center justify-center md:w-[25rem] lg:w-[30rem]">
       <h1 class="text-3xl font-bold transition duration-500">Mail Editor</h1>
       <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">

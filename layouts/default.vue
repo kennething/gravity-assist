@@ -1,11 +1,11 @@
 <template>
   <HomeHeader @toggle="showSidebar = !showSidebar" />
 
-  <div class="flex h-full min-h-[calc(100svh-4rem)] w-full items-start justify-between">
+  <div class="flex h-full min-h-[calc(100dvh-4rem)] w-full items-start justify-between">
     <Transition name="sidebar">
       <HomeSideBar v-show="showSidebar" @contributors="showContributors = true" @changelog="showChangelog = true" @contact="showContact = true" @close="closeSidebarMobile" />
     </Transition>
-    <div class="fixed left-0 top-0 z-10 h-svh w-screen md:hidden" v-if="showSidebar" @click="showSidebar = false"></div>
+    <div class="fixed left-0 top-0 z-10 h-dvh w-screen md:hidden" v-if="showSidebar" @click="showSidebar = false"></div>
 
     <div class="h-full w-0 shrink-0 transition-all duration-[0.75s]" :class="{ 'md:w-72': showSidebar }" aria-hidden="true"></div>
 
@@ -16,19 +16,19 @@
   </div>
 
   <Transition name="menu">
-    <div class="fixed left-0 top-0 z-20 flex h-svh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="showContributors" @click="showContributors = false">
+    <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="showContributors" @click="showContributors = false">
       <HomeContributors />
     </div>
   </Transition>
 
   <Transition name="menu">
-    <div class="fixed left-0 top-0 z-20 flex h-svh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="showChangelog" @click="showChangelog = false">
+    <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="showChangelog" @click="showChangelog = false">
       <HomeChangelog />
     </div>
   </Transition>
 
   <Transition name="menu">
-    <div class="fixed left-0 top-0 z-20 flex h-svh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-show="showContact" @click="showContact = false">
+    <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-show="showContact" @click="showContact = false">
       <HomeContact />
     </div>
   </Transition>

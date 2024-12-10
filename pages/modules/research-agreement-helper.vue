@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full min-h-[calc(100svh-8rem)] w-full flex-col items-center justify-start p-8">
+  <div class="flex h-full min-h-[calc(100dvh-8rem)] w-full flex-col items-center justify-start p-8">
     <h1>Research Agreement Helper</h1>
   </div>
 </template>
