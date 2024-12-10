@@ -15,6 +15,7 @@ watch(
   (val) => {
     if (!quill) return;
     quill.format("underline", val ? "underline" : "");
+    emit("output", quill.getContents());
   }
 );
 watch(
@@ -22,6 +23,7 @@ watch(
   (val) => {
     if (!quill) return;
     quill.format("color", val);
+    emit("output", quill.getContents());
   }
 );
 watch(
@@ -29,6 +31,8 @@ watch(
   (val) => {
     if (!val || !quill) return;
     quill.deleteText(0, quill.getLength());
+    localStorage.removeItem("autosave");
+    emit("output", quill.getContents());
     format();
   }
 );
@@ -63,13 +67,18 @@ onMounted(async () => {
     emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
   });
 
-  quill.on("text-change", async (delta, oldDelta, source) => {
-    if (!quill) return;
+  quill.on("text-change", (delta, oldDelta, source) => {
+    if (!quill || source !== "user") return;
 
-    const selectionFormat = quill.getFormat();
-    if (!selectionFormat.color || quill.getLength() === 1) format();
+    const selection = quill.getSelection();
+    if (!selection) return;
 
-    emit("output", quill.getContents());
+    const content = addFallbackColor(quill.getContents());
+    quill.setContents(content);
+
+    const length = quill.getLength();
+    quill.setSelection({ index: length === 1 ? 0 : selection.index, length: 0 });
+    emit("output", content);
   });
 });
 
@@ -88,8 +97,16 @@ function format() {
   const range = quill.getSelection();
   if (!range || range.length > 0) return;
 
+  quill.focus();
   quill.format("underline", props.underline ? "underline" : "");
   quill.format("color", props.color);
+}
+
+function addFallbackColor(text: Delta) {
+  for (const op of text.ops) {
+    if (!op.attributes?.color) op.attributes = { ...op.attributes, color: "#ffffff" };
+  }
+  return text;
 }
 </script>
 
