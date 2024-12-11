@@ -74,10 +74,13 @@ onMounted(async () => {
     if (!selection) return;
 
     const content = addFallbackColor(quill.getContents());
+    console.log(oldDelta);
+    console.log(content);
     quill.setContents(content);
 
     const length = quill.getLength();
-    quill.setSelection({ index: length === 1 ? 0 : selection.index, length: 0 });
+    const selectionIndex = oldDelta.ops[oldDelta.ops.length - 1].insert === "\n\n" || (oldDelta.ops.length === 1 && oldDelta.ops[0].insert === "\n") ? selection.index + 1 : selection.index;
+    quill.setSelection({ index: length === 1 ? 0 : selectionIndex, length: 0 });
     emit("output", content);
   });
 });
@@ -104,7 +107,7 @@ function format() {
 
 function addFallbackColor(text: Delta) {
   for (const op of text.ops) {
-    if (!op.attributes?.color) op.attributes = { ...op.attributes, color: "#ffffff" };
+    if (!op.attributes?.color && op.insert !== "\n") op.attributes = { ...op.attributes, color: "#ffffff" };
   }
   return text;
 }

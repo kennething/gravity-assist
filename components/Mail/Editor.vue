@@ -210,7 +210,9 @@ function handleOutput(output: Delta) {
     outputString += string;
   }
 
-  if (outputString.endsWith("#r")) outputString = outputString.slice(0, -2);
+  while (outputString.endsWith("#r")) {
+    outputString = outputString.slice(0, -2);
+  }
   outputText.value = outputString;
   checkProfanity(outputString);
 }
