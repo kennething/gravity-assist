@@ -6,6 +6,11 @@
         </div>
 
         <div class="cardHolder">
+            <div class="card">
+                <h2 style="color: white;">Gravity Assist v2 Beta</h2>
+                <p style="color: white;">Gravity Assist is changing soon! Stay ahead of the curve (and help me out with bug testing and feedback) by <a href="https://beta.gravityassist.xyz">checking out the beta build!</a></p>
+                <p style="color: white;">If you encounter any bugs or have any suggestions, reach out to me!</p>
+            </div>
             <LatestChange />
             <div class="card" id="contact">
                 <h2>Contact Me!</h2>
