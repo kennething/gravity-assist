@@ -11351,8 +11351,8 @@ export default defineEventHandler((event) => {
                 subsystems: [{
                     type: "hanger",
                     count: 1,
-                    title: `asiofghsaioghisaogoh`,
-                    name: "asiofghsaioghisaogoh",
+                    title: `CFB-580`,
+                    name: "Large Fighter Hangar",
                     hanger: "Large Fighter",
                     capacity: 4,
                     attributes: null
