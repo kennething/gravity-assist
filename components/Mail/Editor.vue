@@ -102,7 +102,7 @@
 
 <script setup lang="ts">
 import { DataSet, RegExpMatcher, englishDataset, englishRecommendedTransformers, pattern } from "obscenity";
-import type { Delta } from "quill";
+import type { Delta, Op } from "quill";
 
 const props = defineProps<{
   clearText: boolean;
@@ -167,8 +167,8 @@ function handleEmit(underlineEmit: boolean, colorEmit: string | string[]) {
 }
 
 let isOnCooldown = false;
-let queuedOutput: Delta | null = null;
-function handleOutput(output: Delta) {
+let queuedOutput: Delta | Op[] | null = null;
+function handleOutput(output: Delta | Op[]) {
   if (isOnCooldown) return (queuedOutput = output);
   isOnCooldown = true;
   queuedOutput = null;
@@ -183,20 +183,24 @@ function handleOutput(output: Delta) {
   let previousIsUnderline = false;
   let previousColor = "#ffffff";
 
-  for (const op of output.ops) {
-    let string = (op.insert as string).replaceAll("\n", "#r");
+  const ops = "ops" in output ? output.ops : output;
+  for (const op of ops) {
+    const insert = op.insert as string;
+    const isCoordinate = /\(\d{1,4},\d{1,4}\)/.test(insert);
+    let string = insert.replaceAll("\n", "#r");
 
     const underline = op.attributes?.underline;
-    if (underline) {
+    if (!isCoordinate && underline) {
       if (!previousIsUnderline) string = "#E" + string;
       previousIsUnderline = true;
-    } else {
+    } else if (!isCoordinate && !underline) {
       if (previousIsUnderline) string = "#e" + string;
       previousIsUnderline = false;
     }
 
     let color = op.attributes?.color as string | string[];
-    if (color) {
+    if (color && !isCoordinate) {
+      // Only apply color formatting if it's not a coordinate
       if (typeof color !== "string") color = color[0];
       if (color !== previousColor) string = "#c" + color.slice(1) + string;
       previousColor = color;

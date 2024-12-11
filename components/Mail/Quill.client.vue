@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import Quill, { Delta } from "quill";
+import Quill, { Delta, Op, Range } from "quill";
 
 const props = defineProps<{
   underline: boolean;
@@ -39,7 +39,7 @@ watch(
 
 const emit = defineEmits<{
   event: [boolean, string | string[]];
-  output: [Delta];
+  output: [Delta | Op[]];
 }>();
 
 const editor = ref<HTMLElement>();
@@ -62,9 +62,10 @@ onMounted(async () => {
   quill.on("selection-change", (range, oldRange, source) => {
     if (!quill || source !== "user") return;
 
-    const selectionFormat = quill.getFormat();
-    if (!selectionFormat.color) format();
-    emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
+    const selection = quill.getSelection();
+    if (!selection) return;
+
+    formatSelection(selection, quill.getFormat());
   });
 
   quill.on("text-change", (delta, oldDelta, source) => {
@@ -73,17 +74,32 @@ onMounted(async () => {
     const selection = quill.getSelection();
     if (!selection) return;
 
-    const content = addFallbackColor(quill.getContents());
-    console.log(oldDelta);
-    console.log(content);
+    const content = defaultFormat(quill.getContents());
     quill.setContents(content);
 
     const length = quill.getLength();
-    const selectionIndex = oldDelta.ops[oldDelta.ops.length - 1].insert === "\n\n" || (oldDelta.ops.length === 1 && oldDelta.ops[0].insert === "\n") ? selection.index + 1 : selection.index;
+    const selectionIndex =
+      delta.ops.find((op) => op.insert === "\n") || (oldDelta.ops[oldDelta.ops.length - 1].insert as string).includes("\n\n") || (oldDelta.ops.length === 1 && oldDelta.ops[0].insert === "\n")
+        ? selection.index + 1
+        : selection.index;
     quill.setSelection({ index: length === 1 ? 0 : selectionIndex, length: 0 });
     emit("output", content);
+
+    formatSelection(selection, quill.getFormat());
   });
 });
+
+function formatSelection(selection: Range, selectionFormat: Record<string, unknown>) {
+  if (!quill) return;
+
+  if (!selectionFormat.color) format();
+  if (selectionFormat.color === "#278451" && quill.getText(selection.index - 1, 1) === ")") {
+    selectionFormat = quill.getFormat(selection.index + 1);
+    quill.format("color", selectionFormat.color ?? props.color ?? "#ffffff");
+    quill.format("underline", selectionFormat.underline ?? props.underline);
+  }
+  emit("event", Boolean(selectionFormat.underline ?? props.underline), (selectionFormat.color as string) ?? props.color ?? "#ffffff");
+}
 
 async function init() {
   await delay(1);
@@ -105,9 +121,24 @@ function format() {
   quill.format("color", props.color);
 }
 
-function addFallbackColor(text: Delta) {
-  for (const op of text.ops) {
-    if (!op.attributes?.color && op.insert !== "\n") op.attributes = { ...op.attributes, color: "#ffffff" };
+function defaultFormat(text: Delta) {
+  for (let i = 0; i < text.ops.length; i++) {
+    const op = text.ops[i];
+    const insert = op.insert as string | undefined;
+
+    const regex = /([^\(]*)(\(\d{1,4},\d{1,4}\))(.*)/; // Apply coordinate formatting to coordinates
+    let match = insert?.match(regex);
+    if (match && !op.attributes?.underline && op.attributes?.color !== "#278451") {
+      const [fullMatch, before, coordinates, after] = match;
+      if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
+      if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes } });
+      op.insert = coordinates;
+
+      op.attributes = { underline: true, color: "#278451" };
+      match = insert?.match(regex);
+    }
+
+    if (!op.attributes?.color && insert !== "\n") op.attributes = { ...op.attributes, color: "#ffffff" }; // Add fallback color
   }
   return text;
 }
