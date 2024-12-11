@@ -86,7 +86,7 @@
           </div>
         </div>
       </div>
-      <div class="rounded-b-2xl bg-[#050404]">
+      <div class="editor-bg rounded-b-2xl">
         <MailQuill
           :underline="underline"
           :color="currentColor"
@@ -214,9 +214,10 @@ function handleOutput(output: Delta | Op[]) {
     outputString += string;
   }
 
-  while (outputString.endsWith("#r")) {
+  while (outputString.endsWith("#r") || outputString.endsWith("#e") || outputString.endsWith("#W")) {
     outputString = outputString.slice(0, -2);
   }
+
   outputText.value = outputString;
   checkProfanity(outputString);
 }
@@ -240,6 +241,10 @@ async function checkProfanity(text: string) {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.editor-bg {
+  background: radial-gradient(#1e232a, #080a0c);
 }
 
 @media (hover: none) and (pointer: coarse) {

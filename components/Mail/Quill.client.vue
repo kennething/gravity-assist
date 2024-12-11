@@ -90,16 +90,20 @@ onMounted(async () => {
   });
 });
 
-function formatSelection(selection: Range, selectionFormat: Record<string, unknown>) {
+function formatSelection(selectionRange: Range, selection: Record<string, unknown>) {
   if (!quill) return;
 
+  let selectionFormat = selection;
+  let color = (selectionFormat.color as string) ?? "#ffffff";
+
   if (!selectionFormat.color) format();
-  if (selectionFormat.color === "#278451" && quill.getText(selection.index - 1, 1) === ")") {
-    selectionFormat = quill.getFormat(selection.index + 1);
-    quill.format("color", selectionFormat.color ?? props.color ?? "#ffffff");
-    quill.format("underline", selectionFormat.underline ?? props.underline);
+  if (selectionFormat.color === "#278451" && quill.getText(selectionRange.index - 1, 1) === ")") {
+    selectionFormat = quill.getFormat(selectionRange.index + 1);
+    color = (selectionFormat.color as string) ?? (props.color !== "#278451" ? props.color : "#ffffff");
+    quill.format("color", color);
+    quill.format("underline", selectionFormat.underline);
   }
-  emit("event", Boolean(selectionFormat.underline ?? props.underline), (selectionFormat.color as string) ?? props.color ?? "#ffffff");
+  emit("event", Boolean(selectionFormat.underline), color);
 }
 
 async function init() {

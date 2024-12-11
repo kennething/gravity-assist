@@ -21,10 +21,20 @@
       </nav>
     </div>
 
-    <div class="mt-8 w-full">
-      <div class="flex w-full flex-col items-center justify-center" role="tabpanel" :class="{ hidden: currentTab !== 0 }">
+    <div class="mt-4 w-full">
+      <div class="flex w-full flex-col items-center justify-center gap-4" role="tabpanel" :class="{ hidden: currentTab !== 0 }">
+        <div class="flex items-center justify-center gap-2">
+          <p>Got writer's block? Try a <span class="cursor-pointer font-medium hover:underline">mail template</span></p>
+          <div class="du-tooltip fo-input-group-text p-0" data-tip="View templates">
+            <button class="fo-btn fo-btn-circle fo-btn-text dark:hover:bg-neutral-700">
+              <img class="size-5 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+
         <MailEditor @output="(text) => (outputText = text)" :clear-text="isClearText" />
-        <div class="mt-4 flex items-center justify-center gap-5">
+
+        <div class="flex items-center justify-center gap-5">
           <div class="relative">
             <button
               @click="showClearDialog = !showClearDialog"
