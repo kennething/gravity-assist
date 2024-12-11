@@ -136,7 +136,7 @@ function defaultFormat(text: Delta) {
     if (match && !op.attributes?.underline && op.attributes?.color !== "#278451") {
       const [fullMatch, before, coordinates, after] = match;
       if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
-      if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes } });
+      if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes, color: "#ffffff" } });
       op.insert = coordinates;
 
       op.attributes = { underline: true, color: "#278451" };
