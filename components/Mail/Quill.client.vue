@@ -48,6 +48,7 @@ let quill: Quill | null = null;
 onMounted(async () => {
   quill = await init();
   quill.format("color", "#ffffff");
+  document.querySelector(".ql-editor")?.setAttribute("spellcheck", "false");
 
   const autosave = localStorage.getItem("autosave");
   if (autosave) {
