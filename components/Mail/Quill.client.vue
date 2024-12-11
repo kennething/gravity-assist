@@ -4,6 +4,7 @@
 
 <script setup lang="ts">
 import Quill, { Delta, Op, Range } from "quill";
+import { FormattingColors } from "~/utils/mailTemplates";
 
 const props = defineProps<{
   underline: boolean;
@@ -132,16 +133,27 @@ function defaultFormat(text: Delta) {
     const op = text.ops[i];
     const insert = op.insert as string | undefined;
 
-    const regex = /([^\(]*)(\(\d{1,4},\d{1,4}\))(.*)/; // Apply coordinate formatting to coordinates
-    let match = insert?.match(regex);
-    if (match && !op.attributes?.underline && op.attributes?.color !== "#278451") {
-      const [fullMatch, before, coordinates, after] = match;
+    const coordinateRegex = /([^\(]*)(\(\d{1,4},\d{1,4}\))(.*)/; // Apply coordinate formatting to coordinates
+    let coordinateMatch = insert?.match(coordinateRegex);
+    if (coordinateMatch && !op.attributes?.underline && op.attributes?.color !== "#278451") {
+      const [fullMatch, before, coordinates, after] = coordinateMatch;
       if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
       if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes, color: "#ffffff" } });
       op.insert = coordinates;
 
       op.attributes = { underline: true, color: "#278451" };
-      match = insert?.match(regex);
+      coordinateMatch = insert?.match(coordinateRegex);
+    }
+
+    const formattingRegex = /(#[rEeRODYGBUPWK]|#c[0-9a-fA-F]{6})/; // Convert IL formatting markers to quill
+    if (insert && formattingRegex.test(insert)) {
+      const [before, code, after] = insert.split(formattingRegex);
+      if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
+      
+      const textToInsert = (code === "#r" ? "\n" : "") + after;
+      const colorToInsert = code.length === 2 ? FormattingColors[code[1] as keyof typeof FormattingColors] : ("#" + code.slice(1));
+      text.ops.splice(i + 2, 0, { insert: textToInsert, attributes: { ...op.attributes, color: colorToInsert } });
+      text.ops.splice(i + 1, 1);
     }
 
     if (!op.attributes?.color && insert !== "\n") op.attributes = { ...op.attributes, color: "#ffffff" }; // Add fallback color

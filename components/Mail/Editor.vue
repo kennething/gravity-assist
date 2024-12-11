@@ -31,7 +31,7 @@
                       <button
                         type="button"
                         class="size-7 rounded-full border border-neutral-700 shadow-sm transition hover:scale-110 hover:shadow"
-                        v-for="color in Colors"
+                        v-for="color in FormattingColors"
                         :style="{ backgroundColor: color }"
                         @click.stop="selectColor(color)"
                       ></button>
@@ -103,6 +103,7 @@
 <script setup lang="ts">
 import { DataSet, RegExpMatcher, englishDataset, englishRecommendedTransformers, pattern } from "obscenity";
 import type { Delta, Op } from "quill";
+import { FormattingColors } from "~/utils/mailTemplates";
 
 const props = defineProps<{
   clearText: boolean;
@@ -115,18 +116,6 @@ const emit = defineEmits<{
 const underline = ref(false);
 const openColorMenu = ref(false);
 const currentColor = ref("#ffffff");
-enum Colors {
-  R = "#ff0000",
-  O = "#ffa500",
-  D = "#ffd700",
-  Y = "#ffff00",
-  G = "#00ff00",
-  B = "#0000ff",
-  U = "#ff00ff",
-  P = "#ffc0cb",
-  W = "#ffffff",
-  K = "#000000"
-}
 
 const outputText = ref("");
 watch(outputText, (val) => {
@@ -205,7 +194,7 @@ function handleOutput(output: Delta | Op[]) {
       if (color !== previousColor) string = "#c" + color.slice(1) + string;
       previousColor = color;
 
-      string = Object.entries(Colors).reduce((result, [key, value]) => {
+      string = Object.entries(FormattingColors).reduce((result, [key, value]) => {
         const regex = new RegExp("#c" + value.slice(1), "g");
         return result.replace(regex, `#${key}`);
       }, string);
