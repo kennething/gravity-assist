@@ -94,15 +94,16 @@ function formatSelection(selectionRange: Range, selection: Record<string, unknow
   if (!quill) return;
 
   let selectionFormat = selection;
-  let color = (selectionFormat.color as string) ?? "#ffffff";
+  let color = (selectionFormat.color as string) ?? (props.color !== "#278451" ? props.color : "#ffffff");
 
   if (!selectionFormat.color) format();
   if (selectionFormat.color === "#278451" && quill.getText(selectionRange.index - 1, 1) === ")") {
     selectionFormat = quill.getFormat(selectionRange.index + 1);
     color = (selectionFormat.color as string) ?? (props.color !== "#278451" ? props.color : "#ffffff");
-    quill.format("color", color);
-    quill.format("underline", selectionFormat.underline);
   }
+  quill.format("color", color);
+  quill.format("underline", selectionFormat.underline);
+
   emit("event", Boolean(selectionFormat.underline), color);
 }
 
@@ -136,7 +137,7 @@ function defaultFormat(text: Delta) {
     if (match && !op.attributes?.underline && op.attributes?.color !== "#278451") {
       const [fullMatch, before, coordinates, after] = match;
       if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
-      if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes } });
+      if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes, color: "#ffffff" } });
       op.insert = coordinates;
 
       op.attributes = { underline: true, color: "#278451" };
