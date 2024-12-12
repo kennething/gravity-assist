@@ -67,50 +67,58 @@ onMounted(async () => {
     const selection = quill.getSelection();
     if (!selection) return;
 
-    formatSelection(selection, quill.getFormat());
+    const text = quill.getText(selection.index - 1, 1);
+    const format = quill.getFormat();
+    const underline = text === ")" ? false : Boolean(format.underline);
+    const color = (format.color as string) === "#278451" ? "#ffffff" : (format.color as string);
+
+    quill.format("underline", underline);
+    quill.format("color", color);
+    emit("event", underline, color);
   });
 
   quill.on("text-change", (delta, oldDelta, source) => {
     if (!quill || source !== "user") return;
 
-    const selection = quill.getSelection();
+    let selection = quill.getSelection();
     if (!selection) return;
 
     const [content, selectionOffset] = defaultFormat(quill.getContents());
     quill.setContents(content);
-    console.log(selectionOffset, selection.index);
     selection.index -= selectionOffset;
-    console.log(selectionOffset, selection.index);
 
     const length = quill.getLength();
     const selectionIndex =
       delta.ops.find((op) => op.insert === "\n") || (oldDelta.ops[oldDelta.ops.length - 1].insert as string).includes("\n\n") || (oldDelta.ops.length === 1 && oldDelta.ops[0].insert === "\n")
         ? selection.index + 1
         : selection.index;
-    console.log(selection.index, selectionIndex);
     quill.setSelection({ index: length === 1 ? 0 : selectionIndex, length: 0 });
     emit("output", content);
+
+    selection = quill.getSelection();
+    if (!selection) return;
 
     formatSelection(selection, quill.getFormat());
   });
 });
 
-function formatSelection(selectionRange: Range, selection: Record<string, unknown>) {
+async function formatSelection(selectionRange: Range, selection: Record<string, unknown>) {
   if (!quill) return;
 
+  await nextTick();
   let selectionFormat = selection;
-  let color = (selectionFormat.color as string) ?? (props.color !== "#278451" ? props.color : "#ffffff");
+  let underline = props.underline;
+  let color = props.color !== "#278451" ? props.color : "#ffffff";
 
   if (!selectionFormat.color) format();
   if (selectionFormat.color === "#278451" && quill.getText(selectionRange.index - 1, 1) === ")") {
     selectionFormat = quill.getFormat(selectionRange.index + 1);
-    color = (selectionFormat.color as string) ?? (props.color !== "#278451" ? props.color : "#ffffff");
+    color = props.color !== "#278451" ? props.color : "#ffffff";
   }
   quill.format("color", color);
-  quill.format("underline", selectionFormat.underline);
+  quill.format("underline", underline);
 
-  console.log(selectionFormat.underline, color);
-  emit("event", Boolean(selectionFormat.underline), color);
+  emit("event", Boolean(underline), color);
 }
 
 async function init() {
@@ -159,8 +167,10 @@ function defaultFormat(text: Delta): [Delta, number] {
       if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
       if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes } });
 
-      if (code === "#r") op.insert = "\n";
-      else {
+      if (code === "#r") {
+        op.insert = "\n";
+        selectionOffset = -1;
+      } else {
         const colorToInsert = !["r", "e", "E"].includes(code[1])
           ? code.length === 2
             ? FormattingColors[code[1] as keyof typeof FormattingColors]
@@ -176,7 +186,6 @@ function defaultFormat(text: Delta): [Delta, number] {
     if (!op.attributes?.color && insert !== "\n") op.attributes = { ...op.attributes, color: "#ffffff" }; // Add fallback color
   }
 
-  console.log(text);
   return [text, selectionOffset];
 }
 </script>
