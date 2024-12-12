@@ -4,6 +4,7 @@
 
 <script setup lang="ts">
 import Quill, { Delta, Op, Range } from "quill";
+import { FormattingColors } from "~/utils/mailTemplates";
 
 const props = defineProps<{
   underline: boolean;
@@ -66,17 +67,25 @@ onMounted(async () => {
     const selection = quill.getSelection();
     if (!selection) return;
 
-    formatSelection(selection, quill.getFormat());
+    const text = quill.getText(selection.index - 1, 1);
+    const format = quill.getFormat();
+    const underline = text === ")" ? false : Boolean(format.underline);
+    const color = (format.color as string) === "#278451" ? "#ffffff" : (format.color as string);
+
+    quill.format("underline", underline);
+    quill.format("color", color);
+    emit("event", underline, color);
   });
 
   quill.on("text-change", (delta, oldDelta, source) => {
     if (!quill || source !== "user") return;
 
-    const selection = quill.getSelection();
+    let selection = quill.getSelection();
     if (!selection) return;
 
-    const content = defaultFormat(quill.getContents());
+    const [content, selectionOffset] = defaultFormat(quill.getContents());
     quill.setContents(content);
+    selection.index -= selectionOffset;
 
     const length = quill.getLength();
     const selectionIndex =
@@ -86,25 +95,30 @@ onMounted(async () => {
     quill.setSelection({ index: length === 1 ? 0 : selectionIndex, length: 0 });
     emit("output", content);
 
+    selection = quill.getSelection();
+    if (!selection) return;
+
     formatSelection(selection, quill.getFormat());
   });
 });
 
-function formatSelection(selectionRange: Range, selection: Record<string, unknown>) {
+async function formatSelection(selectionRange: Range, selection: Record<string, unknown>) {
   if (!quill) return;
 
+  await nextTick();
   let selectionFormat = selection;
-  let color = (selectionFormat.color as string) ?? (props.color !== "#278451" ? props.color : "#ffffff");
+  let underline = props.underline;
+  let color = props.color !== "#278451" ? props.color : "#ffffff";
 
   if (!selectionFormat.color) format();
   if (selectionFormat.color === "#278451" && quill.getText(selectionRange.index - 1, 1) === ")") {
     selectionFormat = quill.getFormat(selectionRange.index + 1);
-    color = (selectionFormat.color as string) ?? (props.color !== "#278451" ? props.color : "#ffffff");
+    color = props.color !== "#278451" ? props.color : "#ffffff";
   }
   quill.format("color", color);
-  quill.format("underline", selectionFormat.underline);
+  quill.format("underline", underline);
 
-  emit("event", Boolean(selectionFormat.underline), color);
+  emit("event", Boolean(underline), color);
 }
 
 async function init() {
@@ -127,26 +141,52 @@ function format() {
   quill.format("color", props.color);
 }
 
-function defaultFormat(text: Delta) {
+function defaultFormat(text: Delta): [Delta, number] {
+  let selectionOffset = 0;
+
   for (let i = 0; i < text.ops.length; i++) {
     const op = text.ops[i];
     const insert = op.insert as string | undefined;
 
-    const regex = /([^\(]*)(\(\d{1,4},\d{1,4}\))(.*)/; // Apply coordinate formatting to coordinates
-    let match = insert?.match(regex);
-    if (match && !op.attributes?.underline && op.attributes?.color !== "#278451") {
-      const [fullMatch, before, coordinates, after] = match;
+    const coordinateRegex = /([^\(]*)(\(\d{1,4},\d{1,4}\))(.*)/; // Apply coordinate formatting to coordinates
+    let coordinateMatch = insert?.match(coordinateRegex);
+    if (coordinateMatch && !op.attributes?.underline && op.attributes?.color !== "#278451") {
+      const [fullMatch, before, coordinates, after] = coordinateMatch;
       if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
       if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes, color: "#ffffff" } });
       op.insert = coordinates;
 
       op.attributes = { underline: true, color: "#278451" };
-      match = insert?.match(regex);
+      coordinateMatch = insert?.match(coordinateRegex);
+    }
+
+    const formattingRegex = /(#[rEeRODYGBUPWK]|#c[0-9a-fA-F]{6})/; // Convert IL formatting markers to quill
+    if (insert && formattingRegex.test(insert)) {
+      const [before, code, after] = insert.split(formattingRegex);
+      selectionOffset += code.length;
+      if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
+      if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes } });
+
+      if (code === "#r") {
+        op.insert = "\n";
+        selectionOffset = -1;
+      } else {
+        const colorToInsert = !["r", "e", "E"].includes(code[1])
+          ? code.length === 2
+            ? FormattingColors[code[1] as keyof typeof FormattingColors]
+            : "#" + code.slice(2)
+          : (op.attributes?.color ?? props.color);
+        const underline = op.attributes?.underline ? code !== "#e" : code === "#E";
+        emit("event", underline, colorToInsert as string);
+
+        text.ops.splice(i + 1, 1);
+      }
     }
 
     if (!op.attributes?.color && insert !== "\n") op.attributes = { ...op.attributes, color: "#ffffff" }; // Add fallback color
   }
-  return text;
+
+  return [text, selectionOffset];
 }
 </script>
 
