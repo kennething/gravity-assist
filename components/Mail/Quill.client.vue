@@ -54,7 +54,7 @@ onMounted(async () => {
   const autosave = localStorage.getItem("autosave");
   if (autosave) {
     const delta = JSON.parse(autosave) as Delta;
-    console.log("autosave: ", delta);
+    console.log("autosave: ", autosave);
     quill.setContents(delta);
     quill.setSelection(quill.getLength());
     const selectionFormat = quill.getFormat();
