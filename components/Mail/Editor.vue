@@ -108,6 +108,13 @@ import { FormattingColors } from "~/utils/mailTemplates";
 const props = defineProps<{
   clearText: boolean;
 }>();
+watch(
+  () => props.clearText,
+  () => {
+    underline.value = false;
+    currentColor.value = "#ffffff";
+  }
+);
 
 const emit = defineEmits<{
   output: [string];
