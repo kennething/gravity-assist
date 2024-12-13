@@ -78,12 +78,8 @@ onMounted(async () => {
     emit("event", underline, color);
   });
 
-  let sagasg = 0;
   quill.on("text-change", (delta, oldDelta, source) => {
     if (!quill || source !== "user") return;
-    sagasg++;
-    const aiojgsaiog = sagasg;
-
     let selection = quill.getSelection();
     if (!selection) return;
 
