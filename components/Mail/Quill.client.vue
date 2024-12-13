@@ -10,6 +10,8 @@ const props = defineProps<{
   underline: boolean;
   color: string;
   clearText: boolean;
+  readonly?: boolean;
+  startText?: Delta;
 }>();
 watch(
   () => props.underline,
@@ -34,7 +36,6 @@ watch(
     quill.deleteText(0, quill.getLength());
     localStorage.removeItem("autosave");
     emit("output", quill.getContents());
-    format();
   }
 );
 
@@ -48,18 +49,19 @@ let quill: Quill | null = null;
 
 onMounted(async () => {
   quill = await init();
-  quill.format("color", "#ffffff");
   document.querySelector(".ql-editor")?.setAttribute("spellcheck", "false");
 
-  const autosave = localStorage.getItem("autosave");
-  if (autosave) {
-    const delta = JSON.parse(autosave) as Delta;
-    console.log("autosave: ", autosave);
-    quill.setContents(delta);
-    quill.setSelection(quill.getLength());
-    const selectionFormat = quill.getFormat();
-    emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
-    emit("output", delta);
+  if (props.startText) quill.setContents(props.startText);
+  else {
+    const autosave = localStorage.getItem("autosave");
+    if (autosave) {
+      const delta = JSON.parse(autosave) as Delta;
+      quill.setContents(delta);
+      quill.setSelection(quill.getLength());
+      const selectionFormat = quill.getFormat();
+      emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
+      emit("output", delta);
+    }
   }
 
   quill.on("selection-change", (range, oldRange, source) => {
@@ -74,19 +76,16 @@ onMounted(async () => {
     const underline = text === ")" ? false : Boolean(format.underline);
     const color = (format.color as string) === "#278451" ? "#ffffff" : (format.color as string);
 
-    quill.format("underline", underline);
-    quill.format("color", color);
     emit("event", underline, color);
   });
 
   quill.on("text-change", (delta, oldDelta, source) => {
     console.log(`${new Date().getSeconds()} delta: ${JSON.stringify(delta)}`);
     if (!quill || source !== "user") return;
-
     let selection = quill.getSelection();
     if (!selection) return;
 
-    const [content, selectionOffset] = defaultFormat(quill.getContents());
+    const [content, selectionOffset] = defaultFormat(delta, quill.getContents());
     quill.setContents(content);
     selection.index -= selectionOffset;
 
@@ -111,19 +110,14 @@ async function formatSelection(selectionRange: Range, selection: Record<string, 
   if (!quill) return;
 
   await nextTick();
-  let selectionFormat = selection;
-  let underline = props.underline;
-  let color = props.color !== "#278451" ? props.color : "#ffffff";
 
-  if (!selectionFormat.color) format();
-  if (selectionFormat.color === "#278451" && quill.getText(selectionRange.index - 1, 1) === ")") {
-    selectionFormat = quill.getFormat(selectionRange.index + 1);
-    color = props.color !== "#278451" ? props.color : "#ffffff";
-  }
+  if (selection.color !== "#278451" || quill.getText(selectionRange.index - 1, 1) !== ")") return;
+
+  selection = quill.getFormat(selectionRange.index + 1);
+  const color = props.color !== "#278451" ? props.color : "#ffffff";
   quill.format("color", color);
-  quill.format("underline", underline);
-
-  emit("event", Boolean(underline), color);
+  quill.format("underline", false);
+  emit("event", false, color);
 }
 
 async function init() {
@@ -131,22 +125,12 @@ async function init() {
   if (!editor.value) return init();
   return new Quill(editor.value, {
     placeholder: "Start composing your mail here...",
-    formats: ["underline", "color"]
+    formats: ["underline", "color"],
+    readOnly: props.readonly
   });
 }
 
-function format() {
-  if (!quill) return;
-
-  const range = quill.getSelection();
-  if (!range || range.length > 0) return;
-
-  quill.focus();
-  quill.format("underline", props.underline ? "underline" : "");
-  quill.format("color", props.color);
-}
-
-function defaultFormat(text: Delta): [Delta, number] {
+function defaultFormat(delta: Delta, text: Delta): [Delta, number] {
   let selectionOffset = 0;
 
   for (let i = 0; i < text.ops.length; i++) {
@@ -168,7 +152,7 @@ function defaultFormat(text: Delta): [Delta, number] {
     const formattingRegex = /(#[rEeRODYGBUPWK]|#c[0-9a-fA-F]{6})/; // Convert IL formatting markers to quill
     if (insert && formattingRegex.test(insert)) {
       const [before, code, after] = insert.split(formattingRegex);
-      selectionOffset += code.length;
+      selectionOffset += delta.ops[delta.ops.length - 1].insert === "#" ? 1 : code.length;
       if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
       if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes } });
 
