@@ -168,7 +168,7 @@ function defaultFormat(delta: Delta, text: Delta): [Delta, number] {
         const underline = op.attributes?.underline ? code !== "#e" : code === "#E";
         emit("event", underline, colorToInsert as string);
 
-        text.ops.splice(i + 1, 1);
+        text.ops.splice(i + (before ? 1 : 0), 1);
       }
     }
 
