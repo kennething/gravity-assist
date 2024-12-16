@@ -1,5 +1,5 @@
 <template>
-  <div ref="editor"></div>
+  <div ref="editor" :class="{ readonly: readonly }"></div>
 </template>
 
 <script setup lang="ts">
@@ -11,7 +11,7 @@ const props = defineProps<{
   color: string;
   clearText: boolean;
   readonly?: boolean;
-  startText?: Delta;
+  startText?: Op[];
 }>();
 watch(
   () => props.underline,
@@ -25,7 +25,6 @@ watch(
   () => props.color,
   (val) => {
     if (!quill) return;
-    console.log(val);
     quill.format("color", val);
     emit("output", quill.getContents());
   }
@@ -37,6 +36,13 @@ watch(
     quill.deleteText(0, quill.getLength());
     localStorage.removeItem("autosave");
     emit("output", quill.getContents());
+  }
+);
+watch(
+  () => props.startText,
+  (text) => {
+    if (!quill || !text) return;
+    quill.setContents(text);
   }
 );
 
@@ -134,7 +140,7 @@ function defaultFormat(delta: Delta, text: Delta): [Delta, number] {
   for (let i = 0; i < text.ops.length; i++) {
     const op = text.ops[i];
     const insert = op.insert as string | undefined;
-    if (insert !== "\n") op.attributes = { ...op.attributes, color: props.color };
+    if (!insert?.includes("\n")) op.attributes = { ...op.attributes, color: props.color };
 
     const coordinateRegex = /([^\(]*)(\(\d{1,4},\d{1,4}\))(.*)/; // Apply coordinate formatting to coordinates
     let coordinateMatch = insert?.match(coordinateRegex);
@@ -176,10 +182,16 @@ function defaultFormat(delta: Delta, text: Delta): [Delta, number] {
 }
 </script>
 
-<style>
+<style lang="scss">
 .ql-editor {
   @apply h-96 text-base;
 }
+.readonly {
+  .ql-editor {
+    @apply pointer-events-none;
+  }
+}
+
 .ql-blank::before {
   color: rgb(156 163 175) !important;
 }

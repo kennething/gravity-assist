@@ -8,7 +8,7 @@
       <aside class="flex w-4/6 items-center justify-center sm:w-1/2 md:w-1/3 lg:w-1/2">
         <p class="text-center transition duration-500">
           Gravity Assist
-          <button @click="footerOpenChangelog" class="fo-link text-lg font-semibold no-underline transition duration-500 hover:underline hover:duration-150 dark:hover:text-white">
+          <button type="button" @click="footerOpenChangelog" class="fo-link text-lg font-semibold no-underline transition duration-500 hover:underline hover:duration-150 dark:hover:text-white">
             v{{ changelog[changelog.length - 1].version }}
           </button>
           by DubNubz

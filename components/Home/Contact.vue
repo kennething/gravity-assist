@@ -13,7 +13,7 @@
             <p class="w-44 overflow-hidden overflow-ellipsis text-nowrap sm:w-full">DubNubz</p>
           </div>
           <div class="du-tooltip fo-input-group-text p-0" data-tip="Copy">
-            <button class="fo-btn fo-btn-circle fo-btn-text" @click="copyText('DubNubz')">
+            <button class="fo-btn fo-btn-circle fo-btn-text" type="button" @click="copyText('DubNubz')">
               <img class="size-5 dark:invert" src="/ui/copy.svg" aria-hidden="true" />
             </button>
           </div>
@@ -29,7 +29,7 @@
             <p class="w-44 overflow-hidden overflow-ellipsis text-nowrap sm:w-full">micromidget</p>
           </div>
           <div class="du-tooltip fo-input-group-text p-0" data-tip="Copy">
-            <button class="fo-btn fo-btn-circle fo-btn-text" @click="copyText('micromidget')">
+            <button class="fo-btn fo-btn-circle fo-btn-text" type="button" @click="copyText('micromidget')">
               <img class="size-5 dark:invert" src="/ui/copy.svg" aria-hidden="true" />
             </button>
           </div>

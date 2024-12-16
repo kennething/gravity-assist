@@ -26,17 +26,24 @@
         <div class="flex items-center justify-center gap-2">
           <p>Need some inspiration? Try a <span class="cursor-pointer font-medium hover:underline">mail template</span></p>
           <div class="du-tooltip fo-input-group-text p-0" data-tip="View templates">
-            <button class="fo-btn fo-btn-circle fo-btn-text dark:hover:bg-neutral-700">
+            <button type="button" class="fo-btn fo-btn-circle fo-btn-text dark:hover:bg-neutral-700" @click="showMailTemplates = true">
               <img class="size-5 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
             </button>
           </div>
         </div>
 
-        <MailEditor @output="(text) => (outputText = text)" :clear-text="isClearText" />
+        <Transition name="menu">
+          <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-show="showMailTemplates" @click="showMailTemplates = false">
+            <MailTemplates @template="(template) => (selectedMailTemplate = template)" />
+          </div>
+        </Transition>
+
+        <MailEditor @output="(text) => (outputText = text)" :clear-text="isClearText" :template="selectedMailTemplate" />
 
         <div class="flex items-center justify-center gap-5">
           <div class="relative">
             <button
+              type="button"
               @click="showClearDialog = !showClearDialog"
               class="du-btn flex items-center justify-center gap-2 rounded-xl border-red-300 bg-red-100 transition duration-500 hover:scale-105 hover:border-red-400 hover:bg-red-200 dark:border-red-500 dark:hover:bg-red-700"
               :class="{ 'scale-105 border-red-400 bg-red-200 dark:bg-red-700': showClearDialog, 'dark:bg-red-800': !showClearDialog }"
@@ -52,12 +59,14 @@
                   <p class="text-center text-lg font-medium text-black transition duration-500">Are you sure you want to clear the editor?</p>
                   <div class="flex w-full items-center justify-between gap-2">
                     <button
+                      type="button"
                       @click="clearText"
                       class="du-btn du-btn-outline grow rounded-xl border-black py-1 text-base text-black hover:border-neutral-900 hover:bg-neutral-900 hover:text-white dark:border-neutral-200 dark:hover:border-neutral-200 dark:hover:bg-neutral-200 dark:hover:text-black"
                     >
                       Yes
                     </button>
                     <button
+                      type="button"
                       @click="showClearDialog = false"
                       class="du-btn du-btn-outline grow rounded-xl border-black py-1 text-base text-black hover:border-neutral-900 hover:bg-neutral-900 hover:text-white dark:border-neutral-200 dark:hover:border-neutral-200 dark:hover:bg-neutral-200 dark:hover:text-black"
                     >
@@ -70,6 +79,7 @@
           </div>
           <div class="relative">
             <button
+              type="button"
               @click="copyText"
               class="du-btn flex items-center justify-center gap-2 rounded-xl border-green-300 bg-green-100 transition duration-500 hover:scale-105 hover:border-green-400 hover:bg-green-200 dark:border-green-500 dark:hover:bg-green-700"
               :class="{ 'scale-105 border-green-400 bg-green-200 dark:bg-green-700': showCopyDialog, 'dark:bg-green-800': !showCopyDialog }"
@@ -89,12 +99,14 @@
             </Transition>
           </div>
           <button
+            type="button"
             class="du-btn flex items-center justify-center gap-2 rounded-xl border-blue-300 bg-blue-100 transition duration-500 hover:scale-105 hover:border-blue-400 hover:bg-blue-200 dark:border-blue-500 dark:bg-blue-800 dark:hover:bg-blue-700"
           >
             <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">Save</span>
             <img class="size-5 transition duration-500 dark:invert" src="/ui/save.svg" aria-hidden="true" />
           </button>
           <button
+            type="button"
             class="du-btn flex items-center justify-center gap-2 rounded-xl border-blue-300 bg-blue-100 transition duration-500 hover:scale-105 hover:border-blue-400 hover:bg-blue-200 dark:border-blue-500 dark:bg-blue-800 dark:hover:bg-blue-700"
           >
             <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">Share</span>
@@ -122,6 +134,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Op } from "quill";
+
 const route = useRoute();
 const router = useRouter();
 
@@ -147,6 +161,14 @@ const tabs = [
 
 const showClearDialog = ref(false);
 const showCopyDialog = ref(false);
+const showMailTemplates = ref(false);
+const selectedMailTemplate = ref<Op[]>();
+watch(selectedMailTemplate, async (val) => {
+  if (!val) return;
+  showMailTemplates.value = false;
+  await nextTick();
+  selectedMailTemplate.value = undefined;
+});
 
 function copyText() {
   if (showCopyDialog.value) return;
@@ -175,6 +197,24 @@ function clearText() {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.menu-enter-active,
+.menu-leave-active {
+  transition: all 0.5s ease-in-out;
+
+  #menu {
+    transition: all 0.35s ease-in-out;
+  }
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
+
+  #menu {
+    transform: scale(0);
+  }
 }
 
 @keyframes spin {

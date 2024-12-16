@@ -91,6 +91,7 @@
           :underline="underline"
           :color="currentColor"
           :clear-text="clearText"
+          :start-text="template"
           @event="(underlineEmit, colorEmit) => handleEmit(underlineEmit, colorEmit)"
           @click="openColorMenu = false"
           @output="(output) => handleOutput(output)"
@@ -107,12 +108,19 @@ import { FormattingColors } from "~/utils/mailTemplates";
 
 const props = defineProps<{
   clearText: boolean;
+  template: Op[] | undefined;
 }>();
 watch(
   () => props.clearText,
   () => {
     underline.value = false;
     currentColor.value = "#ffffff";
+  }
+);
+watch(
+  () => props.template,
+  (text) => {
+    template.value = text;
   }
 );
 
@@ -123,6 +131,7 @@ const emit = defineEmits<{
 const underline = ref(false);
 const openColorMenu = ref(false);
 const currentColor = ref("#ffffff");
+const template = ref<Op[]>();
 
 const outputText = ref("");
 watch(outputText, (val) => {

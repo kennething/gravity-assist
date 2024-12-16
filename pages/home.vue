@@ -21,7 +21,7 @@
           </ol>
         </div>
       </div>
-      <button class="flex w-full items-center justify-end gap-2" @click="router.push({ query: { v: 'latest' } })">
+      <button type="button" class="flex w-full items-center justify-end gap-2" @click="router.push({ query: { v: 'latest' } })">
         <p class="transition duration-500 hover:underline">View full changelog</p>
         <div class="du-tooltip" data-tip="View">
           <div class="fo-btn fo-btn-circle fo-btn-text dark:hover:bg-neutral-700">
