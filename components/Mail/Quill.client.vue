@@ -43,6 +43,17 @@ watch(
   (text) => {
     if (!quill || !text) return;
     quill.setContents(text);
+
+    const length = quill.getLength();
+    quill.setSelection({ index: length, length: 0 });
+    emit("output", text);
+
+    const selection = quill.getSelection();
+    if (!selection) return;
+
+    const selectionFormat = quill.getFormat();
+    formatSelection(selection, selectionFormat);
+    emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
   }
 );
 
@@ -143,7 +154,10 @@ function defaultFormat(delta: Delta, text: Delta): [Delta, number] {
   for (let i = 0; i < text.ops.length; i++) {
     const op = text.ops[i];
     const insert = op.insert as string | undefined;
-    if (!insert?.includes("\n")) op.attributes = { ...op.attributes, color: props.color };
+
+    if (insert?.slice(0, 2) !== "\n" && !op.attributes?.color) {
+      op.attributes = { ...op.attributes, color: props.color };
+    }
 
     const coordinateRegex = /([^\(]*)(\(\d{1,4},\d{1,4}\))(.*)/; // Apply coordinate formatting to coordinates
     let coordinateMatch = insert?.match(coordinateRegex);
