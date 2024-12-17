@@ -56,7 +56,10 @@ let quill: Quill | null = null;
 
 onMounted(async () => {
   quill = await init();
-  document.querySelector(".ql-editor")?.setAttribute("spellcheck", "false");
+  const editor = document.querySelector(".ql-editor");
+  editor?.setAttribute("spellcheck", "false");
+  editor?.setAttribute("enterkeyhint", "enter");
+  editor?.setAttribute("autocorrect", "off");
 
   if (props.startText) quill.setContents(props.startText);
   else {
