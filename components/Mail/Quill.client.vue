@@ -1,5 +1,5 @@
 <template>
-  <div ref="editor" :class="{ readonly: readonly }"></div>
+  <div ref="editor" :class="{ readonly: readOnly }"></div>
 </template>
 
 <script setup lang="ts">
@@ -10,7 +10,7 @@ const props = defineProps<{
   underline: boolean;
   color: string;
   clearText: boolean;
-  readonly?: boolean;
+  readOnly?: boolean;
   startText?: Op[];
 }>();
 watch(
@@ -41,21 +41,28 @@ watch(
 watch(
   () => props.startText,
   (text) => {
-    if (!quill || !text) return;
-    quill.setContents(text);
-
-    const length = quill.getLength();
-    quill.setSelection({ index: length, length: 0 });
-    emit("output", text);
-
-    const selection = quill.getSelection();
-    if (!selection) return;
-
-    const selectionFormat = quill.getFormat();
-    formatSelection(selection, selectionFormat);
-    emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
+    setTemplate(text);
   }
 );
+
+async function setTemplate(text: Op[] | undefined) {
+  if (!quill || !text) {
+    await delay(1);
+    return setTemplate(text);
+  }
+  quill.setContents(text);
+
+  const length = quill.getLength();
+  quill.setSelection({ index: length, length: 0 });
+  emit("output", text);
+
+  const selection = quill.getSelection();
+  if (!selection) return;
+
+  const selectionFormat = quill.getFormat();
+  formatSelection(selection, selectionFormat);
+  emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
+}
 
 const emit = defineEmits<{
   event: [boolean, string | string[]];
@@ -74,14 +81,21 @@ onMounted(async () => {
 
   if (props.startText) quill.setContents(props.startText);
   else {
-    const autosave = localStorage.getItem("autosave");
-    if (autosave) {
-      const delta = JSON.parse(autosave) as Delta;
-      quill.setContents(delta);
-      quill.setSelection(quill.getLength());
-      const selectionFormat = quill.getFormat();
-      emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
-      emit("output", delta);
+    try {
+      const autosave = localStorage.getItem("autosave");
+      if (autosave) {
+        const delta = JSON.parse(autosave) as Delta;
+        quill.setContents(delta);
+        quill.setSelection(quill.getLength());
+        const selectionFormat = quill.getFormat();
+        emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
+        emit("output", delta);
+      }
+    } catch (error) {
+      console.group();
+      console.warn("Failed to load autosave. Please refrain from touching your autosave :)");
+      console.error(error);
+      console.groupEnd();
     }
   }
 
@@ -144,7 +158,7 @@ async function init() {
   return new Quill(editor.value, {
     placeholder: "Start composing your mail here...",
     formats: ["underline", "color"],
-    readOnly: props.readonly
+    readOnly: props.readOnly
   });
 }
 
@@ -201,11 +215,15 @@ function defaultFormat(delta: Delta, text: Delta): [Delta, number] {
 
 <style lang="scss">
 .ql-editor {
-  @apply h-96 text-base;
+  @apply h-full text-base;
+
+  * {
+    @apply text-left;
+  }
 }
 .readonly {
   .ql-editor {
-    @apply pointer-events-none;
+    @apply pointer-events-none overflow-y-hidden;
   }
 }
 

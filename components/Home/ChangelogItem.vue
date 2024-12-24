@@ -7,7 +7,7 @@
         aria-hidden="true"
       />
     </span>
-    <h3 class="mb-1 flex items-center text-lg font-semibold text-neutral-900 transition duration-500">
+    <h3 class="mb-1 flex items-center text-lg font-semibold text-neutral-900 transition duration-500 dark:text-neutral-100">
       v{{ change.version }}
       <span
         class="me-2 ms-3 rounded px-2.5 py-0.5 text-sm font-medium transition duration-500"
@@ -24,11 +24,9 @@
         >Latest</span
       >
     </h3>
-    <time class="mb-2 block text-sm font-normal leading-none text-neutral-400"
-      >Released on {{ new Intl.DateTimeFormat(undefined, { dateStyle: "long", timeZone: "UTC" }).format(new Date(change.release)) }}</time
-    >
+    <time class="mb-2 block text-left text-sm font-normal leading-none text-neutral-400">Released on {{ formatDate(change.release) }}</time>
     <ul class="mb-4 text-base font-normal text-neutral-500 transition duration-500 dark:text-neutral-300">
-      <li v-for="(note, index) in change.notes">→ {{ note }}{{ index === change.notes.length - 1 ? "" : "," }}</li>
+      <li class="text-left" v-for="(note, index) in change.notes">→ {{ note }}{{ index === change.notes.length - 1 ? "" : "," }}</li>
     </ul>
   </li>
 </template>

@@ -1,29 +1,15 @@
+import { getRandomCharacters } from "~/utils/functions";
+import { UserData } from "~/utils/types";
 import admin from "firebase-admin";
-import { UserData } from "~/stores/user";
-import { getRandomItem } from "~/utils/functions";
 
 async function generateUid() {
   const db = admin.firestore();
-  const numbers = "0123456789";
-  let uid = "";
-
-  for (let i = 0; i < 12; i++) {
-    uid += getRandomItem(numbers);
-  }
+  const uid = getRandomCharacters(12, "numeric");
 
   const docData = await db.collection("users").doc(uid).get();
   if (docData.exists) return await generateUid();
 
   return uid;
-}
-
-function generateAccessToken() {
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let accessToken = "";
-  for (let i = 0; i < 50; i++) {
-    accessToken += getRandomItem(characters);
-  }
-  return accessToken;
 }
 
 export default defineEventHandler(async (event) => {
@@ -33,11 +19,13 @@ export default defineEventHandler(async (event) => {
 
   try {
     const uid = await generateUid();
-    const accessToken = generateAccessToken();
+    const accessToken = getRandomCharacters(50);
 
     data = {
       uid,
-      accessToken
+      accessToken,
+      savedMails: [],
+      blueprints: []
     };
 
     await db.collection("users").doc(uid).create(data);

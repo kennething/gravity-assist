@@ -1,28 +1,30 @@
-import { UserData } from "~/utils/types";
+import { SaveTemplate, UserData } from "~/utils/types";
 import admin from "firebase-admin";
 
 type Body = {
   uid: string;
-  accessToken: string;
+  mailId: string;
 };
 
 export default defineEventHandler(async (event) => {
   const body = (await readBody(event)) as Body;
   const db = admin.firestore();
 
-  let returnData: UserData | null = null;
+  let mail: SaveTemplate | null = null;
 
   try {
     const docData = await db.collection("users").doc(body.uid).get();
     const userData = docData.data() as UserData | undefined;
 
     if (!userData) throw new Error("User not found.");
-    if (userData.uid !== body.uid || userData.accessToken !== body.accessToken) throw new Error("Invalid credentials.");
 
-    returnData = userData;
+    const foundMail = userData.savedMails.find((mail) => mail.id === body.mailId);
+    if (!foundMail) throw new Error("Mail not found.");
+
+    mail = foundMail;
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : "Something went wrong. Try again later.", content: null };
   }
 
-  return { success: true, error: null, content: returnData };
+  return { success: true, error: null, content: mail };
 });

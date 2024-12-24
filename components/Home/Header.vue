@@ -11,14 +11,6 @@
       </NuxtLink>
     </div>
     <div class="fo-navbar-end items-center gap-4">
-      <label
-        class="fo-input-group hidden max-w-56 rounded-full border-neutral-500 bg-body transition duration-500 hover:border-neutral-500 md:flex dark:border-neutral-400 dark:bg-neutral-700 dark:hover:border-neutral-400"
-      >
-        <span class="fo-input-group-text">
-          <img class="size-5 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
-        </span>
-        <input type="text" class="fo-input grow rounded-e-full transition duration-500 dark:placeholder:text-neutral-300" placeholder="Search" />
-      </label>
       <label class="du-swap du-swap-rotate">
         <!-- this hidden checkbox controls the state -->
         <input type="checkbox" class="theme-controller hidden" :checked="isDarkMode" @click="isDarkMode = !isDarkMode" />

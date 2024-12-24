@@ -1,5 +1,5 @@
+import { Alert } from "~/utils/types";
 import admin from "firebase-admin";
-import { Alert } from "~/stores/user";
 
 export default defineEventHandler(async (event) => {
   const db = admin.firestore();
