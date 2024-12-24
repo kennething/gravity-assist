@@ -8,6 +8,7 @@
     </div>
     <div class="absolute bottom-4 left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-2">
       <button
+        type="button"
         v-for="(showcase, index) in carouselShowcases"
         class="h-6 w-1/6 rounded-full shadow md:h-3 md:w-16"
         :class="{ 'bg-white': currentCarouselIndex === index, 'bg-neutral-300': currentCarouselIndex !== index }"

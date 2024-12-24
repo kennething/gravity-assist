@@ -1,4 +1,4 @@
-import { Delta, Op } from "quill";
+import { Op } from "quill";
 
 export enum FormattingColors {
   R = "#ff0000",
@@ -28,7 +28,7 @@ export const mailTemplates: Record<string, Op[]> = {
     { insert: "\n" },
     { attributes: { color: "#f8c7ff" }, insert: "Delegates: " },
     { attributes: { color: "#278451", underline: true }, insert: "(6969,6969)" },
-    { insert: "\n\n", attributes: { color: "#ffffff" } },
+    { insert: "\n\n" },
     { attributes: { color: "#ffffff" }, insert: "Send your fleets to the " },
     { attributes: { color: "#c7ffd2" }, insert: "gathering location " },
     { attributes: { color: "#278451", underline: true }, insert: "(6969,6969)" },
@@ -44,8 +44,10 @@ export const mailTemplates: Record<string, Op[]> = {
     { attributes: { color: "#ffffff" }, insert: "at " },
     { attributes: { color: "#b3e5ff" }, insert: "12:10 " },
     { attributes: { color: "#ffffff" }, insert: "UTC." },
-    { insert: "\n\n", attributes: { color: "#ffffff" } },
-    { attributes: { color: "#ffffff" }, insert: "If you cannot manual, delegate your fleets to the org op at " },
+    { insert: "\n\n" },
+    { attributes: { color: "#ffffff" }, insert: "If you cannot manual, " },
+    { attributes: { color: "#f8c7ff" }, insert: "delegate your fleets" },
+    { attributes: { color: "#ffffff" }, insert: " to the org op at " },
     { attributes: { color: "#278451", underline: true }, insert: "(6969,6969)" },
     { attributes: { color: "#ffffff" }, insert: "." },
     { insert: "\n" }

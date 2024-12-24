@@ -86,11 +86,12 @@
           </div>
         </div>
       </div>
-      <div class="editor-bg rounded-b-2xl">
+      <div class="editor-bg h-96 rounded-b-2xl">
         <MailQuill
           :underline="underline"
           :color="currentColor"
           :clear-text="clearText"
+          :start-text="template"
           @event="(underlineEmit, colorEmit) => handleEmit(underlineEmit, colorEmit)"
           @click="openColorMenu = false"
           @output="(output) => handleOutput(output)"
@@ -107,6 +108,7 @@ import { FormattingColors } from "~/utils/mailTemplates";
 
 const props = defineProps<{
   clearText: boolean;
+  template: Op[] | undefined;
 }>();
 watch(
   () => props.clearText,
@@ -115,14 +117,22 @@ watch(
     currentColor.value = "#ffffff";
   }
 );
+watch(
+  () => props.template,
+  (text) => {
+    template.value = text;
+  }
+);
 
 const emit = defineEmits<{
   output: [string];
+  outputOps: [Op[]];
 }>();
 
 const underline = ref(false);
 const openColorMenu = ref(false);
 const currentColor = ref("#ffffff");
+const template = ref<Op[]>();
 
 const outputText = ref("");
 watch(outputText, (val) => {
@@ -180,7 +190,19 @@ function handleOutput(output: Delta | Op[]) {
   let previousColor = "#ffffff";
 
   const ops = "ops" in output ? output.ops : output;
+  emit("outputOps", ops);
   for (const op of ops) {
+    outputString += insertFormatting(op);
+  }
+
+  while (outputString.endsWith("#r") || outputString.endsWith("#e") || outputString.endsWith("#W")) {
+    outputString = outputString.slice(0, -2);
+  }
+
+  outputText.value = outputString;
+  checkProfanity(outputString);
+
+  function insertFormatting(op: Op) {
     const insert = op.insert as string;
     const isCoordinate = /\(\d{1,4},\d{1,4}\)/.test(insert);
     let string = insert.replaceAll("\n", "#r");
@@ -201,21 +223,15 @@ function handleOutput(output: Delta | Op[]) {
       if (color !== previousColor) string = "#c" + color.slice(1) + string;
       previousColor = color;
 
+      // Replace hex code with IL shorthand code
       string = Object.entries(FormattingColors).reduce((result, [key, value]) => {
         const regex = new RegExp("#c" + value.slice(1), "g");
         return result.replace(regex, `#${key}`);
       }, string);
     }
 
-    outputString += string;
+    return string;
   }
-
-  while (outputString.endsWith("#r") || outputString.endsWith("#e") || outputString.endsWith("#W")) {
-    outputString = outputString.slice(0, -2);
-  }
-
-  outputText.value = outputString;
-  checkProfanity(outputString);
 }
 
 async function checkProfanity(text: string) {
@@ -237,10 +253,6 @@ async function checkProfanity(text: string) {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
-
-.editor-bg {
-  background: radial-gradient(#1e232a, #080a0c);
 }
 
 @media (hover: none) and (pointer: coarse) {

@@ -1,5 +1,5 @@
 <template>
-  <div ref="editor"></div>
+  <div ref="editor" :class="{ readonly: readOnly }"></div>
 </template>
 
 <script setup lang="ts">
@@ -10,8 +10,8 @@ const props = defineProps<{
   underline: boolean;
   color: string;
   clearText: boolean;
-  readonly?: boolean;
-  startText?: Delta;
+  readOnly?: boolean;
+  startText?: Op[];
 }>();
 watch(
   () => props.underline,
@@ -38,6 +38,31 @@ watch(
     emit("output", quill.getContents());
   }
 );
+watch(
+  () => props.startText,
+  (text) => {
+    setTemplate(text);
+  }
+);
+
+async function setTemplate(text: Op[] | undefined) {
+  if (!quill || !text) {
+    await delay(1);
+    return setTemplate(text);
+  }
+  quill.setContents(text);
+
+  const length = quill.getLength();
+  quill.setSelection({ index: length, length: 0 });
+  emit("output", text);
+
+  const selection = quill.getSelection();
+  if (!selection) return;
+
+  const selectionFormat = quill.getFormat();
+  formatSelection(selection, selectionFormat);
+  emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
+}
 
 const emit = defineEmits<{
   event: [boolean, string | string[]];
@@ -49,18 +74,28 @@ let quill: Quill | null = null;
 
 onMounted(async () => {
   quill = await init();
-  document.querySelector(".ql-editor")?.setAttribute("spellcheck", "false");
+  const editor = document.querySelector(".ql-editor");
+  editor?.setAttribute("spellcheck", "false");
+  editor?.setAttribute("enterkeyhint", "enter");
+  editor?.setAttribute("autocorrect", "off");
 
   if (props.startText) quill.setContents(props.startText);
   else {
-    const autosave = localStorage.getItem("autosave");
-    if (autosave) {
-      const delta = JSON.parse(autosave) as Delta;
-      quill.setContents(delta);
-      quill.setSelection(quill.getLength());
-      const selectionFormat = quill.getFormat();
-      emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
-      emit("output", delta);
+    try {
+      const autosave = localStorage.getItem("autosave");
+      if (autosave) {
+        const delta = JSON.parse(autosave) as Delta;
+        quill.setContents(delta);
+        quill.setSelection(quill.getLength());
+        const selectionFormat = quill.getFormat();
+        emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
+        emit("output", delta);
+      }
+    } catch (error) {
+      console.group();
+      console.warn("Failed to load autosave. Please refrain from touching your autosave :)");
+      console.error(error);
+      console.groupEnd();
     }
   }
 
@@ -82,6 +117,7 @@ onMounted(async () => {
   quill.on("text-change", (delta, oldDelta, source) => {
     console.log(`${new Date().getSeconds()} delta: ${JSON.stringify(delta)}`);
     if (!quill || source !== "user") return;
+
     let selection = quill.getSelection();
     if (!selection) return;
 
@@ -126,7 +162,7 @@ async function init() {
   return new Quill(editor.value, {
     placeholder: "Start composing your mail here...",
     formats: ["underline", "color"],
-    readOnly: props.readonly
+    readOnly: props.readOnly
   });
 }
 
@@ -136,6 +172,10 @@ function defaultFormat(delta: Delta, text: Delta): [Delta, number] {
   for (let i = 0; i < text.ops.length; i++) {
     const op = text.ops[i];
     const insert = op.insert as string | undefined;
+
+    if (insert?.slice(0, 2) !== "\n" && !op.attributes?.color) {
+      op.attributes = { ...op.attributes, color: props.color };
+    }
 
     const coordinateRegex = /([^\(]*)(\(\d{1,4},\d{1,4}\))(.*)/; // Apply coordinate formatting to coordinates
     let coordinateMatch = insert?.match(coordinateRegex);
@@ -171,18 +211,26 @@ function defaultFormat(delta: Delta, text: Delta): [Delta, number] {
         text.ops.splice(i + (before ? 1 : 0), 1);
       }
     }
-
-    if (!op.attributes?.color && insert !== "\n") op.attributes = { ...op.attributes, color: "#ffffff" }; // Add fallback color
   }
 
   return [text, selectionOffset];
 }
 </script>
 
-<style>
+<style lang="scss">
 .ql-editor {
-  @apply h-96 text-base;
+  @apply h-full text-base;
+
+  * {
+    @apply text-left;
+  }
 }
+.readonly {
+  .ql-editor {
+    @apply pointer-events-none overflow-y-hidden;
+  }
+}
+
 .ql-blank::before {
   color: rgb(156 163 175) !important;
 }

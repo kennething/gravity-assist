@@ -21,10 +21,10 @@
           </ol>
         </div>
       </div>
-      <button class="flex w-full items-center justify-end gap-2" @click="router.push({ query: { v: 'latest' } })">
+      <button type="button" class="flex w-full items-center justify-end gap-2" @click="router.push({ query: { v: 'latest' } })">
         <p class="transition duration-500 hover:underline">View full changelog</p>
         <div class="du-tooltip" data-tip="View">
-          <div class="fo-btn fo-btn-circle fo-btn-text dark:hover:bg-neutral-700">
+          <div class="fo-btn fo-btn-circle fo-btn-text">
             <img class="size-4 transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
           </div>
         </div>
@@ -41,7 +41,7 @@
         <button type="button" class="flex w-full items-center justify-end gap-2" @click="router.push({ query: { ct: 'true' } })">
           <p class="transition duration-500 hover:underline">View all contributors</p>
           <div class="du-tooltip" data-tip="View">
-            <div class="fo-btn fo-btn-circle fo-btn-text dark:hover:bg-neutral-700">
+            <div class="fo-btn fo-btn-circle fo-btn-text">
               <img class="size-4 transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
             </div>
           </div>
