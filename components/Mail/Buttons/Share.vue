@@ -40,7 +40,7 @@ const emit = defineEmits<{
 function shareText() {
   if (props.showDialog) return;
 
-  navigator.clipboard.writeText(config.public.baseUrl + `/modules/mail-editor/create?u=${route.query.u}&id=${route.query.id}`);
+  navigator.clipboard.writeText(config.public.baseUrl + `/modules/mail-editor/edit?u=${route.query.u}&id=${route.query.id}`);
 
   emit("toggleDialog", true);
   setTimeout(() => {

@@ -39,7 +39,7 @@ const emit = defineEmits<{
 
 const store = useUserStore();
 
-const baseUrl = "/modules/mail-editor/create";
+const baseUrl = "/modules/mail-editor/edit";
 const link = computed(() => {
   if (!store.user) return baseUrl;
   return `${baseUrl}?u=${store.user?.uid}&id=${props.mail.id}`;
