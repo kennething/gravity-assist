@@ -165,7 +165,7 @@ const navButtons: NavButton[] = [
     route: "/",
     disabled: true,
     tag: {
-      name: "Soon!",
+      name: '"Soon"',
       color: "bg-neutral-100"
     }
   }

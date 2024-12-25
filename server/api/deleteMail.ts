@@ -29,6 +29,7 @@ export default defineEventHandler(async (event) => {
     outcomeMails = savedMails;
     await db.collection("users").doc(body.uid).update({ savedMails });
   } catch (error) {
+    console.error(error);
     return { success: false, error: error instanceof Error ? error.message : "Something went wrong. Try again later.", content: null };
   }
 

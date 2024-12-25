@@ -24,12 +24,15 @@ export default defineEventHandler(async (event) => {
     data = {
       uid,
       accessToken,
+      createdAt: new Date().toISOString().slice(0, 10),
+      lastLoggedIn: new Date().toISOString().slice(0, 10),
       savedMails: [],
       blueprints: []
     };
 
     await db.collection("users").doc(uid).create(data);
   } catch (error) {
+    console.error(error);
     return { success: false, error: error instanceof Error ? error.message : "Something went wrong. Try again later.", content: null };
   }
 

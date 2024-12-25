@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
 
     returnData = querySnapshot.docs[0].data() as Alert;
   } catch (error) {
+    console.error(error);
     return { success: false, error: error instanceof Error ? error.message : "Something went wrong. Try again later.", content: null };
   }
 

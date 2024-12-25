@@ -1,3 +1,5 @@
+import type { Op } from "quill";
+
 /**
  * @warning Be sure to await this function in order to actually use the delay.
  * @param {number} ms - Number of milliseconds to delay.
@@ -23,7 +25,9 @@ const dateOptions: Record<string, Record<string, string>> = {
   full: { dateStyle: "long", timeZone: "UTC" },
   numeric: { dateStyle: "short", timeZone: "UTC" }
 };
-/** @params {date} YYYY-MM-DD */
+/** Returns a date string as "today," "yesterday," "{n}d ago," or a localized date string
+ * @params {date} YYYY-MM-DD
+ */
 export function formatDate(dateString: string, options: "full" | "numeric" = "full", timeDiff = false) {
   const formatter = new Intl.DateTimeFormat(undefined, dateOptions[options]);
   const date = new Date(dateString);
@@ -52,4 +56,34 @@ export function getRandomCharacters(length: number, set: "numeric" | "alphanumer
     characters += getRandomItem(CharacterSets[set]);
   }
   return characters;
+}
+
+export function truncateOps(ops: Op[]) {
+  return ops.map((op) => {
+    const newObj: Record<string, string | Record<string, string>> = {};
+
+    if (op.attributes && op.attributes.color) {
+      newObj.a = {};
+      newObj.a.c = op.attributes.color as string;
+    }
+
+    newObj.i = op.insert as string;
+
+    return newObj;
+  });
+}
+
+export function untruncateOps(ops: TruncatedOp[]) {
+  return ops.map((op) => {
+    const newObj: Op = {};
+
+    if (op.a && op.a.c) {
+      newObj.attributes = {};
+      newObj.attributes.color = op.a.c;
+    }
+
+    newObj.insert = op.i;
+
+    return newObj;
+  });
 }

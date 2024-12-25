@@ -1,5 +1,8 @@
 export type Changelog = {
   type: "release" | "minor release" | "bugfix";
+  /** Excludes any flavor, such as a leading v
+   * @example "0.1.0"
+   */
   version: string;
   /** YYYY-MM-DD */
   release: string;

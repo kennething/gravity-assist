@@ -1,4 +1,5 @@
-import { SaveTemplate, UserData } from "~/utils/types";
+import { SaveTemplate, TruncatedOp, UserData } from "~/utils/types";
+import { untruncateOps } from "~/utils/functions";
 import admin from "firebase-admin";
 
 type Body = {
@@ -21,8 +22,10 @@ export default defineEventHandler(async (event) => {
     const foundMail = userData.savedMails.find((mail) => mail.id === body.mailId);
     if (!foundMail) throw new Error("Mail not found.");
 
+    foundMail.ops = untruncateOps(foundMail.ops as TruncatedOp[]);
     mail = foundMail;
   } catch (error) {
+    console.error(error);
     return { success: false, error: error instanceof Error ? error.message : "Something went wrong. Try again later.", content: null };
   }
 

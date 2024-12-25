@@ -6,23 +6,23 @@
       class="du-btn flex items-center justify-center gap-2 rounded-xl border-blue-300 bg-blue-100 transition duration-500 hover:scale-105 hover:border-blue-400 hover:bg-blue-200 dark:border-blue-500 dark:bg-blue-800 dark:hover:bg-blue-700"
       :class="{ 'scale-105 border-blue-400 bg-blue-200 dark:bg-blue-700': showDialog, 'dark:bg-blue-800': !showDialog }"
     >
-      <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">{{ !userQuery || userQuery === store.user?.uid ? "Save" : "Clone" }}</span>
+      <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">{{ !userQuery || userQuery === userStore.user?.uid ? "Save" : "Clone" }}</span>
       <img class="size-5 transition duration-500 dark:invert" src="/ui/save.svg" aria-hidden="true" />
     </button>
     <Transition name="fade">
       <div class="fo-tooltip-content visible -right-24 bottom-12 opacity-100 sm:right-1/2 sm:translate-x-1/2" role="popover" v-if="showDialog">
         <div
-          v-if="store.user"
+          v-if="userStore.user"
           class="fo-tooltip-body flex w-64 flex-col items-center justify-center gap-3 rounded-lg border-2 border-blue-300 bg-blue-100 p-4 text-start shadow transition duration-500 dark:border-blue-500 dark:bg-blue-800"
         >
           <div class="max-w-sm">
             <span class="fo-label justify-end">
-              <span class="fo-label-text-alt transition duration-500" :class="{ 'text-red-700 dark:text-red-200': error }">{{ templateName.length }}/100</span>
+              <span class="fo-label-text-alt transition duration-500" :class="{ 'text-red-700 dark:text-red-200': error }">{{ templateName.length }}/50</span>
             </span>
             <div class="relative">
               <input
                 type="text"
-                :placeholder="'Name your ' + (!userQuery || userQuery === store.user?.uid ? 'new mail' : 'clone') + '!'"
+                :placeholder="'Name your ' + (!userQuery || userQuery === userStore.user?.uid ? 'new mail' : 'clone') + '!'"
                 class="fo-input text-black"
                 :class="{ 'text-red-700': error }"
                 v-model="templateName"
@@ -44,7 +44,7 @@
               <span
                 class="text-black transition duration-500 group-hover:text-white group-hover:duration-200 dark:text-white dark:group-hover:text-black"
                 :class="{ 'text-white dark:text-black': !templateName }"
-                v-if="!userQuery || userQuery === store.user?.uid"
+                v-if="!userQuery || userQuery === userStore.user?.uid"
                 >{{ loading ? "Saving..." : success ? "Saved!" : "Save" }}</span
               >
               <span
@@ -100,8 +100,8 @@ const emit = defineEmits<{
   newQuery: [string, string];
 }>();
 
-const store = useUserStore();
-const user = computed(() => store.user);
+const userStore = useUserStore();
+const user = computed(() => userStore.user);
 watch(user, async () => {
   getOwnership();
 });
@@ -109,7 +109,7 @@ watch(user, async () => {
 async function getOwnership() {
   let tries = 0;
   while (tries < 10) {
-    const ownership = !userQuery || userQuery === store.user?.uid ? "" : "Clone of ";
+    const ownership = !userQuery || userQuery === userStore.user?.uid ? "" : "Clone of ";
     if (props.savedMail) templateName.value = (ownership + props.savedMail.name).slice(0, 100);
     tries++;
     await delay(50);
@@ -125,10 +125,10 @@ const loading = ref(false);
 const success = ref(false);
 
 async function saveText() {
-  if (!props.showDialog || !store.user || !templateName.value || error.value) return;
+  if (!props.showDialog || !userStore.user || !templateName.value || error.value) return;
   loading.value = true;
 
-  const template = { name: templateName.value, createdAt: new Date().toISOString().slice(0, 10), lastSaved: new Date().toISOString().slice(0, 10), ops: props.outputOps };
+  let template = { name: templateName.value, ops: props.outputOps };
   const {
     success: fetchSuccess,
     error: fetchError,
@@ -137,8 +137,8 @@ async function saveText() {
   } = await $fetch("/api/saveMail", {
     method: "POST",
     body: {
-      uid: store.user.uid,
-      accessToken: store.user.accessToken,
+      uid: userStore.user.uid,
+      accessToken: userStore.user.accessToken,
       template
     }
   });
@@ -146,14 +146,14 @@ async function saveText() {
   if (!fetchSuccess && fetchError) return (error.value = fetchError);
   if (fetchSuccess && content && outcomeMails) {
     success.value = true;
-    (template as SaveTemplate).id = content;
-    store.user.savedMails = outcomeMails;
+    (template as SaveTemplate) = content;
+    userStore.user.savedMails = outcomeMails;
     setTimeout(() => {
       success.value = false;
       emit("toggleDialog", false);
     }, 1000);
-    router.push({ query: { u: store.user.uid, id: content } });
-    emit("newQuery", store.user.uid, content);
+    router.push({ query: { u: userStore.user.uid, id: content.id } });
+    emit("newQuery", userStore.user.uid, content.id);
   }
 }
 </script>

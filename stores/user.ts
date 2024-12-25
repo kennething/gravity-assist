@@ -2,7 +2,8 @@ export const useUserStore = defineStore("userStore", () => {
   const isDarkMode = ref(false);
   const alert = ref<Alert>();
   const user = ref<UserData>();
-  const shipData = ref<any>();
+  const shipData = ref<AllShip[]>();
+  const shipDifficulties = ref<Record<string, number>>();
 
   async function init() {
     getUser();
@@ -35,8 +36,9 @@ export const useUserStore = defineStore("userStore", () => {
     }
 
     async function fetchShipData() {
-      const data = await $fetch("/api/data/ships");
+      const { data, difficulty } = await $fetch("/api/data/ships");
       shipData.value = data;
+      shipDifficulties.value = difficulty;
     }
 
     async function fetchLatestAlert() {
@@ -53,5 +55,5 @@ export const useUserStore = defineStore("userStore", () => {
     }
   }
 
-  return { isDarkMode, alert, user, init };
+  return { isDarkMode, alert, user, shipData, shipDifficulties, init };
 });
