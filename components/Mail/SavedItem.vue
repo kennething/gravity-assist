@@ -8,13 +8,13 @@
         <button v-if="link === baseUrl" class="fo-btn grow-[3]" disabled>Edit <img class="size-5" src="/ui/pencil.svg" aria-hidden="true" /></button>
         <NuxtLink v-else :to="link" class="fo-btn grow-[3]">Edit <img class="size-5" src="/ui/pencil.svg" aria-hidden="true" /></NuxtLink>
         <button
-          :disabled="!store.user"
+          :disabled="!userStore.user"
           class="fo-btn border-red-400 bg-red-400 px-3 hover:border-red-300 hover:bg-red-300 dark:hover:border-red-500 dark:hover:bg-red-500"
           @click="emit('delete', mail)"
         >
           <img class="size-5" src="/ui/trash.svg" aria-hidden="true" />
         </button>
-        <button :disabled="!store.user" class="fo-btn border-blue-400 bg-blue-400 px-3 hover:border-blue-300 hover:bg-blue-300 dark:hover:border-blue-500 dark:hover:bg-blue-500" @click="share">
+        <button :disabled="!userStore.user" class="fo-btn border-blue-400 bg-blue-400 px-3 hover:border-blue-300 hover:bg-blue-300 dark:hover:border-blue-500 dark:hover:bg-blue-500" @click="share">
           <img class="size-5" src="/ui/share.svg" aria-hidden="true" />
         </button>
       </div>
@@ -37,12 +37,12 @@ const emit = defineEmits<{
   delete: [SaveTemplate];
 }>();
 
-const store = useUserStore();
+const userStore = useUserStore();
 
 const baseUrl = "/modules/mail-editor/edit";
 const link = computed(() => {
-  if (!store.user) return baseUrl;
-  return `${baseUrl}?u=${store.user?.uid}&id=${props.mail.id}`;
+  if (!userStore.user) return baseUrl;
+  return `${baseUrl}?u=${userStore.user?.uid}&id=${props.mail.id}`;
 });
 
 function share() {

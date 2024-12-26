@@ -63,7 +63,7 @@
                 ><span class="inline text-white lg:hidden"> detections</span>
               </p>
               <div class="group relative">
-                <img class="size-5 invert" src="/ui/question.svg" alt="Profanity filter information" />
+                <img class="size-5 cursor-help invert" src="/ui/question.svg" alt="Profanity filter information" />
                 <div
                   class="profanity-tooltip fo-tooltip-content pointer-events-none visible top-5 group-hover:opacity-100 max-lg:-right-4 lg:left-1/2 lg:max-xl:-translate-x-1/2 xl:-left-4"
                   role="popover"

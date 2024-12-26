@@ -93,7 +93,7 @@ onMounted(async () => {
       }
     } catch (error) {
       console.group();
-      console.warn("Failed to load autosave. Please refrain from touching your autosave :)");
+      console.warn("Failed to load autosave. Please refrain from touching localStorage :)");
       console.error(error);
       console.groupEnd();
     }

@@ -1,73 +1,49 @@
 <template>
-  <div class="flex h-full min-h-[calc(100dvh-8rem)] w-full flex-col items-center justify-start p-8">
-    <div class="flex w-full flex-col items-center justify-center md:w-[25rem] lg:w-[30rem]">
-      <h1 class="text-3xl font-bold transition duration-500">Mail Editor</h1>
-      <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
-        <span class="flex items-center justify-center"><img class="size-12 transition duration-500 dark:invert" src="/ui/mailEditor.svg" aria-hidden="true" /></span>
-      </div>
-      <div role="tablist" class="du-tabs du-tabs-bordered">
-        <NuxtLink
-          v-for="tab in tabs"
-          type="button"
-          class="du-tab flex items-center justify-center gap-2 transition duration-500 dark:text-white"
-          :class="{ 'du-tab-active': '/modules/mail-editor' + tab.route === route.path }"
-          role="tab"
-          :to="'/modules/mail-editor' + tab.route"
-        >
-          <img class="size-5 transition duration-500 dark:invert" :src="tab.src" aria-hidden="true" />
-          {{ tab.name }}
-        </NuxtLink>
+  <div class="flex w-full flex-col items-center justify-center gap-4" role="tabpanel">
+    <div class="flex items-center justify-center gap-2">
+      <p class="transition duration-500">
+        Need some inspiration? Try a <span class="cursor-pointer font-medium transition duration-500 hover:underline" @click="showMailTemplates = true">mail template</span>
+      </p>
+      <div class="du-tooltip fo-input-group-text p-0" data-tip="View templates">
+        <button type="button" class="fo-btn fo-btn-circle fo-btn-text" @click="showMailTemplates = true">
+          <img class="size-5 transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
+        </button>
       </div>
     </div>
 
-    <div class="mt-4 w-full">
-      <div class="flex w-full flex-col items-center justify-center gap-4" role="tabpanel">
-        <div class="flex items-center justify-center gap-2">
-          <p class="transition duration-500">
-            Need some inspiration? Try a <span class="cursor-pointer font-medium transition duration-500 hover:underline" @click="showMailTemplates = true">mail template</span>
-          </p>
-          <div class="du-tooltip fo-input-group-text p-0" data-tip="View templates">
-            <button type="button" class="fo-btn fo-btn-circle fo-btn-text" @click="showMailTemplates = true">
-              <img class="size-5 transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
-            </button>
-          </div>
-        </div>
+    <Transition name="menu">
+      <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-show="showMailTemplates" @click="showMailTemplates = false">
+        <MailTemplates @template="(template) => (selectedMailTemplate = template)" />
+      </div>
+    </Transition>
 
-        <Transition name="menu">
-          <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-show="showMailTemplates" @click="showMailTemplates = false">
-            <MailTemplates @template="(template) => (selectedMailTemplate = template)" />
-          </div>
-        </Transition>
+    <div v-if="loading" class="fo-skeleton fo-skeleton-animated h-96 w-full rounded-2xl shadow transition duration-500 md:w-[25rem] lg:w-[40rem] xl:w-[50rem]"></div>
+    <MailEditor v-else @output="(text) => (outputText = text)" @output-ops="(ops) => (outputOps = ops)" :clear-text="isClearText" :template="selectedMailTemplate" />
 
-        <div v-if="loading" class="fo-skeleton fo-skeleton-animated h-96 w-full rounded-2xl shadow transition duration-500 md:w-[25rem] lg:w-[40rem] xl:w-[50rem] dark:bg-neutral-800"></div>
-        <MailEditor v-else @output="(text) => (outputText = text)" @output-ops="(ops) => (outputOps = ops)" :clear-text="isClearText" :template="selectedMailTemplate" />
+    <div class="flex items-center justify-center gap-5">
+      <MailButtonsClear :show-dialog="showClearDialog" @toggle-dialog="(val) => (showClearDialog = val)" @clear-text="isClearText = true" @click="deselectOthers('clear')" />
+      <MailButtonsCopy :show-dialog="showCopyDialog" @toggle-dialog="(val) => (showCopyDialog = val)" :output-text="outputText" @click="deselectOthers('copy')" />
+      <MailButtonsSave
+        :show-dialog="showSaveDialog"
+        @toggle-dialog="(val) => (showSaveDialog = val)"
+        :output-ops="outputOps"
+        :saved-mail="savedMail"
+        @new-query="(uid, id) => getMail(uid, id)"
+        @click="deselectOthers('save')"
+      />
+      <MailButtonsShare :show-dialog="showShareDialog" @toggle-dialog="(val) => (showShareDialog = val)" :saved-mail="savedMail" @click="deselectOthers('share')" />
+    </div>
 
-        <div class="flex items-center justify-center gap-5">
-          <MailButtonsClear :show-dialog="showClearDialog" @toggle-dialog="(val) => (showClearDialog = val)" @clear-text="isClearText = true" @click="deselectOthers('clear')" />
-          <MailButtonsCopy :show-dialog="showCopyDialog" @toggle-dialog="(val) => (showCopyDialog = val)" :output-text="outputText" @click="deselectOthers('copy')" />
-          <MailButtonsSave
-            :show-dialog="showSaveDialog"
-            @toggle-dialog="(val) => (showSaveDialog = val)"
-            :output-ops="outputOps"
-            :saved-mail="savedMail"
-            @new-query="(uid, id) => getMail(uid, id)"
-            @click="deselectOthers('save')"
-          />
-          <MailButtonsShare :show-dialog="showShareDialog" @toggle-dialog="(val) => (showShareDialog = val)" :saved-mail="savedMail" @click="deselectOthers('share')" />
-        </div>
-
-        <div
-          class="profanity-tooltip-mobile mt-4 hidden items-center justify-center gap-1 rounded-lg bg-neutral-50 p-4 text-sm text-neutral-800 transition duration-500 dark:bg-neutral-800 dark:text-neutral-200"
-          role="alert"
-        >
-          <img class="mr-1 size-9 transition duration-500 dark:invert" src="/ui/question.svg" aria-hidden="true" />
-          <div class="flex flex-col items-start justify-center">
-            <p class="transition duration-500">
-              <span class="font-medium transition duration-500">Profanity filter:</span> The editor uses a basic profanity filter that does not reflect Infinite Lagrange's actual profanity filter.
-            </p>
-            <p class="transition duration-500">Gives a general idea if your mail will be blocked or not.</p>
-          </div>
-        </div>
+    <div
+      class="profanity-tooltip-mobile mt-4 hidden items-center justify-center gap-1 rounded-lg bg-neutral-50 p-4 text-sm text-neutral-800 transition duration-500 dark:bg-neutral-800 dark:text-neutral-200"
+      role="alert"
+    >
+      <img class="mr-1 size-9 transition duration-500 dark:invert" src="/ui/question.svg" aria-hidden="true" />
+      <div class="flex flex-col items-start justify-center">
+        <p class="transition duration-500">
+          <span class="font-medium transition duration-500">Profanity filter:</span> The editor uses a basic profanity filter that does not reflect Infinite Lagrange's actual profanity filter.
+        </p>
+        <p class="transition duration-500">Gives a general idea if your mail will be blocked or not.</p>
       </div>
     </div>
   </div>
@@ -76,30 +52,16 @@
 <script setup lang="ts">
 import type { Op } from "quill";
 
+definePageMeta({
+  layout: "mail-editor"
+});
+
 useSeoMeta({
   title: "Editor - Mail Editor | Gravity Assist",
-  ogTitle: "Mail Editor - Gravity Assist",
-  description:
-    "A simple mail/text editor for Infinite Lagrange with a built-in profanity detector, color picker, character counter, and autosave. Compile your mail with the click of a button and paste into IL's mail menu for a quick and easy way to send mails. Send and share mails with others to draft the coolest text!",
-  ogDescription:
-    "A simple mail/text editor for Infinite Lagrange with a built-in profanity detector, color picker, character counter, and autosave. Compile your mail with the click of a button and paste into IL's mail menu for a quick and easy way to send mails. Send and share mails with others to draft the coolest text!"
+  ogTitle: "Mail Editor - Gravity Assist"
 });
 
 const route = useRoute();
-const router = useRouter();
-
-const tabs = [
-  {
-    name: "Edit",
-    src: "/ui/pencil.svg",
-    route: "/edit"
-  },
-  {
-    name: "Saved Mails",
-    src: "/ui/saved.svg",
-    route: "/saved"
-  }
-];
 
 const isClearText = ref(false);
 watch(isClearText, async (val) => {

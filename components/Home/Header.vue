@@ -26,8 +26,8 @@ const emit = defineEmits<{
   toggle: [void];
 }>();
 
-const store = useUserStore();
-const { isDarkMode } = storeToRefs(store);
+const userStore = useUserStore();
+const { isDarkMode } = storeToRefs(userStore);
 </script>
 
 <style scoped></style>

@@ -1,5 +1,6 @@
 export type Credit = {
   name: string;
+  /** Notes for the credit */
   specific: string[];
   /** YYYY-MM-DD */
   dateAdded: string;
