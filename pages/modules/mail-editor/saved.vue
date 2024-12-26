@@ -21,7 +21,7 @@
                 loading ? "Deleting..." : deleteSuccess ? "Deleted!" : "Yes"
               }}</span>
             </button>
-            <button class="fo-btn grow" @click="deleteMail = undefined">Cancel</button>
+            <button class="fo-btn grow border-neutral-100 bg-neutral-100 hover:border-neutral-300 hover:bg-neutral-300" @click="deleteMail = undefined">Cancel</button>
           </div>
         </div>
       </div>

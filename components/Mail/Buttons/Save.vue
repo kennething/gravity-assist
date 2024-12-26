@@ -23,7 +23,7 @@
               <input
                 type="text"
                 :placeholder="'Name your ' + (!userQuery || userQuery === userStore.user?.uid ? 'new mail' : 'clone') + '!'"
-                class="fo-input text-black"
+                class="fo-input border-neutral-300 bg-white text-black"
                 :class="{ 'text-red-700': error }"
                 v-model="templateName"
                 maxlength="100"
