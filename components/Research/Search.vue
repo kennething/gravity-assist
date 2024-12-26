@@ -1,14 +1,29 @@
 <template>
+  <Transition name="menu">
+    <div class="mobile-search fixed left-0 top-0 z-20 h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-show="isSearching" @click="isSearching = false">
+      <ResearchMobileSearch
+        :recently-searched="recentlySearched"
+        :filtered-data="filteredData"
+        @search="(term) => (search = term)"
+        @select="(ship) => selectShip(ship)"
+        @focus-button="(index) => (focusedButton = index)"
+      />
+    </div>
+  </Transition>
+
   <div class="w-[90vw] rounded-xl bg-neutral-100/50 p-4 transition duration-500 sm:w-96 dark:bg-neutral-900">
-    <div class="jusitfy-start group relative flex w-full flex-col items-start rounded-xl" v-if="ships">
+    <div class="group relative flex w-full flex-col items-start justify-start rounded-xl" v-if="ships" @click="isSearching = true">
       <div class="fo-input-group relative z-[2] flex grow rounded-xl border-neutral-300 bg-white transition duration-500 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600">
         <span class="fo-input-group-text">
           <img class="size-5 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
         </span>
+        <div class="fake-search-input fo-input grow content-center rounded-e-xl transition duration-500">
+          <p class="text-left text-neutral-700/50 dark:text-neutral-300">Search</p>
+        </div>
         <input
           ref="searchInput"
           type="text"
-          class="fo-input grow rounded-e-xl text-left text-black transition duration-500 placeholder:transition placeholder:duration-500 dark:text-white dark:placeholder:text-neutral-300"
+          class="search-input fo-input grow rounded-e-xl text-left text-black transition duration-500 placeholder:transition placeholder:duration-500 dark:text-white dark:placeholder:text-neutral-300"
           @focus="focusedButton = -1"
           placeholder="Search"
           v-model="search"
@@ -79,7 +94,7 @@ const emit = defineEmits<{
   select: [AllShip];
 }>();
 
-const searchInput = useTemplateRef("searchInput");
+const isSearching = ref(false);
 const searchButtons = useTemplateRef("searchButton");
 const focusedButton = ref(-1);
 const search = ref("");
@@ -130,6 +145,7 @@ function selectShip(ship: AllShip) {
   localStorage.setItem("searches", JSON.stringify(recentlySearchedData.value));
 
   search.value = "";
+  isSearching.value = false;
   searchButtons.value?.find((button) => ship.name === button.getAttribute("data-ship-name") && ship.variant === button.getAttribute("data-ship-variant"))?.blur();
   emit("select", ship);
 }
@@ -156,4 +172,44 @@ function arrowKeys(event: KeyboardEvent) {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.menu-enter-active,
+.menu-leave-active {
+  transition: all 0.5s ease-in-out;
+
+  #menu {
+    transition: all 0.35s ease-in-out;
+  }
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
+
+  #menu {
+    transform: scale(0);
+  }
+}
+
+.mobile-search {
+  @apply hidden;
+}
+.search-input {
+  @apply block;
+}
+.fake-search-input {
+  @apply hidden;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .mobile-search {
+    @apply flex;
+  }
+  .search-input {
+    @apply hidden;
+  }
+  .fake-search-input {
+    @apply block;
+  }
+}
+</style>
