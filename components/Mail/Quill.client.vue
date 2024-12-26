@@ -100,7 +100,6 @@ onMounted(async () => {
   }
 
   quill.on("selection-change", (range, oldRange, source) => {
-    console.log("selection: ", source);
     if (!quill || source !== "user") return;
 
     const selection = quill.getSelection();
@@ -115,7 +114,6 @@ onMounted(async () => {
   });
 
   quill.on("text-change", (delta, oldDelta, source) => {
-    console.log(`${new Date().getSeconds()} delta: ${JSON.stringify(delta)}`);
     if (!quill || source !== "user") return;
 
     let selection = quill.getSelection();
@@ -126,7 +124,6 @@ onMounted(async () => {
     selection.index -= selectionOffset;
 
     const length = quill.getLength();
-    console.log(`${new Date().getSeconds()} content: ${length}:${selectionOffset}:${JSON.stringify(content)}`);
     const selectionIndex =
       delta.ops.find((op) => op.insert === "\n") || (oldDelta.ops[oldDelta.ops.length - 1].insert as string).includes("\n\n") || (oldDelta.ops.length === 1 && oldDelta.ops[0].insert === "\n")
         ? selection.index + 1
@@ -138,7 +135,6 @@ onMounted(async () => {
     if (!selection) return;
 
     formatSelection(selection, quill.getFormat());
-    console.warn("end");
   });
 });
 
