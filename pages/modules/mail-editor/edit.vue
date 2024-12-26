@@ -17,7 +17,7 @@
       </div>
     </Transition>
 
-    <div v-if="loading" class="fo-skeleton fo-skeleton-animated h-96 w-full rounded-2xl shadow transition duration-500 md:w-[25rem] lg:w-[40rem] xl:w-[50rem] dark:bg-neutral-800"></div>
+    <div v-if="loading" class="fo-skeleton fo-skeleton-animated h-96 w-full rounded-2xl shadow transition duration-500 md:w-[25rem] lg:w-[40rem] xl:w-[50rem]"></div>
     <MailEditor v-else @output="(text) => (outputText = text)" @output-ops="(ops) => (outputOps = ops)" :clear-text="isClearText" :template="selectedMailTemplate" />
 
     <div class="flex items-center justify-center gap-5">

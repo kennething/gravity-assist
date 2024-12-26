@@ -36,3 +36,7 @@ a {
 .fo-btn.fo-btn-circle.fo-btn-text {
   @apply dark:hover:bg-neutral-700;
 }
+
+.fo-skeleton {
+  @apply dark:bg-neutral-800;
+}

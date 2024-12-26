@@ -40,12 +40,12 @@ export default defineEventHandler(async (event) => {
     const savedMailsCopy = JSON.parse(JSON.stringify(savedMails)) as SaveTemplate[];
     savedMailsCopy.forEach((mail) => (mail.ops = untruncateOps(mail.ops as TruncatedOp[])));
     newMail = JSON.parse(JSON.stringify(template));
-    savedMailsCopy.splice(0, 0, newMail as SaveTemplate);
+    savedMailsCopy.unshift(newMail as SaveTemplate);
     outcomeMails = savedMailsCopy;
 
     // Condense for storage saving
     template.ops = truncateOps(template.ops);
-    savedMails.splice(0, 0, template);
+    savedMails.unshift(template);
 
     await db.collection("users").doc(body.uid).update({ savedMails });
   } catch (error) {

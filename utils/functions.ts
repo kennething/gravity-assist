@@ -1,4 +1,5 @@
 import type { Op } from "quill";
+import type { AllShip } from "./ships";
 
 /**
  * @warning Be sure to await this function in order to actually use the delay.

@@ -1,17 +1,17 @@
 <template>
-  <div class="flex w-96 flex-col items-center justify-center gap-2 rounded-xl bg-neutral-100/50 p-4 transition duration-500 dark:bg-neutral-900">
-    <h3 class="mb-2 text-2xl font-bold transition duration-500">Path Browser</h3>
+  <div class="flex w-[90vw] flex-col items-center justify-center gap-2 rounded-xl bg-neutral-100/50 p-4 transition duration-500 sm:w-96 dark:bg-neutral-900">
+    <h3 class="mb-2 text-xl font-bold transition duration-500">Path Browser</h3>
 
     <div class="flex w-full items-center justify-between gap-3">
       <div class="du-tooltip" data-tip="Previous">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('manufacturer', 'previous')">
-          <img class="size-6 transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous manufacturer" />
+          <img class="size-5 transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous manufacturer" />
         </button>
       </div>
-      <h3 class="grow rounded-xl bg-neutral-200/50 py-2 text-xl font-medium transition duration-500 dark:bg-neutral-800">{{ manufacturers[manufacturer] }}</h3>
+      <h3 class="grow rounded-xl border border-neutral-300 bg-white py-2 text-lg font-medium transition duration-500 dark:border-neutral-700 dark:bg-neutral-800">{{ manufacturers[manufacturer] }}</h3>
       <div class="du-tooltip" data-tip="Next">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('manufacturer', 'next')">
-          <img class="size-6 transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next manufacturer" />
+          <img class="size-5 transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next manufacturer" />
         </button>
       </div>
     </div>
@@ -19,13 +19,13 @@
     <div class="flex w-full items-center justify-between gap-3">
       <div class="du-tooltip" data-tip="Previous">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('direction', 'previous')">
-          <img class="size-6 transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous direction" />
+          <img class="size-5 transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous direction" />
         </button>
       </div>
-      <h3 class="grow rounded-xl bg-neutral-200/50 py-2 text-xl font-medium transition duration-500 dark:bg-neutral-800">{{ directions[direction] }}</h3>
+      <h3 class="grow rounded-xl border border-neutral-300 bg-white py-2 text-lg font-medium transition duration-500 dark:border-neutral-700 dark:bg-neutral-800">{{ directions[direction] }}</h3>
       <div class="du-tooltip" data-tip="Next">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('direction', 'next')">
-          <img class="size-6 transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next direction" />
+          <img class="size-5 transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next direction" />
         </button>
       </div>
     </div>
@@ -33,19 +33,19 @@
     <div class="flex w-full items-center justify-between gap-3">
       <div class="du-tooltip" data-tip="Previous">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('scope', 'previous')">
-          <img class="size-6 transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous scope" />
+          <img class="size-5 transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous scope" />
         </button>
       </div>
-      <h3 class="grow rounded-xl bg-neutral-200/50 py-2 text-xl font-medium transition duration-500 dark:bg-neutral-800">{{ scopes[scope] }}</h3>
+      <h3 class="grow rounded-xl border border-neutral-300 bg-white py-2 text-lg font-medium transition duration-500 dark:border-neutral-700 dark:bg-neutral-800">{{ scopes[scope] }}</h3>
       <div class="du-tooltip" data-tip="Next">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('scope', 'next')">
-          <img class="size-6 transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next scope" />
+          <img class="size-5 transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next scope" />
         </button>
       </div>
     </div>
 
     <p
-      class="mt-2 text-lg font-medium transition duration-500"
+      class="mt-2 font-medium transition duration-500"
       :class="{
         'text-yellow-400 dark:text-yellow-300': totalTime.time > 280 && totalTime.time <= 380,
         'text-orange-500': totalTime.time > 380 && totalTime.time <= 480,

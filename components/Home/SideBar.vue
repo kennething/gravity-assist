@@ -153,11 +153,7 @@ const navButtons: NavButton[] = [
   {
     displayName: "Color Generator",
     src: "/ui/colorGenerator.svg",
-    route: "/modules/color-generator",
-    tag: {
-      name: "Updated",
-      color: "bg-green-100"
-    }
+    route: "/modules/color-generator"
   },
   {
     displayName: "Fleet Builder",

@@ -176,3 +176,33 @@ export interface SuperCapitalShip extends Ship {
   type: "Battlecruiser" | "Auxiliary Ship" | "Carrier" | "Battleship";
   modules: (UnknownModule | WeaponModule | PropulsionModule | MiscModule)[];
 }
+
+export function findShip(ships: AllShip[] | undefined, ship: AllShip | undefined, name?: string, variant?: string) {
+  if (ship) return ships?.find((s) => s.name === ship.name && s.variant === ship.variant);
+  return ships?.find((s) => s.name === name && s.variant === variant);
+}
+
+export function findBestDirection(data: AllShip[], ship: AllShip) {
+  if (ship.direction.length === 1) {
+    return ship.direction[0];
+  }
+
+  let bestDirection: DirectionOption = "Empty";
+  const allChances: number[] = [];
+
+  for (const direction of ship.direction) {
+    const simulatedPath = data.filter((shipObj) => {
+      const manufacturerCheck = ship.manufacturer === "Empty" || shipObj.manufacturer === ship.manufacturer;
+      const directionCheck = direction === "Empty" || shipObj.direction.includes(direction);
+      const scopeCheck = ship.scope === "Empty" || shipObj.scope === ship.scope;
+
+      return manufacturerCheck && directionCheck && scopeCheck;
+    });
+
+    const chance = (ship.weight / simulatedPath.reduce((acc, item) => acc + item.weight, 0)) * 100;
+    allChances.push(chance);
+  }
+
+  bestDirection = ship.direction[allChances.indexOf(Math.max(...allChances))];
+  return bestDirection;
+}
