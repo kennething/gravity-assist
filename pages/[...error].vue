@@ -4,7 +4,7 @@
     <h1 class="text-5xl font-bold transition duration-500">Uh oh!</h1>
     <p class="mt-1 text-2xl transition duration-500">A v4 whale is blocking your path!</p>
     <p class="mt-5 text-xl transition duration-500">You'll have to find your page somewhere else.</p>
-    <NuxtLink to="/home" class="fo-btn mt-6">Go Home</NuxtLink>
+    <NuxtLink to="/home" class="fo-btn mt-6 border-neutral-100 bg-neutral-100 text-black hover:border-neutral-300 hover:bg-neutral-300">Go Home</NuxtLink>
   </div>
 </template>
 

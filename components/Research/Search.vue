@@ -1,11 +1,12 @@
 <template>
   <div class="w-[90vw] rounded-xl bg-neutral-100/50 p-4 transition duration-500 sm:w-96 dark:bg-neutral-900">
     <div class="jusitfy-start group relative flex w-full flex-col items-start rounded-xl" v-if="ships">
-      <div class="fo-input-group relative z-[2] flex grow rounded-xl transition duration-500 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600">
+      <div class="fo-input-group relative z-[2] flex grow rounded-xl border-neutral-300 bg-white transition duration-500 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600">
         <span class="fo-input-group-text">
           <img class="size-5 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
         </span>
         <input
+          ref="searchInput"
           type="text"
           class="fo-input grow rounded-e-xl text-left text-black transition duration-500 placeholder:transition placeholder:duration-500 dark:text-white dark:placeholder:text-neutral-300"
           @focus="focusedButton = -1"
@@ -78,6 +79,7 @@ const emit = defineEmits<{
   select: [AllShip];
 }>();
 
+const searchInput = useTemplateRef("searchInput");
 const searchButtons = useTemplateRef("searchButton");
 const focusedButton = ref(-1);
 const search = ref("");
@@ -139,7 +141,7 @@ function arrowKeys(event: KeyboardEvent) {
   if (event.key === "ArrowUp") {
     event.preventDefault();
     focusedButton.value--;
-    if (focusedButton.value <= -1) return (focusedButton.value = -1);
+    if (focusedButton.value <= -1) return (focusedButton.value = 0);
 
     buttons[focusedButton.value].focus();
   }

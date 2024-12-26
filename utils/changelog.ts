@@ -388,10 +388,11 @@ export const changelog: Changelog[] = [
     notes: [
       "Redesigned entire site",
       "Heavily optimized site for mobile devices",
-      "Added Inostrancevia to RA Helper",
       "Added Blueprint Tracker",
-      "Revamped Color Generator",
-      "Combined Module Library and Equipment Library into Encyclopedia"
+      "Added Mail Editor",
+      "Added Inostrancevia to RA Helper",
+      "Combined Module Library and Equipment Library into Encyclopedia",
+      "Fixed RA Helper search function not properly finding optimal path"
     ]
   }
 ];
