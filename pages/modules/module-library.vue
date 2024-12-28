@@ -6,7 +6,7 @@
 const router = useRouter();
 
 onMounted(() => {
-  router.push("/modules/encyclopedia");
+  router.replace("/modules/encyclopedia");
 });
 </script>
 
