@@ -83,21 +83,24 @@
 <script setup lang="ts">
 // this is such shit code
 
-const route = useRoute();
-const router = useRouter();
-
+const lastSaved = ref("");
+const data = ref<BlueprintAllShip[]>();
 watch(
-  () => route.query,
-  async (val) => {
-    console.log(val, userStore.shipData);
-    if (!userStore.shipData || !userStore.user) return;
-
-    if (userStore.user.uid === val.u) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
-    data.value = await getBlueprints(userStore.shipData);
-  }
+  data,
+  (val) => {
+    if (userStore.user?.uid === route.query.u && val) userStore.blueprintsAutosave = val;
+  },
+  { deep: true }
 );
 
+onMounted(() => {
+  data.value = userStore.blueprintsAutosave;
+});
+
+const route = useRoute();
+const router = useRouter();
 const userStore = useUserStore();
+
 const isOwner = computed(() => {
   if (!userStore.user || !userStore.shipData) return;
   if (!route.query.u) {
@@ -113,20 +116,26 @@ watch(isOwner, async (val) => {
   if (val) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
   data.value = await getBlueprints(userStore.shipData);
 });
-const lastSaved = ref("");
-const data = ref<BlueprintAllShip[]>();
+
+useSeoMeta({
+  title: () => `${isOwner.value ? "Your" : "Someone else's"} Blueprint Tracker | Gravity Assist`,
+  ogTitle: "Blueprint Tracker - Gravity Assist",
+  description:
+    "Easily track your blueprint collection and share it with others! View your collection, add new blueprints, and save your changes. Never open Excel ever again to share your blueprints with others!",
+  ogDescription:
+    "Easily track your blueprint collection and share it with others! View your collection, add new blueprints, and save your changes. Never open Excel ever again to share your blueprints with others!"
+});
 
 watch(
-  data,
-  (val) => {
-    if (userStore.user?.uid === route.query.u && val) userStore.blueprintsAutosave = val;
-  },
-  { deep: true }
-);
+  () => route.query,
+  async (val) => {
+    console.log(val, userStore.shipData);
+    if (!userStore.shipData || !userStore.user) return;
 
-onMounted(() => {
-  data.value = userStore.blueprintsAutosave;
-});
+    if (userStore.user.uid === val.u) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
+    data.value = await getBlueprints(userStore.shipData);
+  }
+);
 
 const shipTypes = ["Fighter", "Corvette", "Frigate", "Destroyer", "Cruiser", "Battlecruiser", "Auxiliary Ship", "Carrier", "Battleship"];
 
