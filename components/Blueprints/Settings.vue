@@ -70,7 +70,7 @@ const variantsOff = ref<boolean>();
 
 onMounted(() => {
   listOn.value = localStorage.getItem("layout") === "list";
-  variantsOff.value = localStorage.getItem("variants") === "false";
+  variantsOff.value = localStorage.getItem("variants") !== "true";
 });
 </script>
 
