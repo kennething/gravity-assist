@@ -27,7 +27,8 @@ export default defineEventHandler(async (event) => {
       createdAt: new Date().toISOString().slice(0, 10),
       lastLoggedIn: new Date().toISOString().slice(0, 10),
       savedMails: [],
-      blueprints: []
+      blueprints: [],
+      bpLastSaved: null
     };
 
     await db.collection("users").doc(uid).create(data);
