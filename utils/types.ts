@@ -11,7 +11,7 @@ export type UserData = {
   savedMails: SaveTemplate[];
   blueprints: BlueprintAllShip[];
   /** YYYY-MM-DD */
-  bpLastSaved: string;
+  bpLastSaved: string | null;
 };
 
 export type Alert = {
