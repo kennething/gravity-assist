@@ -44,12 +44,25 @@ const selectedDirectionValue = computed(() => directions[selectedDirection.value
 const selectedScope = ref(0);
 const selectedScopeValue = computed(() => scopes[selectedScope.value]);
 
+const config = useRuntimeConfig();
+
 useSeoMeta({
   title: () =>
     `${manufacturers[selectedManufacturer.value].split(" ")[0]}/${directions[selectedDirection.value].split(" ")[0]}/${scopes[selectedScope.value].split(" ")[0]} - RA Helper | Gravity Assist`,
-  ogTitle: "Research Agreement Helper - Gravity Assist",
-  description: "A tool to help you find the best ship for your research agreement.",
-  ogDescription: "A tool to help you find the best ship for your research agreement."
+  ogTitle: () =>
+    `RA Helper - Gravity Assist | ${manufacturers[selectedManufacturer.value].split(" ")[0]}/${directions[selectedDirection.value].split(" ")[0]}/${scopes[selectedScope.value].split(" ")[0]}`,
+
+  description:
+    "The best Research Agreement tool on the market! Browse through any category and find the ship that best fits your needs. Or, search for a specific ship by name and we'll find the path that gives you the best chance to find it!",
+  ogDescription:
+    "The best Research Agreement tool on the market! Browse through any category and find the ship that best fits your needs. Or, search for a specific ship by name and we'll find the path that gives you the best chance to find it!",
+  twitterDescription:
+    "The best Research Agreement tool on the market! Browse through any category and find the ship that best fits your needs. Or, search for a specific ship by name and we'll find the path that gives you the best chance to find it!",
+  twitterImage: () =>
+    config.public.baseUrl +
+    (route.query.shn && route.query.shv
+      ? `/ships/${(route.query.shn as string).split(" ")[0].toLowerCase() + (route.query.shn as string).split(" ").slice(1).join("")}_${(route.query.shv as string).toLowerCase()}.png`
+      : "/ships/solarWhale.png")
 });
 
 const route = useRoute();

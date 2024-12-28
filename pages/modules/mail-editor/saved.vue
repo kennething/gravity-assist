@@ -38,9 +38,17 @@ definePageMeta({
   layout: "mail-editor"
 });
 
+const route = useRoute();
+
 useSeoMeta({
   title: "Saves - Mail Editor | Gravity Assist",
-  ogTitle: "Mail Editor - Gravity Assist"
+  ogTitle: "Mail Editor - Gravity Assist",
+  description: () =>
+    `${route.query.u && route.query.id ? "Someone wrote and saved this mail to send it to you! You, too, can also e" : "E"}asily write, edit, save, and share mails for your community with this mail editor! Featuring a built-in mail template editor, profanity detector, and formatting options, you'll be able to harness the full power of the Infinite Lagrange chat menu!`,
+  ogDescription: () =>
+    `${route.query.u && route.query.id ? "Someone wrote and saved this mail to send it to you! You, too, can also e" : "E"}asily write, edit, save, and share mails for your community with this mail editor! Featuring a built-in mail template editor, profanity detector, and formatting options, you'll be able to harness the full power of the Infinite Lagrange chat menu!`,
+  twitterDescription:
+    "Easily write, edit, save, and share mails for your community! Featuring a built-in mail template editor, profanity detector, and formatting options, you'll be able to harness the full power of the Infinite Lagrange chat menu!"
 });
 
 const userStore = useUserStore();

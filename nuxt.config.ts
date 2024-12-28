@@ -32,8 +32,18 @@ export default defineNuxtConfig({
         { charset: "UTF-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1.0" },
         { name: "mobile-web-app-capable", content: "yes" },
+        { name: "author", content: "DubNubz" },
+        { property: "og:title", content: "Gravity Assist" },
+        { property: "og:site_name", content: "Gravity Assist" },
         {
-          hid: "description",
+          name: "twitter:description",
+          content: "Create colored text, search modules and research paths, design custom fleets, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange."
+        },
+        {
+          property: "og:description",
+          content: "Create colored text, search modules and research paths, design custom fleets, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange."
+        },
+        {
           name: "description",
           content: "Create colored text, search modules and research paths, design custom fleets, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange."
         },
