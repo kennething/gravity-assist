@@ -29,13 +29,15 @@ export default defineEventHandler(async (event) => {
     const savedMails = userData.savedMails;
     if (savedMails.length >= 30) throw new Error("You can only have 30 saved mails. Try deleting some.");
 
-    const id = getRandomCharacters(10);
+    const namespaceCollision = savedMails.findIndex((mail) => mail.name === template.name);
+    const isSame = namespaceCollision !== -1;
+
+    const id = isSame ? savedMails[namespaceCollision].id : getRandomCharacters(10);
     template.id = id;
-    template.createdAt = new Date().toISOString().slice(0, 10);
+    template.createdAt = isSame ? savedMails[namespaceCollision].createdAt : new Date().toISOString().slice(0, 10);
     template.lastSaved = new Date().toISOString().slice(0, 10);
 
-    const namespaceCollision = savedMails.findIndex((mail) => mail.name === template.name);
-    if (namespaceCollision !== -1) savedMails.splice(namespaceCollision, 1);
+    if (isSame) savedMails.splice(namespaceCollision, 1);
 
     const savedMailsCopy = JSON.parse(JSON.stringify(savedMails)) as SaveTemplate[];
     savedMailsCopy.forEach((mail) => (mail.ops = untruncateOps(mail.ops as TruncatedOp[])));

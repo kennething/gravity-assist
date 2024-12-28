@@ -5,6 +5,10 @@ export const useUserStore = defineStore("userStore", () => {
   const shipData = ref<AllShip[]>();
   const shipDifficulties = ref<Record<string, number>>();
 
+  // blueprint tracker
+  const blueprintsAutosave = ref<BlueprintAllShip[]>();
+  const hasUnsavedChanges = ref(false);
+
   async function init() {
     getUser();
     fetchLatestAlert();
@@ -55,5 +59,5 @@ export const useUserStore = defineStore("userStore", () => {
     }
   }
 
-  return { isDarkMode, alert, user, shipData, shipDifficulties, init };
+  return { isDarkMode, alert, user, shipData, shipDifficulties, blueprintsAutosave, hasUnsavedChanges, init };
 });

@@ -11,7 +11,7 @@ const route = useRoute();
 const router = useRouter();
 
 onMounted(() => {
-  router.push("/modules/mail-editor/edit");
+  router.replace("/modules/mail-editor/edit");
 });
 </script>
 

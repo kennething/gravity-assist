@@ -35,7 +35,7 @@
             >
               <img class="w-16" :src="ship.img" :alt="ship.name" />
               <p class="text-left">
-                {{ ship.name }} <span v-if="!('modules' in ship)">({{ ship.variant }})</span>
+                {{ ship.name }} <span v-if="ship.hasVariants">({{ ship.variant }})</span>
               </p>
             </button>
           </div>
@@ -56,7 +56,7 @@
           >
             <img class="w-16" :src="ship.img" :alt="ship.name" />
             <p class="text-left">
-              {{ ship.name }} <span v-if="!('modules' in ship)">({{ ship.variant }})</span>
+              {{ ship.name }} <span v-if="ship.hasVariants">({{ ship.variant }})</span>
             </p>
           </button>
           <p v-if="filteredData.length > 4" class="mt-2 text-sm italic text-neutral-700/75 dark:text-neutral-300">...and {{ filteredData.length - 4 }} more</p>

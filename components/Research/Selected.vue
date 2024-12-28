@@ -6,7 +6,7 @@
     <div class="flex w-full flex-col items-center justify-center" v-if="ship">
       <h3 class="text-xl font-bold transition duration-500">{{ ship.name }}</h3>
       <p class="transition duration-500">
-        {{ ship.variantName }} <span class="transition duration-500" v-if="!('modules' in ship)">({{ ship.variant }})</span>
+        {{ ship.variantName }} <span class="transition duration-500" v-if="ship.hasVariants">({{ ship.variant }})</span>
       </p>
       <img class="my-2.5 h-32" :src="ship.img" :alt="ship.name" />
       <p class="text-xl font-medium transition duration-500" :class="{ 'text-red-600': chance === -1 }">{{ chance === -1 ? "Not found in this path" : chance.toFixed(2) + "%" }}</p>
