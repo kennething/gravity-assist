@@ -18,7 +18,7 @@
     <div class="flex grow flex-col items-start justify-center sm:items-center">
       <p class="font-medium transition duration-500">{{ ship.name }}</p>
       <p class="text-sm transition duration-500">
-        {{ ship.variantName }} <span class="text-sm transition duration-500" v-if="!('modules' in ship)">({{ ship.variant }})</span>
+        {{ ship.variantName }} <span class="text-sm transition duration-500" v-if="ship.hasVariants">({{ ship.variant }})</span>
       </p>
     </div>
     <p class="w-1/5 text-right transition duration-500">{{ ((ship.weight / ships.reduce((total, ship) => total + ship.weight, 0)) * 100).toFixed(2) }}%</p>

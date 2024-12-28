@@ -1,12 +1,16 @@
 <template>
   <div class="flex w-full flex-col items-center justify-center" role="tabpanel">
     <p class="transition duration-500">
-      You have <span class="font-medium transition duration-500">{{ savedMails.length }}/30</span> saved mails
+      You have <span class="font-medium transition duration-500">{{ savedMails?.length ?? 0 }}/30</span> saved mails
     </p>
-    <p class="transition duration-500">Mails unused for more than 6 months will be automatically deleted</p>
+    <p class="transition duration-500">Mails unused for more than 6 months may be automatically deleted</p>
 
-    <div class="mt-4 flex w-full flex-col items-center justify-center gap-3 md:w-[25rem] lg:w-[40rem] xl:w-[50rem]" v-if="loadedMails.length">
-      <LazyMailSavedItem v-for="mail in loadedMails" :mail="mail" :key="mail.id" @delete="(mail) => (deleteMail = mail)" />
+    <div class="mt-4 flex w-full flex-col items-center justify-center gap-3 md:w-[25rem] lg:w-[40rem] xl:w-[50rem]" v-if="loadedMails">
+      <LazyMailSavedItem v-if="loadedMails.length > 0" v-for="mail in loadedMails" :mail="mail" :key="mail.id" @delete="(mail) => (deleteMail = mail)" />
+      <p class="text-2xl transition duration-500" v-else>You have no saved mail! Try drafting a mail and saving it.</p>
+    </div>
+    <div class="mt-4 flex w-full flex-col items-center justify-center gap-3 md:w-[25rem] lg:w-[40rem] xl:w-[50rem]" v-else>
+      <div class="fo-skeleton fo-skeleton-animated h-56 w-full grow rounded-2xl bg-neutral-100 p-6 transition duration-500 dark:bg-neutral-900" v-for="i in 2"></div>
     </div>
     <Transition name="menu">
       <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="deleteMail" @click="deleteMail = undefined">
@@ -40,15 +44,15 @@ useSeoMeta({
 });
 
 const userStore = useUserStore();
-const savedMails = computed(() => userStore.user?.savedMails ?? []);
+const savedMails = computed(() => userStore.user?.savedMails);
 
 const currentIndex = ref(5);
 watch(currentIndex, (index) => {
-  if (index > savedMails.value.length) {
+  if (savedMails.value && index > savedMails.value.length) {
     window.removeEventListener("scroll", loadMailsOnScroll);
   }
 });
-const loadedMails = computed(() => savedMails.value.slice(0, currentIndex.value));
+const loadedMails = computed(() => savedMails.value?.slice(0, currentIndex.value));
 
 const deleteMail = ref<SaveTemplate>();
 const loading = ref(false);

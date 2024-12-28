@@ -1,3 +1,4 @@
+import type { BlueprintAllShip } from "./blueprints";
 import type { Op } from "quill";
 
 export type UserData = {
@@ -8,7 +9,9 @@ export type UserData = {
   /** YYYY-MM-DD */
   lastLoggedIn: string;
   savedMails: SaveTemplate[];
-  blueprints: any[];
+  blueprints: BlueprintAllShip[];
+  /** YYYY-MM-DD */
+  bpLastSaved: string;
 };
 
 export type Alert = {

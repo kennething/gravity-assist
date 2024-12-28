@@ -18,7 +18,7 @@
           <img class="size-5 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
         </span>
         <div class="fake-search-input fo-input grow content-center rounded-e-xl transition duration-500">
-          <p class="text-left text-neutral-700/50 dark:text-neutral-300">Search</p>
+          <p class="text-left text-neutral-700/50 transition duration-500 dark:text-neutral-300">Search</p>
         </div>
         <input
           ref="searchInput"
@@ -53,7 +53,7 @@
             >
               <img class="w-16" :src="ship.img" :alt="ship.name" />
               <p>
-                {{ ship.name }} <span v-if="!('modules' in ship)">({{ ship.variant }})</span>
+                {{ ship.name }} <span v-if="ship.hasVariants">({{ ship.variant }})</span>
               </p>
             </button>
           </div>
@@ -74,7 +74,7 @@
           >
             <img class="w-16" :src="ship.img" :alt="ship.name" />
             <p>
-              {{ ship.name }} <span v-if="!('modules' in ship)">({{ ship.variant }})</span>
+              {{ ship.name }} <span v-if="ship.hasVariants">({{ ship.variant }})</span>
             </p>
           </button>
           <p v-if="filteredData.length > 4" class="mt-2 px-3 text-sm italic text-neutral-700/75 dark:text-neutral-300">...and {{ filteredData.length - 4 }} more</p>
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <div class="jusitfy-start fo-skeleton fo-skeleton-animated h-10 w-full rounded-xl transition duration-500" v-else></div>
+    <div class="fo-skeleton fo-skeleton-animated h-10 w-full justify-start rounded-xl transition duration-500" v-else></div>
   </div>
 </template>
 

@@ -26,8 +26,12 @@ const dateOptions: Record<string, Record<string, string>> = {
   full: { dateStyle: "long", timeZone: "UTC" },
   numeric: { dateStyle: "short", timeZone: "UTC" }
 };
-/** Returns a date string as "today," "yesterday," "{n}d ago," or a localized date string
+/** Returns a date string as a localized date string
+ *
+ * If `timeDiff` is true, returns "today," "yesterday," "{n}d ago," or a localized date string
  * @params {date} YYYY-MM-DD
+ * @params {options} "full" | "numeric" = "full"
+ * @params {timeDiff} boolean = false
  */
 export function formatDate(dateString: string, options: "full" | "numeric" = "full", timeDiff = false) {
   const formatter = new Intl.DateTimeFormat(undefined, dateOptions[options]);
