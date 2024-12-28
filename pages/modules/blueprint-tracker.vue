@@ -139,7 +139,7 @@ watch(isListLayout, (val) => {
   localStorage.setItem("layout", val ? "list" : "grid");
 });
 const currentLayout = computed(() => (isListLayout.value ? "list" : "grid"));
-const showVariants = ref(true);
+const showVariants = ref(false);
 watch(showVariants, (val) => {
   localStorage.setItem("variants", JSON.stringify(val));
 });
@@ -171,7 +171,7 @@ watch(filteredData, (data) => (displayedData.value = data));
 
 onMounted(() => {
   isListLayout.value = localStorage.getItem("layout") === "list";
-  showVariants.value = localStorage.getItem("variants") !== "false";
+  showVariants.value = localStorage.getItem("variants") === "true";
 });
 
 onMounted(() => {

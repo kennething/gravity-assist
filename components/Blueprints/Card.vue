@@ -30,7 +30,7 @@
       <p class="text-sm transition duration-500" v-if="variants">
         {{ ship.variantName }} <span class="text-sm transition duration-500" v-if="ship.hasVariants">({{ ship.variant }})</span>
       </p>
-      <p class="text-sm transition duration-500" v-else-if="!variants && showVariant">
+      <p class="text-sm transition duration-500" v-else-if="!variants && ship.hasVariants">
         {{ ship.variant }}
       </p>
     </div>
