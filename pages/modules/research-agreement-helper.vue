@@ -44,6 +44,8 @@ const selectedDirectionValue = computed(() => directions[selectedDirection.value
 const selectedScope = ref(0);
 const selectedScopeValue = computed(() => scopes[selectedScope.value]);
 
+const route = useRoute();
+const router = useRouter();
 const config = useRuntimeConfig();
 
 useSeoMeta({
@@ -64,9 +66,6 @@ useSeoMeta({
       ? `/ships/${(route.query.shn as string).split(" ")[0].toLowerCase() + (route.query.shn as string).split(" ").slice(1).join("")}_${(route.query.shv as string).toLowerCase()}.png`
       : "/ships/solarWhale.png")
 });
-
-const route = useRoute();
-const router = useRouter();
 
 watch(
   () => route.query,
