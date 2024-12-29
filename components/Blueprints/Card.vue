@@ -43,7 +43,7 @@
           <div class="relative grow">
             <input
               type="text"
-              class="peer fo-input grow text-left text-black opacity-0 focus:opacity-100"
+              class="peer fo-input grow border-neutral-300 bg-white text-left text-black opacity-0 hover:border-neutral-400 focus:opacity-100 dark:border-neutral-700 dark:hover:border-neutral-600"
               placeholder="Tech Points"
               :id="'techPoints' + ship.name + ship.variant"
               v-model="techPoints"

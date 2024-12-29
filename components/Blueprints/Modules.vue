@@ -2,7 +2,7 @@
   <div id="menu" class="flex w-[80vw] flex-col items-center justify-center rounded-2xl bg-white p-4 md:w-[40rem] md:p-10 lg:w-[50rem] xl:w-[60rem] dark:bg-neutral-800" @click.stop>
     <h2 class="text-2xl font-bold">{{ ship.name }} ({{ ship.modules.filter((mod) => mod.unlocked).length }}/{{ ship.modules.length }})</h2>
     <p>{{ ship.variantName }}</p>
-    <div class="my-4 flex h-[30rem] w-full flex-col items-center justify-start gap-2 overflow-y-scroll p-4">
+    <div class="my-4 flex h-80 w-full flex-col items-center justify-start gap-2 overflow-y-scroll p-4 sm:h-[30rem]">
       <div v-for="category in categories" class="w-full">
         <div class="flex w-full flex-col items-center justify-center" v-if="ship.modules.some((mod) => mod.system.includes(category))">
           <h4 class="my-2 text-xl font-bold">{{ category }} Modules</h4>
@@ -32,12 +32,6 @@ const emit = defineEmits<{
 }>();
 
 const categories = ["M", "A", "B", "C", "D", "E", "F", "G", "H"];
-
-onMounted(() => {
-  for (const category of categories) {
-    console.log(props.ship.modules.some((mod) => mod.system.includes(category)));
-  }
-});
 </script>
 
 <style scoped></style>
