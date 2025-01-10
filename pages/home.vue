@@ -52,8 +52,12 @@
 </template>
 
 <script setup lang="ts">
+const description = "Create colored text, search modules and research paths, design custom fleets, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange.";
 useSeoMeta({
-  title: "Home | Gravity Assist"
+  title: "Home | Gravity Assist",
+  description,
+  ogDescription: description,
+  twitterDescription: description
 });
 
 const route = useRoute();
