@@ -9,6 +9,7 @@ export const scopes: ScopeOption[] = ["Projectile Weapon", "Direct-Fire Weapon",
 export type AllShip = Fighter | Corvette | CapitalShip | MediumFighterCapitalShip | LargeFighterCapitalShip | CorvetteCapitalShip | SuperCapitalShip;
 
 export interface Ship {
+  id: number;
   /** Name of the ship, as shown ingame.
    * @example "Conamara Chaos"
    */

@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     if (!userData.bpLastSaved || userData.blueprints.length === 0) throw new Error("No blueprints found.");
 
     const ships = userData.blueprints as Record<number, (string | number)[]>[];
-    blueprints = ships.map((ship) => Object.values(ship)[0]);
+    blueprints = ships.map((ship) => [Number(Object.keys(ship)[0]), Object.values(ship)[0]].flat());
     lastSaved = userData.bpLastSaved;
   } catch (error) {
     console.error(error);

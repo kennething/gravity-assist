@@ -23,9 +23,9 @@ export default defineEventHandler(async (event) => {
       .map((ship, index) => {
         if (!ship.unlocked) return { [index]: [] };
         // @ts-expect-error
-        if (!("modules" in ship)) return { [index]: [ship.name, ship.variant, ship.techPoints] };
+        if (!("modules" in ship)) return { [ship.id]: [ship.variant, ship.techPoints] };
         // @ts-expect-error
-        return { [index]: [ship.name, ship.variant, ship.techPoints, ship.modules.filter((mod) => mod.unlocked).map((mod) => mod.system)].flat() };
+        return { [ship.id]: [ship.variant, ship.techPoints, ship.modules.filter((mod) => mod.unlocked).map((mod) => mod.system)].flat() };
       })
       .filter((obj) => Object.values(obj)[0].length > 0) as Record<number, (string | number)[]>[];
 

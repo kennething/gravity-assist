@@ -18,7 +18,9 @@
       @search="(term) => (currentSearch = term)"
     />
 
-    <p class="mt-8 transition duration-500" v-if="lastSaved">Last updated: {{ formatDate(lastSaved, "full", true) }}</p>
+    <ClientOnly>
+      <p class="mt-8 transition duration-500" v-if="lastSaved">Last updated: {{ formatDate(lastSaved, "full", true) }}</p>
+    </ClientOnly>
 
     <div class="mt-4 flex w-full flex-col items-center justify-center" v-if="displayedData">
       <BlueprintsCategory
@@ -152,8 +154,9 @@ async function getBlueprints(data: AllShip[]) {
 
   if (success && content && bpLastSaved) {
     lastSaved.value = bpLastSaved;
+    console.log(content);
     return data.map((ship) => {
-      const ownedBlueprint = content.find(([name, variant]) => ship.name === name && ship.variant === variant);
+      const ownedBlueprint = content.find(([id, variant]) => ship.id === id && ship.variant === variant);
 
       const result: Record<any, any> = {
         ...ship,

@@ -42,11 +42,12 @@
           <label class="fo-input-group-text" :for="'techPoints' + ship.name + ship.variant">TP</label>
           <div class="relative grow">
             <input
+              ref="tpInput"
               type="text"
               class="peer fo-input grow border-neutral-300 bg-white text-left text-black opacity-0 hover:border-neutral-400 focus:opacity-100 dark:border-neutral-700 dark:hover:border-neutral-600"
               placeholder="Tech Points"
               :id="'techPoints' + ship.name + ship.variant"
-              v-model="techPoints"
+              @blur="updateTp"
             />
             <div class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center overflow-hidden peer-focus:invisible">
               <p class="w-full px-3 text-left text-black">
@@ -171,6 +172,8 @@ const emit = defineEmits<{
   change: [void];
 }>();
 
+const tpInput = useTemplateRef("tpInput");
+
 const showVariant = computed(() => !props.ship.hasVariants || (props.ship.hasVariants && props.ship.variant === "A"));
 const showVariantUnique = computed(() => props.ship.hasVariants && props.ship.variant === "A");
 const isListLayout = computed(() => props.layout === "list");
@@ -187,15 +190,23 @@ watch(techPoints, (tp) => {
   emit("tp", Number(tp));
 });
 
+function updateTp(event: FocusEvent) {
+  if (!tpInput.value) return;
+  techPoints.value = Number(tpInput.value.value);
+}
+
 function unlock() {
   if (!props.owner) return;
   props.ship.unlocked = true;
+  if ("modules" in props.ship) props.ship.modules.forEach((mod) => (mod.unlocked = Boolean(mod.default)));
+
   emit("change");
 }
 
 function remove() {
   if (!props.owner) return;
   props.ship.unlocked = false;
+
   emit("change");
 }
 

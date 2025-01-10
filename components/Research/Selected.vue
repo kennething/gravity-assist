@@ -19,11 +19,6 @@
         >
           {{ isBestPath ? "This is the best path!" : "Find best path" }}
         </button>
-        <button
-          class="fo-btn w-full border-neutral-100 bg-neutral-100 text-black transition duration-500 hover:border-neutral-300 hover:bg-neutral-300 dark:border-neutral-600 dark:bg-neutral-600 dark:text-white dark:hover:border-neutral-700 dark:hover:bg-neutral-700"
-        >
-          Add to Blueprints
-        </button>
       </div>
     </div>
     <div class="flex h-56 w-full items-center justify-center text-xl font-medium transition duration-500" v-else>Select a ship to view more details!</div>
