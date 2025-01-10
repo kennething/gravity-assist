@@ -2,8 +2,10 @@
   <div class="flex w-full grow flex-col items-center justify-center gap-3 rounded-2xl transition" :class="readOnly ? 'p-4' : 'p-6 hover:bg-neutral-100 lg:flex-row lg:gap-0 dark:hover:bg-neutral-900'">
     <div class="flex w-64 shrink-0 flex-col items-center justify-center">
       <h3 class="mb-1 w-60 overflow-hidden overflow-ellipsis text-nowrap text-center text-xl font-medium transition duration-500">{{ mail.name }}</h3>
-      <p class="transition duration-500">Created {{ formatDate(mail.createdAt, "numeric", true) }}</p>
-      <p class="transition duration-500">Last modified {{ formatDate(mail.lastSaved, "numeric", true) }}</p>
+      <ClientOnly>
+        <p class="transition duration-500">Created {{ formatDate(mail.createdAt, "numeric", true) }}</p>
+        <p class="transition duration-500">Last modified {{ formatDate(mail.lastSaved, "numeric", true) }}</p>
+      </ClientOnly>
       <div class="mt-3 flex items-center justify-center gap-2" v-if="!readOnly">
         <button v-if="link === baseUrl" class="fo-btn grow-[3] border-neutral-100 bg-neutral-100" disabled>Edit <img class="size-5" src="/ui/pencil.svg" aria-hidden="true" /></button>
         <NuxtLink v-else :to="link" class="fo-btn grow-[3] border-neutral-100 bg-neutral-100 hover:border-neutral-300 hover:bg-neutral-300"

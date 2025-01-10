@@ -3,9 +3,11 @@
     <input class="h-full w-full" type="radio" name="contributors-list" :checked="index === 0" />
     <div class="du-collapse-title text-left text-xl font-medium transition duration-500">
       {{ contributor.name }}
-      <time class="mt-px block text-left text-sm font-normal leading-none text-neutral-500 transition duration-500 dark:text-neutral-400">
-        {{ formatDate(contributor.dateAdded) }}
-      </time>
+      <ClientOnly>
+        <time class="mt-px block text-left text-sm font-normal leading-none text-neutral-500 transition duration-500 dark:text-neutral-400">
+          {{ formatDate(contributor.dateAdded) }}
+        </time>
+      </ClientOnly>
     </div>
     <div class="du-collapse-content">
       <ul class="text-base font-normal text-neutral-600 transition duration-500 dark:text-neutral-300">
