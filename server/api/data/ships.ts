@@ -599,6 +599,40 @@ export default defineEventHandler(async (event) => {
     },
     {
       id: 32,
+      name: "Tempel I",
+      title: "Information Corvette",
+      img: "/ships/tempel_a.png",
+      type: "Corvette",
+      variant: "A",
+      variantName: "Interference Type",
+      hasVariants: true,
+      manufacturer: "Jupiter Industry",
+      direction: ["Strategy & Support", "Fighter & Corvette"],
+      scope: "Empty",
+      weight: 10,
+      row: "Front",
+      commandPoints: 2,
+      serviceLimit: 10
+    },
+    {
+      id: 33,
+      name: "Temepl I",
+      title: "Alert Corvette",
+      img: "/ships/tempel_b.png",
+      type: "Corvette",
+      variant: "B",
+      variantName: "Alert Type",
+      hasVariants: true,
+      manufacturer: "Jupiter Industry",
+      direction: ["Strategy & Support", "Fighter & Corvette"],
+      scope: "Empty",
+      weight: 5,
+      row: "Front",
+      commandPoints: 2,
+      serviceLimit: 10
+    },
+    {
+      id: 34,
       name: "Void Elfin",
       title: "Stealth Missile Corvette",
       img: "/ships/voidElfin.png",
@@ -615,7 +649,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 33,
+      id: 35,
       name: "Carilion",
       title: "Recon Frigate",
       img: "/ships/carilion_a.png",
@@ -632,7 +666,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 34,
+      id: 36,
       name: "Carilion",
       title: "Heavy Cannon Frigate",
       img: "/ships/carilion_b.png",
@@ -649,7 +683,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 35,
+      id: 37,
       name: "Carilion",
       title: "Special Frigate",
       img: "/ships/carilion_c.png",
@@ -666,7 +700,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 36,
+      id: 38,
       name: "FG300",
       title: "Multi-Role Frigate",
       img: "/ships/fg300_a.png",
@@ -683,7 +717,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 15
     },
     {
-      id: 37,
+      id: 39,
       name: "FG300",
       title: "Armored Frigate",
       img: "/ships/fg300_b.png",
@@ -700,7 +734,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 15
     },
     {
-      id: 38,
+      id: 40,
       name: "FG300",
       title: "Recon Frigate",
       img: "/ships/fg300_c.png",
@@ -717,7 +751,58 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 15
     },
     {
-      id: 39,
+      id: 41,
+      name: "Inostrancevia",
+      title: "Defensive Frigate",
+      img: "/ships/inostrancevia_a.png",
+      type: "Frigate",
+      variant: "A",
+      variantName: "Defense Type",
+      hasVariants: true,
+      manufacturer: "NOMA Shipping",
+      direction: ["Empty"],
+      scope: "Empty",
+      weight: 5,
+      row: "Front",
+      commandPoints: 6,
+      serviceLimit: 10
+    },
+    {
+      id: 42,
+      name: "Inostrancevia",
+      title: "Assault Frigate",
+      img: "/ships/inostrancevia_b.png",
+      type: "Frigate",
+      variant: "B",
+      variantName: "Offensive Type",
+      hasVariants: true,
+      manufacturer: "NOMA Shipping",
+      direction: ["Outstanding Firepower"],
+      scope: "Empty",
+      weight: 5,
+      row: "Front",
+      commandPoints: 6,
+      serviceLimit: 10
+    },
+    {
+      id: 43,
+      name: "Inostrancevia",
+      title: "Onslaught Frigate",
+      img: "/ships/inostrancevia_c.png",
+      type: "Frigate",
+      variant: "C",
+      variantName: "Special Type",
+      hasVariants: true,
+      manufacturer: "NOMA Shipping",
+      direction: ["Outstanding Firepower"],
+      scope: "Empty",
+      weight: 5,
+      row: "Front",
+      commandPoints: 8,
+      serviceLimit: 10
+    },
+    {
+      id: 44,
       name: "Mare Imbrium",
       title: "Assault Frigate",
       img: "/ships/mareImbrium_a.png",
@@ -734,7 +819,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 40,
+      id: 45,
       name: "Mare Imbrium",
       title: "Experimental Pulse Cannon Frigate",
       img: "/ships/mareImbrium_b.png",
@@ -751,7 +836,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 41,
+      id: 46,
       name: "Mare Nubium",
       title: "Light Landing Ship",
       img: "/ships/mareNubium_a.png",
@@ -768,7 +853,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 42,
+      id: 47,
       name: "Mare Nubium",
       title: "Anti-Aircraft Frigate",
       img: "/ships/mareNubium_b.png",
@@ -785,7 +870,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 43,
+      id: 48,
       name: "Mare Serenitatis",
       title: "Heavy Frigate",
       img: "/ships/mareSerenitatis_a.png",
@@ -802,7 +887,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 44,
+      id: 49,
       name: "Mare Serenitatis",
       title: "Missile Frigate",
       img: "/ships/mareSerenitatis_b.png",
@@ -819,7 +904,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 45,
+      id: 50,
       name: "Mare Serenitatis",
       title: "Anti-Aircraft Frigate",
       img: "/ships/mareSerenitatis_c.png",
@@ -836,7 +921,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 46,
+      id: 51,
       name: "Mare Tranquillitatis",
       title: "Missile Frigate",
       img: "/ships/mareTranquillitatis_a.png",
@@ -853,7 +938,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 47,
+      id: 52,
       name: "Mare Tranquillitatis",
       title: "Pulse Cannon Frigate",
       img: "/ships/mareTranquillitatis_b.png",
@@ -870,7 +955,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 48,
+      id: 53,
       name: "Mare Tranquillitatis",
       title: "Interceptor Frigate",
       img: "/ships/mareTranquillitatis_c.png",
@@ -887,7 +972,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 49,
+      id: 54,
       name: "NOMA M470",
       title: "Heavy Landing Ship",
       img: "/ships/nomaM470_a.png",
@@ -904,7 +989,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 50,
+      id: 55,
       name: "NOMA M470",
       title: "Support Frigate",
       img: "/ships/nomaM470_b.png",
@@ -921,7 +1006,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 51,
+      id: 56,
       name: "NOMA M470",
       title: "Anti-Aircraft Frigate",
       img: "/ships/nomaM470_c.png",
@@ -938,7 +1023,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 52,
+      id: 57,
       name: "Reliat",
       title: "Rapid Torpedo Frigate",
       img: "/ships/reliat_a.png",
@@ -955,7 +1040,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 53,
+      id: 58,
       name: "Reliat",
       title: "Tactical Torpedo Frigate",
       img: "/ships/reliat_b.png",
@@ -972,7 +1057,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 54,
+      id: 59,
       name: "Reliat",
       title: "Stealth Frigate",
       img: "/ships/reliat_c.png",
@@ -989,7 +1074,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 55,
+      id: 60,
       name: "Ruby",
       title: "Heavy Railgun Frigate",
       img: "/ships/ruby_a.png",
@@ -1006,7 +1091,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 56,
+      id: 61,
       name: "Ruby",
       title: "Experimental Ion Cannon Frigate",
       img: "/ships/ruby_b.png",
@@ -1023,7 +1108,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 57,
+      id: 62,
       name: "Ruby",
       title: "Defensive Frigate",
       img: "/ships/ruby_c.png",
@@ -1040,7 +1125,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 58,
+      id: 63,
       name: "XenoStinger",
       title: "Tactical Frigate",
       img: "/ships/xenostinger_a.png",
@@ -1057,7 +1142,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 59,
+      id: 64,
       name: "XenoStinger",
       title: "Defensive Frigate",
       img: "/ships/xenostinger_b.png",
@@ -1074,7 +1159,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 60,
+      id: 65,
       name: "AC721",
       title: "Heavy Logistics Destroyer",
       img: "/ships/ac721_a.png",
@@ -1091,7 +1176,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 15
     },
     {
-      id: 61,
+      id: 66,
       name: "AC721",
       title: "Heavy Missile Destroyer",
       img: "/ships/ac721_b.png",
@@ -1108,7 +1193,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 15
     },
     {
-      id: 62,
+      id: 67,
       name: "AC721",
       title: "Heavy Dual-Purpose Assault Ship",
       img: "/ships/ac721_d.png",
@@ -1126,7 +1211,7 @@ export default defineEventHandler(async (event) => {
       corvetteCapacity: 2
     },
     {
-      id: 63,
+      id: 68,
       name: "Aldabra",
       title: "Heavy Cannon Destroyer",
       img: "/ships/aldabra_a.png",
@@ -1143,7 +1228,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 64,
+      id: 69,
       name: "Aldabra",
       title: "Heavy Assault Destroyer",
       img: "/ships/aldabra_b.png",
@@ -1160,7 +1245,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 65,
+      id: 70,
       name: "Ceres",
       title: "Aircraft Destroyer",
       img: "/ships/ceres_a.png",
@@ -1178,7 +1263,7 @@ export default defineEventHandler(async (event) => {
       mediumFighterCapacity: 2
     },
     {
-      id: 66,
+      id: 71,
       name: "Ceres",
       title: "Support Destroyer",
       img: "/ships/ceres_b.png",
@@ -1195,7 +1280,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 67,
+      id: 72,
       name: "Ceres",
       title: "Tactical Destroyer",
       img: "/ships/ceres_c.png",
@@ -1212,7 +1297,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 68,
+      id: 73,
       name: "Eris I",
       title: "Maneuver Assault Destroyer",
       img: "/ships/eris_a.png",
@@ -1229,7 +1314,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 69,
+      id: 74,
       name: "Eris I",
       title: "Heavy Cannon Destroyer",
       img: "/ships/eris_b.png",
@@ -1246,7 +1331,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 70,
+      id: 75,
       name: "Eris I",
       title: "Armored Destroyer",
       img: "/ships/eris_c.png",
@@ -1263,7 +1348,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 71,
+      id: 76,
       name: "Guardian",
       title: "Support Destroyer",
       img: "/ships/guardian_a.png",
@@ -1280,7 +1365,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 72,
+      id: 77,
       name: "Guardian",
       title: "Dual-Purpose Assault Ship",
       img: "/ships/guardian_b.png",
@@ -1298,7 +1383,7 @@ export default defineEventHandler(async (event) => {
       corvetteCapacity: 2
     },
     {
-      id: 73,
+      id: 78,
       name: "Guardian",
       title: "Experimental Pulse Assault Ship",
       img: "/ships/guardian_c.png",
@@ -1315,7 +1400,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 74,
+      id: 79,
       name: "Quaoar",
       title: "Railgun Destroyer",
       img: "/ships/quaoar_a.png",
@@ -1332,7 +1417,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 75,
+      id: 80,
       name: "Quaoar",
       title: "Torpedo Destroyer",
       img: "/ships/quaoar_b.png",
@@ -1349,7 +1434,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 76,
+      id: 81,
       name: "Taurus",
       title: "Pulse Cannon Destroyer",
       img: "/ships/taurus_a.png",
@@ -1366,7 +1451,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 77,
+      id: 82,
       name: "Taurus",
       title: "Assault Destroyer",
       img: "/ships/taurus_b.png",
@@ -1383,7 +1468,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 78,
+      id: 83,
       name: "Taurus",
       title: "Defensive Destroyer",
       img: "/ships/taurus_c.png",
@@ -1400,7 +1485,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 79,
+      id: 84,
       name: "Tundra",
       title: "Tactical Destroyer",
       img: "/ships/tundra_a.png",
@@ -1417,7 +1502,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 80,
+      id: 85,
       name: "Tundra",
       title: "Aircraft Destroyer",
       img: "/ships/tundra_b.png",
@@ -1435,7 +1520,7 @@ export default defineEventHandler(async (event) => {
       mediumFighterCapacity: 2
     },
     {
-      id: 81,
+      id: 86,
       name: "Winged Hussar",
       title: "Light Missile Destroyer",
       img: "/ships/wingedHussar_a.png",
@@ -1452,7 +1537,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 82,
+      id: 87,
       name: "Winged Hussar",
       title: "Integrated Missile Destroyer",
       img: "/ships/wingedHussar_b.png",
@@ -1469,7 +1554,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 83,
+      id: 88,
       name: "Winged Hussar",
       title: "Area-Denial Anti-Aircraft Destroyer",
       img: "/ships/wingedHussar_c.png",
@@ -1486,7 +1571,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 10
     },
     {
-      id: 84,
+      id: 89,
       name: "CAS066",
       title: "Generic Cruiser",
       img: "/ships/cas066_a.png",
@@ -1503,7 +1588,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 12
     },
     {
-      id: 85,
+      id: 90,
       name: "CAS066",
       title: "Artillery Cruiser",
       img: "/ships/cas066_b.png",
@@ -1520,7 +1605,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 12
     },
     {
-      id: 86,
+      id: 91,
       name: "CAS066",
       title: "Aircraft Cruiser",
       img: "/ships/cas066_c.png",
@@ -1538,7 +1623,7 @@ export default defineEventHandler(async (event) => {
       corvetteCapacity: 2
     },
     {
-      id: 87,
+      id: 92,
       name: "CAS066",
       title: "Auxiliary Cruiser",
       img: "/ships/cas066_d.png",
@@ -1555,7 +1640,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 12
     },
     {
-      id: 88,
+      id: 93,
       name: "Callisto",
       title: "Cluster Torpedo Raid Ship",
       img: "/ships/callisto_a.png",
@@ -1572,7 +1657,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 89,
+      id: 94,
       name: "Callisto",
       title: "Heavy Torpedo Raid Ship",
       img: "/ships/callisto_b.png",
@@ -1589,7 +1674,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 90,
+      id: 95,
       name: "Callisto",
       title: "Heavy UAV Cruiser",
       img: "/ships/callisto_c.png",
@@ -1606,7 +1691,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 91,
+      id: 96,
       name: "Chimera",
       title: "Heavy Cruiser",
       img: "/ships/chimera_a.png",
@@ -1623,7 +1708,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 92,
+      id: 97,
       name: "Chimera",
       title: "Cannon Cruiser",
       img: "/ships/chimera_b.png",
@@ -1640,7 +1725,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 93,
+      id: 98,
       name: "Chimera",
       title: "Defensive Cruiser",
       img: "/ships/chimera_c.png",
@@ -1657,7 +1742,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 94,
+      id: 99,
       name: "Conamara Chaos",
       title: "Railgun Cruiser",
       img: "/ships/conamaraChaos_a.png",
@@ -1674,7 +1759,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 95,
+      id: 100,
       name: "Conamara Chaos",
       title: "High-Speed Plasma Cruiser",
       img: "/ships/conamaraChaos_b.png",
@@ -1691,7 +1776,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 96,
+      id: 101,
       name: "Io",
       title: "Assault Ion Cannon Cruiser",
       img: "/ships/io_a.png",
@@ -1708,7 +1793,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 97,
+      id: 102,
       name: "Io",
       title: "High-Speed Ion Cannon Cruiser",
       img: "/ships/io_b.png",
@@ -1725,7 +1810,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 98,
+      id: 103,
       name: "Io",
       title: "Siege Ion Cannon Cruiser",
       img: "/ships/io_c.png",
@@ -1742,7 +1827,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 99,
+      id: 104,
       name: "Jaeger",
       title: "Heavy Aircraft Cruiser",
       img: "/ships/jaeger_a.png",
@@ -1760,7 +1845,7 @@ export default defineEventHandler(async (event) => {
       corvetteCapacity: 4
     },
     {
-      id: 100,
+      id: 105,
       name: "Jaeger",
       title: "Heavy Cannon Cruiser",
       img: "/ships/jaeger_b.png",
@@ -1777,7 +1862,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 101,
+      id: 106,
       name: "KCCPV2.0",
       title: "Light Attack Cruiser",
       img: "/ships/kccpv_a.png",
@@ -1794,7 +1879,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 12
     },
     {
-      id: 102,
+      id: 107,
       name: "KCCPV2.0",
       title: "Light Pulse Attack Cruiser",
       img: "/ships/kccpv_b.png",
@@ -1811,7 +1896,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 12
     },
     {
-      id: 103,
+      id: 108,
       name: "KCCPV2.0",
       title: "Light Railgun Cruiser",
       img: "/ships/kccpv_c.png",
@@ -1828,7 +1913,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 12
     },
     {
-      id: 104,
+      id: 109,
       name: "KCCPV2.0",
       title: "Light Aircraft Cruiser",
       img: "/ships/kccpv_d.png",
@@ -1846,7 +1931,7 @@ export default defineEventHandler(async (event) => {
       largeFighterCapacity: 2
     },
     {
-      id: 105,
+      id: 110,
       name: "Light Cone",
       title: "Multi-Role Missile Cruiser Cruiser",
       img: "/ships/lightCone_a.png",
@@ -1863,7 +1948,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 106,
+      id: 111,
       name: "Light Cone",
       title: "Area-Denial Anti-Aircraft Cruiser",
       img: "/ships/lightCone_b.png",
@@ -1880,7 +1965,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 107,
+      id: 112,
       name: "Light Cone",
       title: "Offensive Missile Cruiser",
       img: "/ships/lightCone_c.png",
@@ -1897,7 +1982,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 108,
+      id: 113,
       name: "Ranger",
       title: "Comprehensive Warfare Cruiser",
       img: "/ships/ranger_a.png",
@@ -1914,7 +1999,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 109,
+      id: 114,
       name: "Ranger",
       title: "Heavy Ion Cannon Cruiser",
       img: "/ships/ranger_b.png",
@@ -1931,7 +2016,7 @@ export default defineEventHandler(async (event) => {
       serviceLimit: 8
     },
     {
-      id: 110,
+      id: 115,
       name: "Predator",
       title: "Aircraft Cruiser",
       img: "/ships/predator_a.png",
@@ -1949,7 +2034,7 @@ export default defineEventHandler(async (event) => {
       largeFighterCapacity: 4
     },
     {
-      id: 111,
+      id: 116,
       name: "Predator",
       title: "Tactical Aircraft Cruiser",
       img: "/ships/predator_b.png",
@@ -1967,7 +2052,7 @@ export default defineEventHandler(async (event) => {
       largeFighterCapacity: 4
     },
     {
-      id: 112,
+      id: 117,
       name: "Predator",
       title: "Anti-Aircraft Cruiser",
       img: "/ships/predator_c.png",
@@ -1985,7 +2070,7 @@ export default defineEventHandler(async (event) => {
       largeFighterCapacity: 4
     },
     {
-      id: 113,
+      id: 118,
       name: "Constantine the Great",
       title: "Multi-Role Battlecruiser",
       img: "/ships/constantineTheGreat.png",
@@ -2373,7 +2458,7 @@ export default defineEventHandler(async (event) => {
       ]
     },
     {
-      id: 114,
+      id: 119,
       name: "Eternal Storm",
       title: "Attack Battlecruiser",
       img: "/ships/eternalStorm.png",
@@ -2735,7 +2820,7 @@ export default defineEventHandler(async (event) => {
       ]
     },
     {
-      id: 115,
+      id: 120,
       name: "Spear of Uranus",
       title: "Heavy Battlecruiser",
       img: "/ships/spearOfUranus.png",
@@ -3076,7 +3161,7 @@ export default defineEventHandler(async (event) => {
       ]
     },
     {
-      id: 116,
+      id: 121,
       name: "ST59",
       title: "Defensive Battlecruiser",
       img: "/ships/st59.png",
@@ -3404,7 +3489,7 @@ export default defineEventHandler(async (event) => {
       ]
     },
     {
-      id: 117,
+      id: 122,
       name: "Thunderbolt Star",
       title: "Multi-Role Arsenal Ship",
       img: "/ships/thunderboltStar.png",
@@ -3756,7 +3841,7 @@ export default defineEventHandler(async (event) => {
       ]
     },
     {
-      id: 118,
+      id: 123,
       name: "Ediacaran",
       title: "Heavy Firepower Auxiliary Ship",
       img: "/ships/ediacaran.png",
@@ -4090,7 +4175,7 @@ export default defineEventHandler(async (event) => {
       ]
     },
     {
-      id: 119,
+      id: 124,
       name: "FSV830",
       title: "Fast Tactical Auxiliary Ship",
       img: "/ships/fsv830.png",
@@ -4409,7 +4494,7 @@ export default defineEventHandler(async (event) => {
       ]
     },
     {
-      id: 120,
+      id: 125,
       name: "CV3000",
       title: "High-Speed Carrier",
       img: "/ships/cv3000.png",
@@ -4670,7 +4755,7 @@ export default defineEventHandler(async (event) => {
       ]
     },
     {
-      id: 121,
+      id: 126,
       name: "Eternal Heavens",
       title: "UAV Carrier",
       img: "/ships/eternalHeavens.png",
@@ -5098,7 +5183,7 @@ export default defineEventHandler(async (event) => {
       ]
     },
     {
-      id: 122,
+      id: 127,
       name: "Marshal Crux",
       title: "Carrier",
       img: "/ships/marshalCrux.png",
@@ -5360,7 +5445,7 @@ export default defineEventHandler(async (event) => {
       ]
     },
     {
-      id: 123,
+      id: 128,
       name: "Solar Whale",
       title: "Armed Tactical Carrier",
       img: "/ships/solarWhale.png",
@@ -5665,7 +5750,7 @@ export default defineEventHandler(async (event) => {
       ]
     },
     {
-      id: 124,
+      id: 129,
       name: "Warspite",
       title: "Assault Battleship",
       img: "/ships/warspite.png",
