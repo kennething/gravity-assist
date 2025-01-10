@@ -11,6 +11,7 @@
       :close-toolbar="closeToolbar"
       :data="data"
       :is-owner="isOwner"
+      :account-index="accountIndex"
       @list="isListLayout = !isListLayout"
       @variants="showVariants = !showVariants"
       @sort="(sorter) => (currentSorter = sorter)"
@@ -59,6 +60,11 @@ watch(
   { deep: true }
 );
 
+onBeforeMount(() => {
+  const accountQuery = Number(route.query.a);
+  accountIndex.value = accountQuery < 10 ? accountQuery : 0;
+});
+
 onMounted(() => {
   data.value = userStore.blueprintsAutosave;
 });
@@ -70,7 +76,11 @@ const userStore = useUserStore();
 const isOwner = computed(() => {
   if (!userStore.user || !userStore.shipData) return;
   if (!route.query.u) {
-    router.replace({ query: { u: userStore.user.uid } });
+    router.replace({ query: { ...route.query, u: userStore.user.uid } });
+    return true;
+  }
+  if (!route.query.a) {
+    router.replace({ query: { ...route.query, a: 0 } });
     return true;
   }
 
@@ -82,6 +92,8 @@ watch(isOwner, async (val) => {
   if (val) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
   data.value = await getBlueprints(userStore.shipData);
 });
+
+const accountIndex = ref(0);
 
 useSeoMeta({
   title: () => `${isOwner.value ? "Your" : "Someone else's"} Blueprint Tracker | Gravity Assist`,
@@ -98,6 +110,8 @@ watch(
   () => route.query,
   async (val) => {
     if (!userStore.shipData || !userStore.user) return;
+
+    accountIndex.value = Number(val.a) ?? 0;
 
     if (userStore.user.uid === val.u) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
     data.value = await getBlueprints(userStore.shipData);
@@ -148,13 +162,18 @@ onMounted(() => {
 });
 
 async function getBlueprints(data: AllShip[]) {
-  const { success, error, content, lastSaved: bpLastSaved } = await $fetch("/api/getBlueprints", { method: "POST", body: { uid: route.query.u ?? userStore.user?.uid } });
+  const {
+    success,
+    error,
+    content,
+    lastSaved: bpLastSaved,
+    accountName: bpAccountName
+  } = await $fetch("/api/getBlueprints", { method: "POST", body: { uid: route.query.u ?? userStore.user?.uid, accountIndex: accountIndex.value } });
 
   if (!success && error) console.error(error);
 
   if (success && content && bpLastSaved) {
     lastSaved.value = bpLastSaved;
-    console.log(content);
     return data.map((ship) => {
       const ownedBlueprint = content.find(([id, variant]) => ship.id === id && ship.variant === variant);
 

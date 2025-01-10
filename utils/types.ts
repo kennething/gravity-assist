@@ -9,7 +9,20 @@ export type UserData = {
   /** YYYY-MM-DD */
   lastLoggedIn: string;
   savedMails: SaveTemplate[];
-  blueprints: BlueprintAllShip[];
+  blueprints: Record<string, Record<string, (string | number)[]>[]>[];
+  /** YYYY-MM-DD */
+  bpLastSaved: string | null;
+};
+
+export type MinifiedUserData = {
+  uid: string;
+  accessToken: string;
+  /** YYYY-MM-DD */
+  createdAt: string;
+  /** YYYY-MM-DD */
+  lastLoggedIn: string;
+  savedMails: MinifiedSaveTemplate[];
+  blueprints: Record<string, Record<string, (string | number)[]>[]>[];
   /** YYYY-MM-DD */
   bpLastSaved: string | null;
 };
@@ -28,6 +41,19 @@ export type SaveTemplate = {
   id: string;
   name: string;
   ops: Op[];
+  /** YYYY-MM-DD */
+  lastSaved: string;
+  /** YYYY-MM-DD */
+  createdAt: string;
+};
+
+export type MinifiedSaveTemplate = {
+  id: string;
+  name: string;
+  ops: {
+    a?: { c: string };
+    i: string;
+  }[];
   /** YYYY-MM-DD */
   lastSaved: string;
   /** YYYY-MM-DD */

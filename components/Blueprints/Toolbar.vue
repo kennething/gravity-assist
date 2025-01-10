@@ -4,7 +4,15 @@
     class="sticky top-20 z-[2] mt-4 flex flex-wrap items-center justify-center gap-4 rounded-full border-transparent bg-body px-5 py-2 transition duration-500 xl:flex-nowrap"
     :class="{ 'shadow dark:border dark:border-neutral-700': isSticky }"
   >
-    <BlueprintsSettings :close="closeSettings" @list="emit('list')" @variants="emit('variants')" @click.stop="closeOptions(false)" />
+    <BlueprintsSettings
+      :close="closeSettings"
+      :account-index="accountIndex"
+      @edit-name="(acc) => (editName = acc)"
+      @list="emit('list')"
+      @variants="emit('variants')"
+      @click.stop="closeOptions(false)"
+      @create-new="createNewAccount"
+    />
     <BlueprintsSort :close="closeSorters" @sort="(sorter) => emit('sort', sorter)" @click.stop="closeOptions(true, true, false)" />
     <BlueprintsFilter :close="closeFilters" @filter="(filter) => emit('filter', filter)" @click.stop="closeOptions(true, false, true)" />
     <BlueprintsSearch @search="(term) => emit('search', term)" />
@@ -25,6 +33,28 @@
     >
       {{ !isOwner ? "You are viewing someone else's blueprints" : "You have unsaved changes" }}
     </p>
+
+    <Teleport to="body">
+      <Transition name="menu">
+        <div class="fixed left-0 top-0 z-30 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="editName !== undefined && userStore.user" @click="editName = undefined">
+          <form @submit.prevent="rename" id="menu" class="flex w-[80vw] flex-col items-center justify-center gap-2 rounded-2xl bg-white p-4 md:w-[30rem] md:p-10 dark:bg-neutral-800" @click.stop>
+            <!-- prettier-ignore -->
+            <label for="new-name" class="text-xl font-semibold">Rename <span class="text-xl font-bold">{{ Object.keys(userStore.user.blueprints[editName])[0] }}</span>?</label>
+            <input
+              id="new-name"
+              type="text"
+              class="search-input fo-input grow rounded-full text-left text-black transition duration-500 placeholder:transition placeholder:duration-500 dark:text-white dark:placeholder:text-neutral-300"
+              placeholder="Enter new account name"
+              v-model="newName"
+              required
+              minlength="3"
+              maxlength="16"
+            />
+            <button type="submit">Save</button>
+          </form>
+        </div>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
@@ -33,6 +63,7 @@ const props = defineProps<{
   closeToolbar: boolean;
   data: BlueprintAllShip[] | undefined;
   isOwner: boolean | undefined;
+  accountIndex: number;
 }>();
 watch(
   () => props.closeToolbar,
@@ -50,6 +81,7 @@ const emit = defineEmits<{
 }>();
 
 const route = useRoute();
+const router = useRouter();
 const userStore = useUserStore();
 
 const toolbar = useTemplateRef("toolbar");
@@ -60,6 +92,9 @@ const success = ref(false);
 const closeFilters = ref(false);
 const closeSorters = ref(false);
 const closeSettings = ref(false);
+
+const editName = ref<number>();
+const newName = ref("");
 
 watch(
   () => userStore.hasUnsavedChanges,
@@ -103,11 +138,19 @@ function closeOptions(settings = true, filters = true, sorters = true) {
   }, 1);
 }
 
+function createNewAccount() {
+  router.push({ query: { ...route.query, a: props.accountIndex + 1 } });
+}
+
 async function saveBlueprints() {
   if (!userStore.user || !userStore.hasUnsavedChanges) return;
 
   loading.value = true;
-  const { success: fetchSuccess, error } = await $fetch("/api/saveBlueprints", { method: "POST", body: { uid: route.query.u, accessToken: userStore.user.accessToken, blueprints: props.data } });
+  console.log(props.data);
+  const { success: fetchSuccess, error } = await $fetch("/api/saveBlueprints", {
+    method: "POST",
+    body: { uid: route.query.u, accessToken: userStore.user.accessToken, blueprints: props.data, accountIndex: props.accountIndex, accountName: newName.value }
+  });
   loading.value = false;
   if (!fetchSuccess && error) console.error(error);
   success.value = true;
@@ -116,6 +159,35 @@ async function saveBlueprints() {
     success.value = false;
   }, 1000);
 }
+
+async function rename() {
+  if (!userStore.user) return;
+
+  const { success: fetchSuccess, error } = await $fetch("/api/saveBlueprints", {
+    method: "POST",
+    body: { uid: route.query.u, accessToken: userStore.user.accessToken, blueprints: null, accountIndex: props.accountIndex, accountName: newName.value }
+  });
+  if (!fetchSuccess && error) console.error(error);
+  editName.value = undefined;
+}
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.menu-enter-active,
+.menu-leave-active {
+  transition: all 0.5s ease-in-out;
+
+  #menu {
+    transition: all 0.35s ease-in-out;
+  }
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
+
+  #menu {
+    transform: scale(0);
+  }
+}
+</style>
