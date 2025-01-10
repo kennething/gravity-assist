@@ -616,7 +616,7 @@ export default defineEventHandler(async (event) => {
     },
     {
       id: 33,
-      name: "Temepl I",
+      name: "Tempel I",
       title: "Alert Corvette",
       img: "/ships/tempel_b.png",
       type: "Corvette",

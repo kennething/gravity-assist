@@ -2,10 +2,12 @@
   <div class="flex w-full flex-col items-center justify-center" v-if="displayedData && displayedData.filter((ship) => ship.type === type).length > 0">
     <h2 class="mt-4 text-2xl font-bold transition duration-500">{{ type }}s</h2>
     <p class="transition duration-500">{{ displayedData.filter((ship) => ship.type === type && ship.unlocked).length }}/{{ displayedData.filter((ship) => ship.type === type).length }} unlocked</p>
-    <p class="mb-4 transition duration-500">
-      {{ getTotalTP(displayedData.filter((ship) => ship.type === type)).toLocaleString() }}
-      total Tech Points
-    </p>
+    <ClientOnly>
+      <p class="mb-4 transition duration-500">
+        {{ getTotalTP(displayedData.filter((ship) => ship.type === type)).toLocaleString() }}
+        total Tech Points
+      </p>
+    </ClientOnly>
     <div class="flex flex-wrap items-stretch justify-center gap-3">
       <LazyBlueprintsCard
         v-for="ship in displayedData.filter((ship) => ship.type === type)"

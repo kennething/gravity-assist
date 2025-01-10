@@ -390,7 +390,7 @@ export const changelog: Changelog[] = [
       "Heavily optimized site for mobile devices",
       "Added Blueprint Tracker",
       "Added Mail Editor",
-      "Added Inostrancevia to RA Helper",
+      "Added Inostrancevia and Tempel I to RA Helper",
       "Combined Module Library and Equipment Library into Encyclopedia",
       "Fixed RA Helper search function not properly finding optimal path"
     ]
