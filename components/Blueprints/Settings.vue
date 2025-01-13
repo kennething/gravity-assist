@@ -45,31 +45,38 @@
         <label class="transition duration-500" for="layoutType">Hide Variants</label>
       </div>
 
-      <div class="mt-4 flex w-full flex-col items-center justify-center" v-if="userStore.user">
+      <div class="mt-4 flex w-full flex-col items-center justify-center" v-if="isOwner && blueprints">
         <h3 class="text-lg font-semibold transition duration-500">Account Switcher</h3>
-        <p class="mb-2 text-sm transition duration-500">{{ userStore.user.blueprints.length ?? 0 }}/10 accounts</p>
+        <p class="mb-2 text-sm transition duration-500">{{ blueprints.length ?? 0 }}/10 accounts</p>
 
         <ol class="flex w-full flex-col items-center justify-start gap-1">
-          <li v-for="account in userStore.user.blueprints" class="w-full">
-            <div class="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-neutral-100/25 py-1 transition duration-500 hover:bg-neutral-100 hover:duration-300">
-              <h5 class="justfiy-center inline-flex items-center gap-2 font-medium transition duration-500">
-                {{ Object.keys(account)[0] }}
-                <div class="du-tooltip" data-tip="Edit Name">
-                  <button @click="emit('editName', accountIndex)" class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6"><img class="size-4" src="/ui/pencil.svg" alt="Edit account name" /></button>
-                </div>
+          <li v-for="(account, index) in blueprints" class="w-full">
+            <button
+              @click="goToAccount(index)"
+              class="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-1 transition duration-500 hover:duration-300"
+              :class="route.query.a === index.toString() ? 'bg-neutral-200 hover:bg-neutral-300/75' : 'bg-neutral-100/25 hover:bg-neutral-200'"
+            >
+              <h5 class="justfiy-center inline-flex items-center font-medium transition duration-500">
+                {{ getObjectKey(account) }}
+                <span class="du-tooltip ms-2" data-tip="Edit Name">
+                  <button @click.stop="emit('editName', accountIndex)" class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6">
+                    <img class="size-4" src="/ui/pencil.svg" alt="Edit account name" />
+                  </button>
+                </span>
+                <span class="du-tooltip" data-tip="Delete">
+                  <button @click.stop="emit('delete', accountIndex)" class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6">
+                    <img class="size-4" src="/ui/trash.svg" alt="Delete account" />
+                  </button>
+                </span>
               </h5>
               <ClientOnly>
                 <!-- prettier-ignore -->
-                <p class="text-sm transition duration-500">{{ Object.values(account)[0].reduce((total, ship) => total + Number(Object.values(ship)[0][1]), 0).toLocaleString() }} Tech Points</p>
+                <p class="text-sm transition duration-500">{{ getTotalTP(getObjectValue(account)).toLocaleString() }} Tech Points</p>
               </ClientOnly>
-            </div>
+            </button>
           </li>
         </ol>
-        <button
-          @click="emit('createNew')"
-          v-if="userStore.user.blueprints.length < 10"
-          class="mt-1 flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-2 transition hover:bg-neutral-100"
-        >
+        <button @click="emit('createNew')" v-if="blueprints.length < 10" class="mt-1 flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-2 transition hover:bg-neutral-100">
           <h5 class="inline-flex items-center justify-center gap-2 font-medium transition duration-500"><img class="size-6" src="/ui/plusCircle.svg" aria-hidden="true" /> Create New</h5>
         </button>
       </div>
@@ -81,6 +88,8 @@
 const props = defineProps<{
   close: boolean;
   accountIndex: number;
+  data: BlueprintAllShip[] | undefined;
+  isOwner: boolean | undefined;
 }>();
 watch(
   () => props.close,
@@ -92,11 +101,20 @@ const emit = defineEmits<{
   list: [void];
   variants: [void];
   editName: [accountIndex: number];
+  delete: [accountIndex: number];
   createNew: [void];
 }>();
 
+const route = useRoute();
+const router = useRouter();
+
 const userStore = useUserStore();
 const showSettings = ref(false);
+
+const blueprints = computed(() => {
+  console.log(userStore.user?.blueprints);
+  return userStore.user?.blueprints;
+});
 
 const listOn = ref<boolean>();
 const variantsOff = ref<boolean>();
@@ -105,6 +123,26 @@ onMounted(() => {
   listOn.value = localStorage.getItem("layout") === "list";
   variantsOff.value = localStorage.getItem("variants") !== "true";
 });
+
+function getTotalTP(ships: Record<string, (string | number)[]>[]) {
+  const usedShips: string[] = [];
+
+  return ships.reduce((total, ship) => {
+    const id = getObjectKey(ship);
+    const [variant, tp] = getObjectValue(ship);
+
+    const shipInData = props.data?.find((s) => s.id.toString() === id && s.variant === variant);
+    if (shipInData?.hasVariants) {
+      if (usedShips.includes(shipInData.name)) return total;
+      usedShips.push(shipInData.name);
+    }
+    return total + Number(tp);
+  }, 0);
+}
+
+function goToAccount(index: number) {
+  router.push(`/modules/blueprint-tracker?a=${index}`);
+}
 </script>
 
 <style scoped></style>

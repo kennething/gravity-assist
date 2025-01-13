@@ -88,18 +88,18 @@ onMounted(() => {
 const showSidebar = ref(true);
 const showContributors = ref(false);
 watch(showContributors, (value) => {
-  if (!value) return router.push({ query: undefined });
-  if (!route.query.ct) router.push({ query: { ct: "true" } });
+  if (!value) return router.replace({ query: { ...route.query, ct: undefined } });
+  if (!route.query.ct) router.replace({ query: { ...route.query, ct: "true" } });
 });
 const showChangelog = ref(false);
 watch(showChangelog, (value) => {
-  if (!value) return router.push({ query: undefined });
-  if (!route.query.v) router.push({ query: { v: changelog[changelog.length - 1].version } });
+  if (!value) return router.replace({ query: { ...route.query, v: undefined } });
+  if (!route.query.v) router.replace({ query: { ...route.query, v: changelog[changelog.length - 1].version } });
 });
 const showContact = ref(false);
 watch(showContact, (value) => {
-  if (!value) return router.push({ query: undefined });
-  if (!route.query.c) router.push({ query: { c: "true" } });
+  if (!value) return router.replace({ query: { ...route.query, c: undefined } });
+  if (!route.query.c) router.replace({ query: { ...route.query, c: "true" } });
 });
 
 watch(

@@ -1,4 +1,5 @@
 import admin from "firebase-admin";
+import { getObjectKey, getObjectValue } from "~/utils/functions";
 
 type Body = {
   uid: string;
@@ -19,11 +20,12 @@ export default defineEventHandler(async (event) => {
 
     if (!userData) throw new Error("User not found.");
 
-    if (!userData.bpLastSaved || (Object.values(userData.blueprints[body.accountIndex])[0] as Record<number, (string | number)[]>[]).length === 0) throw new Error("No blueprints found.");
+    if (!userData.bpLastSaved || userData.blueprints[body.accountIndex] === undefined || (getObjectValue(userData.blueprints[body.accountIndex]) as Record<number, (string | number)[]>[]).length === 0)
+      throw new Error("No blueprints found.");
 
-    accountName = Object.keys(userData.blueprints[body.accountIndex])[0];
-    const ships = Object.values(userData.blueprints[body.accountIndex])[0] as Record<number, (string | number)[]>[];
-    blueprints = ships.map((ship) => [Number(Object.keys(ship)[0]), Object.values(ship)[0]].flat());
+    accountName = getObjectKey(userData.blueprints[body.accountIndex]);
+    const ships = getObjectValue(userData.blueprints[body.accountIndex]) as Record<number, (string | number)[]>[];
+    blueprints = ships.map((ship) => [Number(getObjectKey(ship)), getObjectValue(ship)].flat());
     lastSaved = userData.bpLastSaved;
   } catch (error) {
     console.error(error);

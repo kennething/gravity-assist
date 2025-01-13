@@ -3,7 +3,7 @@ import type { AllShip } from "./ships";
 
 /**
  * @warning Be sure to await this function in order to actually use the delay.
- * @param {number} ms - Number of milliseconds to delay.
+ * @param ms - Number of milliseconds to delay.
  * @example await delay(1000); // Wait for 1 second
  */
 export function delay(ms: number): Promise<void> {
@@ -29,9 +29,9 @@ const dateOptions: Record<string, Record<string, string>> = {
 /** Returns a date string as a localized date string
  *
  * If `timeDiff` is true, returns "today," "yesterday," "{n}d ago," or a localized date string
- * @params {date} YYYY-MM-DD
- * @params {options} "full" | "numeric" = "full"
- * @params {timeDiff} boolean = false
+ * @param date YYYY-MM-DD
+ * @param options "full" | "numeric" = "full"
+ * @param timeDiff boolean = false
  */
 export function formatDate(dateString: string, options: "full" | "numeric" = "full", timeDiff = false) {
   const formatter = new Intl.DateTimeFormat(undefined, dateOptions[options]);
@@ -55,6 +55,12 @@ enum CharacterSets {
   alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
   alphabetical = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 }
+/**
+ * Returns a random string of characters from the given set with the given length.
+ * @example getRandomCharacters(10, "numeric"); // Returns a random 10-digit number
+ * @example getRandomCharacters(10, "alphanumeric"); // Returns a random alphanumeric string of length 10
+ * @example getRandomCharacters(10, "alphabetical"); // Returns a random alphabetical string of length 10
+ */
 export function getRandomCharacters(length: number, set: "numeric" | "alphanumeric" | "alphabetical" = "alphanumeric") {
   let characters = "";
   for (let i = 0; i < length; i++) {
@@ -63,6 +69,13 @@ export function getRandomCharacters(length: number, set: "numeric" | "alphanumer
   return characters;
 }
 
+/**
+ * Transforms an array of `Op` objects into a minified format.
+ *
+ * Each `Op` object is mapped to a new object containing:
+ * - `a.c`: the `color` attribute if it exists.
+ * - `i`: the `insert` value.
+ */
 export function truncateOps(ops: Op[]) {
   return ops.map((op) => {
     const newObj: Record<string, string | Record<string, string>> = {};
@@ -78,6 +91,13 @@ export function truncateOps(ops: Op[]) {
   });
 }
 
+/**
+ * Restores an array of `TruncatedOp` objects to their original `Op` format.
+ *
+ * Each `TruncatedOp` object is mapped to a new `Op` object containing:
+ * - `attributes.color`: the `a.c` value if it exists.
+ * - `insert`: the `i` value.
+ */
 export function untruncateOps(ops: TruncatedOp[]) {
   return ops.map((op) => {
     const newObj: Op = {};
@@ -91,4 +111,24 @@ export function untruncateOps(ops: TruncatedOp[]) {
 
     return newObj;
   });
+}
+
+/**
+ * Returns the key of the first entry in the given object.
+ *
+ * @param object the object to get the key from
+ * @param index the index of the key to return, defaults to 0
+ */
+export function getObjectKey<T extends string | number | symbol, K>(object: Record<T, K>, index = 0) {
+  return Object.keys(object)[index];
+}
+
+/**
+ * Returns the value of the first entry in the given object.
+ *
+ * @param object the object to get the value from
+ * @param index the index of the value to return, defaults to 0
+ */
+export function getObjectValue<T>(object: Record<any, T>, index = 0) {
+  return Object.values(object)[index];
 }

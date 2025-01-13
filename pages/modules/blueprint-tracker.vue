@@ -109,11 +109,12 @@ useSeoMeta({
 watch(
   () => route.query,
   async (val) => {
-    if (!userStore.shipData || !userStore.user) return;
+    if (!userStore.shipData || !userStore.user || !val.u || !val.a) return;
 
-    accountIndex.value = Number(val.a) ?? 0;
+    const account = Number(val.a);
+    if (userStore.user.uid === val.u && accountIndex.value === account) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
 
-    if (userStore.user.uid === val.u) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
+    accountIndex.value = account;
     data.value = await getBlueprints(userStore.shipData);
   }
 );
@@ -166,8 +167,7 @@ async function getBlueprints(data: AllShip[]) {
     success,
     error,
     content,
-    lastSaved: bpLastSaved,
-    accountName: bpAccountName
+    lastSaved: bpLastSaved
   } = await $fetch("/api/getBlueprints", { method: "POST", body: { uid: route.query.u ?? userStore.user?.uid, accountIndex: accountIndex.value } });
 
   if (!success && error) console.error(error);
@@ -191,6 +191,7 @@ async function getBlueprints(data: AllShip[]) {
   }
 
   lastSaved.value = new Date().toISOString().slice(0, 10);
+  if (userStore.user) userStore.user.blueprints.push({ Unnamed: [] });
   return data.map((ship) => {
     const result: Record<any, any> = {
       ...ship,
