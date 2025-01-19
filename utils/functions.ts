@@ -1,5 +1,4 @@
 import type { Op } from "quill";
-import type { AllShip } from "./ships";
 
 /**
  * @warning Be sure to await this function in order to actually use the delay.
@@ -7,7 +6,7 @@ import type { AllShip } from "./ships";
  * @example await delay(1000); // Wait for 1 second
  */
 export function delay(ms: number): Promise<void> {
-  return new Promise((executor: any) => setTimeout(executor, ms));
+  return new Promise((executor: () => void) => setTimeout(executor, ms));
 }
 
 /** Returns a random integer between `min` and `max`, inclusive. */

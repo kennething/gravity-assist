@@ -1,4 +1,5 @@
 import { getRandomCharacters } from "~/utils/functions";
+import { origins } from "~/utils/general";
 import { UserData } from "~/utils/types";
 import admin from "firebase-admin";
 
@@ -13,6 +14,7 @@ async function generateUid() {
 }
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
   const db = admin.firestore();
 
   let data: UserData | null = null;
@@ -27,8 +29,9 @@ export default defineEventHandler(async (event) => {
       createdAt: new Date().toISOString().slice(0, 10),
       lastLoggedIn: new Date().toISOString().slice(0, 10),
       savedMails: [],
-      blueprints: [{ Unnamed: [] }],
-      bpLastSaved: null
+      blueprints: [],
+      bpLastSaved: null,
+      origin: origins[config.public.baseUrl] ?? "U"
     };
 
     await db.collection("users").doc(uid).create(data);

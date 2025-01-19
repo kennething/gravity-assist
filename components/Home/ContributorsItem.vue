@@ -11,7 +11,7 @@
     </div>
     <div class="du-collapse-content">
       <ul class="text-base font-normal text-neutral-600 transition duration-500 dark:text-neutral-300">
-        <li class="text-left" v-for="(note, index) in contributor.specific">→ {{ note }}{{ index === contributor.specific.length - 1 ? "" : "," }}</li>
+        <li class="text-left transition duration-500" v-for="(note, index) in contributor.specific">→ {{ note }}{{ index === contributor.specific.length - 1 ? "" : "," }}</li>
       </ul>
     </div>
   </div>

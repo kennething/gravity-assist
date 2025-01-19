@@ -21,11 +21,6 @@ useSeoMeta({
   twitterImage: () => config.public.baseUrl + "/ships/solarWhale.png",
   twitterDescription: description
 });
-
-const route = useRoute();
-const router = useRouter();
-
-onMounted(() => {});
 </script>
 
 <style scoped></style>

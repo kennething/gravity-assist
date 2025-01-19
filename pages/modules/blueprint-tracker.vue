@@ -96,7 +96,7 @@ watch(isOwner, async (val) => {
 const accountIndex = ref(0);
 
 useSeoMeta({
-  title: () => `${isOwner.value ? "Your" : "Someone else's"} Blueprint Tracker | Gravity Assist`,
+  title: "Someone's Blueprint Tracker | Gravity Assist",
   ogTitle: "Blueprint Tracker - Gravity Assist",
   description: () =>
     `${route.query.u ? "Someone saved their blueprint collection and shared it with you! You, too, can e" : "E"}asily track your blueprint collection and share it with others! View your collection, add new blueprints, and save your changes. Never open Excel ever again to share your blueprints with others!`,

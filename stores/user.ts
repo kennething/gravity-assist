@@ -19,7 +19,7 @@ export const useUserStore = defineStore("userStore", () => {
       const accessToken = localStorage.getItem("token");
 
       if (uid && accessToken) {
-        const { success, error, content } = await $fetch("/api/getUser", { method: "POST", body: { uid, accessToken } });
+        const { success, error, content } = await $fetch("/api/getUser", { method: "POST", body: { uid, accessToken, updateOrigin: false } });
         if (!success && error !== "User not found.") return console.error(error);
         if (success && content) {
           user.value = content;

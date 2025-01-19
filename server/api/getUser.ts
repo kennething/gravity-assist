@@ -1,13 +1,16 @@
 import { TruncatedOp, UserData } from "~/utils/types";
 import { untruncateOps } from "~/utils/functions";
+import { origins } from "~/utils/general";
 import admin from "firebase-admin";
 
 type Body = {
   uid: string;
   accessToken: string;
+  updateOrigin: boolean;
 };
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
   const body = (await readBody(event)) as Body;
   const db = admin.firestore();
 
@@ -21,6 +24,7 @@ export default defineEventHandler(async (event) => {
     if (userData.uid !== body.uid || userData.accessToken !== body.accessToken) throw new Error("Invalid credentials.");
 
     userData.lastLoggedIn = new Date().toISOString().slice(0, 10);
+    if (body.updateOrigin) userData.origin = origins[config.public.baseUrl] ?? "U";
     await db.collection("users").doc(body.uid).update(userData);
 
     userData.savedMails.forEach((mail) => (mail.ops = untruncateOps(mail.ops as TruncatedOp[])));

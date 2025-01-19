@@ -28,7 +28,7 @@
       <time class="mb-2 block text-left text-sm font-normal leading-none text-neutral-400">Released on {{ formatDate(change.release) }}</time>
     </ClientOnly>
     <ul class="mb-4 text-base font-normal text-neutral-500 transition duration-500 dark:text-neutral-300">
-      <li class="text-left" v-for="(note, index) in change.notes">→ {{ note }}{{ index === change.notes.length - 1 ? "" : "," }}</li>
+      <li class="text-left transition duration-500" v-for="(note, index) in change.notes">→ {{ note }}{{ index === change.notes.length - 1 ? "" : "," }}</li>
     </ul>
   </li>
 </template>

@@ -10,11 +10,11 @@
     </div>
 
     <div class="mt-16 flex w-[80vw] flex-col items-center justify-center gap-2 md:w-[25rem] lg:w-[40rem]">
-      <h2 class="text-3xl font-bold transition duration-500">What's New?</h2>
+      <h2 class="text-3xl font-bold" id="whats-new"><NuxtLink to="/home#whats-new" class="transition duration-500">What's New?</NuxtLink></h2>
       <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
         <span class="flex items-center justify-center"><img class="size-12 transition duration-500 dark:invert" src="/ui/hourglass.svg" aria-hidden="true" /></span>
       </div>
-      <div class="min-w-[25rem] rounded-2xl bg-neutral-100/50 p-4 transition duration-500 dark:bg-neutral-900">
+      <div class="min-w-[20rem] rounded-2xl bg-neutral-100/50 p-4 transition duration-500 dark:bg-neutral-900">
         <div class="w-full p-4">
           <ol class="relative border-s border-neutral-200 transition duration-500 dark:border-neutral-700">
             <HomeChangelogItem class="ms-6" :change="latestChange" />
@@ -32,7 +32,7 @@
     </div>
 
     <div class="mt-16 flex w-[80vw] flex-col items-center justify-center gap-2 md:w-[25rem] lg:w-[40rem]">
-      <h2 class="text-3xl font-bold transition duration-500">Top Contributors</h2>
+      <h2 class="text-3xl font-bold" id="top-contributors"><NuxtLink to="/home#top-contributors" class="transition duration-500">Top Contributors</NuxtLink></h2>
       <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
         <span class="flex items-center justify-center"><img class="size-12 transition duration-500 dark:invert" src="/ui/trophy.svg" aria-hidden="true" /></span>
       </div>
@@ -48,13 +48,34 @@
         </button>
       </div>
     </div>
+
+    <div class="mt-16 flex w-[80vw] flex-col items-center justify-center gap-2 md:w-[25rem] lg:w-[40rem]">
+      <h2 class="text-3xl font-bold" id="link-a-device"><NuxtLink to="/home#link-a-device" class="transition duration-500">Link A Device</NuxtLink></h2>
+      <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
+        <span class="flex items-center justify-center"><img class="size-12 transition duration-500 dark:invert" src="/ui/link.svg" aria-hidden="true" /></span>
+      </div>
+      <div class="flex w-[80vw] flex-col gap-2 md:w-[25rem] lg:w-[35rem] xl:w-[40rem]">
+        <HomeLink />
+      </div>
+    </div>
+
+    <div class="mt-16 flex w-[80vw] flex-col items-center justify-center gap-2 md:w-[25rem] lg:w-[40rem]">
+      <h2 class="text-3xl font-bold" id="contact-me"><NuxtLink to="/home#contact-me" class="transition duration-500">Contact Me</NuxtLink></h2>
+      <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
+        <span class="flex items-center justify-center"><img class="size-12 transition duration-500 dark:invert" src="/ui/link.svg" aria-hidden="true" /></span>
+      </div>
+      <div class="flex w-[80vw] flex-col gap-2 md:w-[25rem] lg:w-[35rem] xl:w-[40rem]">
+        <HomeContact isBlock />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const description = "Create colored text, search modules and research paths, design custom fleets, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange.";
+const description = "Create colored text, search modules and research paths, track your progress, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange.";
 useSeoMeta({
   title: "Home | Gravity Assist",
+  ogTitle: "Gravity Assist",
   description,
   ogDescription: description,
   twitterDescription: description

@@ -112,7 +112,6 @@ const userStore = useUserStore();
 const showSettings = ref(false);
 
 const blueprints = computed(() => {
-  console.log(userStore.user?.blueprints);
   return userStore.user?.blueprints;
 });
 

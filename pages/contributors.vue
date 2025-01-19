@@ -6,7 +6,7 @@
 const router = useRouter();
 
 onMounted(() => {
-  router.push("/home?ct=true");
+  router.replace("/home?ct=true");
 });
 </script>
 

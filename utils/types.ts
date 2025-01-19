@@ -1,4 +1,3 @@
-import type { BlueprintAllShip } from "./blueprints";
 import type { Op } from "quill";
 
 export type UserData = {
@@ -12,6 +11,7 @@ export type UserData = {
   blueprints: Record<string, Record<string, (string | number)[]>[]>[];
   /** YYYY-MM-DD */
   bpLastSaved: string | null;
+  origin: string;
 };
 
 export type MinifiedUserData = {
