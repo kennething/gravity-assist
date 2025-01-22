@@ -21,7 +21,7 @@ export function getRandomItem<T>(array: T[] | string) {
   return array[getRandomInt(0, array.length - 1)];
 }
 
-const dateOptions: Record<string, Record<string, string>> = {
+const dateOptions: Readonly<Record<string, Record<string, string>>> = {
   full: { dateStyle: "long", timeZone: "UTC" },
   numeric: { dateStyle: "short", timeZone: "UTC" }
 };
@@ -118,7 +118,7 @@ export function untruncateOps(ops: TruncatedOp[]) {
  * @param object the object to get the key from
  * @param index the index of the key to return, defaults to 0
  */
-export function getObjectKey<T extends string | number | symbol, K>(object: Record<T, K>, index = 0) {
+export function getObjectKey<T extends object>(object: T, index = 0) {
   return Object.keys(object)[index];
 }
 
@@ -128,6 +128,6 @@ export function getObjectKey<T extends string | number | symbol, K>(object: Reco
  * @param object the object to get the value from
  * @param index the index of the value to return, defaults to 0
  */
-export function getObjectValue<T>(object: Record<any, T>, index = 0) {
+export function getObjectValue<T extends object>(object: T, index = 0) {
   return Object.values(object)[index];
 }

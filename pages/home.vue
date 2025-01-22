@@ -62,7 +62,7 @@
     <div class="mt-16 flex w-[80vw] flex-col items-center justify-center gap-2 md:w-[25rem] lg:w-[40rem]">
       <h2 class="text-3xl font-bold" id="contact-me"><NuxtLink to="/home#contact-me" class="transition duration-500">Contact Me</NuxtLink></h2>
       <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
-        <span class="flex items-center justify-center"><img class="size-12 transition duration-500 dark:invert" src="/ui/link.svg" aria-hidden="true" /></span>
+        <span class="flex items-center justify-center"><img class="size-12 transition duration-500 dark:invert" src="/ui/contact.svg" aria-hidden="true" /></span>
       </div>
       <div class="flex w-[80vw] flex-col gap-2 md:w-[25rem] lg:w-[35rem] xl:w-[40rem]">
         <HomeContact isBlock />

@@ -63,29 +63,21 @@ useSeoMeta({
   twitterImage: () =>
     config.public.baseUrl +
     (route.query.shn && route.query.shv
-      ? `/ships/${(route.query.shn as string).split(" ")[0].toLowerCase() + (route.query.shn as string).split(" ").slice(1).join("")}_${(route.query.shv as string).toLowerCase()}.png`
+      ? `/ships/${(route.query.shn as string).toLowerCase().replaceAll("-", "").replaceAll("'", "").replaceAll(".", "").split(" ").join("_")}_${(route.query.shv as string).toLowerCase()}.png`
       : "/ships/solarWhale.png")
 });
 
-watch(
-  () => route.query,
-  () => {
-    const shipName = route.query.shn as string;
-    const shipVariant = route.query.shv as string;
-    if (shipName && shipVariant) selectedShip.value = findShip(data.value, undefined, shipName, shipVariant);
-    handleQueries();
-  }
-);
-
 const userStore = useUserStore();
 const data = computed(() => {
-  const shipData = userStore.shipData;
+  const shipData = userStore.shipData?.filter((ship) => ship.manufacturer !== "Empty" || ship.direction[0] !== "Empty" || ship.scope !== "Empty"); // remove unobtainable ships
   if (!shipData) return;
 
   const shipName = route.query.shn as string;
   const shipVariant = route.query.shv as string;
   if (shipName && shipVariant) selectedShip.value = findShip(shipData, undefined, shipName, shipVariant);
-  else {
+  handleQueries();
+
+  if (!shipName || !shipVariant) {
     const autosave = localStorage.getItem("rahelper");
     if (autosave) {
       const [x, y, z, name, variant] = JSON.parse(autosave) as [number, number, number, string | null, string | null];
@@ -94,6 +86,7 @@ const data = computed(() => {
   }
   return shipData;
 });
+
 const filteredData = computed(() => {
   if (!data.value) return [];
 

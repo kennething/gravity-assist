@@ -9,7 +9,7 @@ export type Changelog = {
   notes: string[];
 };
 
-export const changelog: Changelog[] = [
+export const changelog: Readonly<Changelog[]> = [
   {
     type: "release",
     version: "0.1.0",
@@ -384,15 +384,16 @@ export const changelog: Changelog[] = [
   {
     type: "release",
     version: "2.0.0",
-    release: "2024-12-04",
+    release: "2025-01-27",
     notes: [
       "Redesigned entire site",
-      "Heavily optimized site for mobile devices",
+      "Heavily optimized site networking",
       "Added Blueprint Tracker",
       "Added Mail Editor",
       "Added Inostrancevia and Tempel I to RA Helper",
       "Combined Module Library and Equipment Library into Encyclopedia",
-      "Fixed RA Helper search function not properly finding optimal path"
+      "Fixed RA Helper search function not properly finding optimal path",
+      "Removed Equipment Encyclopedia"
     ]
   }
 ];

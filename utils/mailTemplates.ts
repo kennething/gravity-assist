@@ -13,7 +13,7 @@ export enum FormattingColors {
   K = "#000000"
 }
 
-export const mailTemplates: Record<string, Op[]> = {
+export const mailTemplates: Readonly<Record<string, Op[]>> = {
   "City Siege": [
     { attributes: { color: "#ffffff" }, insert: "Target: " },
     { attributes: { color: "#ffe1ad" }, insert: "Ligma " },
