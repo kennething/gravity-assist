@@ -72,20 +72,43 @@ const data = computed(() => {
   const shipData = userStore.shipData?.filter((ship) => ship.manufacturer !== "Empty" || ship.direction[0] !== "Empty" || ship.scope !== "Empty"); // remove unobtainable ships
   if (!shipData) return;
 
+  if (handleQueries(shipData)) return shipData;
+
   const shipName = route.query.shn as string;
   const shipVariant = route.query.shv as string;
-  if (shipName && shipVariant) selectedShip.value = findShip(shipData, undefined, shipName, shipVariant);
-  handleQueries();
 
   if (!shipName || !shipVariant) {
     const autosave = localStorage.getItem("rahelper");
     if (autosave) {
-      const [x, y, z, name, variant] = JSON.parse(autosave) as [number, number, number, string | null, string | null];
+      const [manufacturer, direction, scope, name, variant] = JSON.parse(autosave) as [number, number, number, string | null, string | null];
       if (name && variant) selectedShip.value = findShip(shipData, undefined, name, variant);
+      if (manufacturer >= 0 && manufacturer < manufacturers.length) selectedManufacturer.value = manufacturer;
+      if (direction >= 0 && direction < directions.length) selectedDirection.value = direction;
+      if (scope >= 0 && scope < scopes.length) selectedScope.value = scope;
     }
   }
   return shipData;
 });
+
+function handleQueries(data: AllShip[]) {
+  const manufacturer = Number(route.query.m);
+  const direction = Number(route.query.d);
+  const scope = Number(route.query.s);
+  const shipName = route.query.shn as string;
+  const shipVariant = route.query.shv as string;
+
+  if (!manufacturer && !direction && !scope && !shipName && !shipVariant) return;
+  if ((shipName && !shipVariant) || (!shipName && shipVariant)) return;
+
+  if (shipName && shipVariant) selectedShip.value = findShip(data, undefined, shipName, shipVariant);
+  if (shipName && shipVariant && !manufacturer && !direction && !scope) return selectShip(selectedShip.value, true, data);
+
+  if (manufacturer) selectedManufacturer.value = manufacturer;
+  if (direction) selectedDirection.value = direction;
+  if (scope) selectedScope.value = scope;
+
+  return true;
+}
 
 const filteredData = computed(() => {
   if (!data.value) return [];
@@ -110,34 +133,6 @@ const selectedShipChance = computed(() => {
   return ((selectedShip.value?.weight ?? 0) / filteredData.value.reduce((total, ship) => total + ship.weight, 0)) * 100;
 });
 
-onMounted(() => {
-  if (handleQueries()) return;
-  const autosave = localStorage.getItem("rahelper");
-  if (autosave) {
-    const [manufacturer, direction, scope] = JSON.parse(autosave) as [number, number, number, string | null, string | null];
-    if (manufacturer >= 0 && manufacturer < manufacturers.length) selectedManufacturer.value = manufacturer;
-    if (direction >= 0 && direction < directions.length) selectedDirection.value = direction;
-    if (scope >= 0 && scope < scopes.length) selectedScope.value = scope;
-  }
-});
-
-function handleQueries() {
-  const manufacturer = Number(route.query.m);
-  const direction = Number(route.query.d);
-  const scope = Number(route.query.s);
-  const shipName = route.query.shn as string;
-  const shipVariant = route.query.shv as string;
-
-  if (!manufacturer && !direction && !scope && !shipName && !shipVariant) return false;
-  if ((shipName && !shipVariant) || (!shipName && shipVariant)) return false;
-
-  if (manufacturer) selectedManufacturer.value = manufacturer;
-  if (direction) selectedDirection.value = direction;
-  if (scope) selectedScope.value = scope;
-
-  return true;
-}
-
 function handleOptionChange(type: "manufacturer" | "direction" | "scope", next: number) {
   const options: Record<string, Ref<number>> = {
     manufacturer: selectedManufacturer,
@@ -149,14 +144,14 @@ function handleOptionChange(type: "manufacturer" | "direction" | "scope", next: 
   router.push({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
 }
 
-function selectShip(ship: AllShip | undefined, setPath = false) {
-  if (!data.value) return;
+function selectShip(ship: AllShip | undefined, setPath = false, manualData?: AllShip[]) {
+  if (!data.value && !manualData) return;
 
   selectedShip.value = ship;
 
   if (setPath && ship) {
     selectedManufacturer.value = manufacturers.indexOf(ship.manufacturer);
-    selectedDirection.value = directions.indexOf(findBestDirection(data.value, ship));
+    selectedDirection.value = directions.indexOf(findBestDirection(data.value ?? manualData ?? [], ship));
     selectedScope.value = scopes.indexOf(ship.scope);
   }
 

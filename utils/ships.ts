@@ -122,10 +122,12 @@ export interface MiscUAVSubsystem extends UAVSubsystem {
   hanger: "Spotter UAV" | "Shield UAV" | "Info UAV" | "Recon UAV";
 }
 
+export type ModuleSystemName = "M1" | "M2" | "M3" | "A1" | "A2" | "A3" | "B1" | "B2" | "B3" | "C1" | "C2" | "C3" | "D1" | "D2" | "D3" | "E1" | "E2" | "F1" | "F2" | "G1" | "G2" | "H1" | "H2";
+
 interface Module {
   /** Image of the weapon type, found in `/public/weapons/icons`. */
   img: string;
-  system: "M1" | "M2" | "M3" | "A1" | "A2" | "A3" | "B1" | "B2" | "B3" | "C1" | "C2" | "C3" | "D1" | "D2" | "D3" | "E1" | "E2" | "F1" | "F2" | "G1" | "G2" | "H1" | "H2";
+  system: ModuleSystemName;
   /** Whether or not the module comes with the ship */
   default?: boolean;
 }
@@ -177,14 +179,16 @@ export interface MiscModule extends KnownModule {
   subsystems: (MiscSubsytem | RepairUAVSubsystem | MiscUAVSubsystem)[];
 }
 
+export type AllModule = UnknownModule | WeaponModule | PropulsionModule | MiscModule;
+
 export interface SuperCapitalShip extends Ship {
   type: "Battlecruiser" | "Auxiliary Ship" | "Carrier" | "Battleship";
-  modules: (UnknownModule | WeaponModule | PropulsionModule | MiscModule)[];
+  modules: AllModule[];
 }
 
 export function findShip(ships: AllShip[] | undefined, ship: AllShip | undefined, name?: string, variant?: string) {
-  if (ship) return ships?.find((s) => s.name === ship.name && s.variant === ship.variant);
-  return ships?.find((s) => s.name === name && s.variant === variant);
+  if (ship) return ships?.find((s) => s.name.toLowerCase() === ship.name.toLowerCase() && s.variant.toLowerCase() === ship.variant.toLowerCase());
+  return ships?.find((s) => s.name.toLowerCase() === name?.toLowerCase() && s.variant.toLowerCase() === variant?.toLowerCase());
 }
 
 export function findBestDirection(data: AllShip[], ship: AllShip) {

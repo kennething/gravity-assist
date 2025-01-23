@@ -391,7 +391,6 @@ export const changelog: Readonly<Changelog[]> = [
       "Added Blueprint Tracker",
       "Added Mail Editor",
       "Added Inostrancevia and Tempel I to RA Helper",
-      "Combined Module Library and Equipment Library into Encyclopedia",
       "Fixed RA Helper search function not properly finding optimal path",
       "Removed Equipment Encyclopedia"
     ]

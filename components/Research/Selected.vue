@@ -19,6 +19,13 @@
         >
           {{ isBestPath ? "This is the best path!" : "Find best path" }}
         </button>
+        <NuxtLink
+          v-if="'modules' in ship"
+          :to="`/modules/module-library?s=${ship.name}`"
+          class="fo-btn w-full border-neutral-200 bg-neutral-200 text-black transition duration-500 hover:border-neutral-100 hover:bg-neutral-100 dark:border-neutral-600 dark:bg-neutral-600 dark:text-white dark:hover:border-neutral-500 dark:hover:bg-neutral-500"
+        >
+          View in Module Library
+        </NuxtLink>
       </div>
     </div>
     <div class="flex h-56 w-full items-center justify-center text-xl font-medium transition duration-500" v-else>Select a ship to view more details!</div>
