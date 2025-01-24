@@ -390,7 +390,8 @@ export const changelog: Readonly<Changelog[]> = [
       "Heavily optimized site networking",
       "Added Blueprint Tracker",
       "Added Mail Editor",
-      "Added Inostrancevia and Tempel I to RA Helper",
+      "Added Inostrancevia, Tempel I, and Shield of Plutus to RA Helper",
+      "Added Shield of Plutus to Module Library",
       "Fixed RA Helper search function not properly finding optimal path",
       "Removed Equipment Encyclopedia"
     ]

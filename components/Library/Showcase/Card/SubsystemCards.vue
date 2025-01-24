@@ -1,14 +1,6 @@
 <template>
-  <div class="relative flex w-full flex-col items-center justify-center gap-2 rounded-xl bg-neutral-100/25 p-4">
-    <img class="absolute left-0 top-0 size-8 rounded-br-lg rounded-tl-xl" v-if="mod" :src="mod.img" :alt="mod.system" loading="lazy" />
-    <h3 class="text-xl">
-      <span class="text-2xl font-semibold">{{ mod?.system ?? "404" }}</span
-      >: <span v-if="mod?.type === 'known'" v-for="part in italicize(mod.name)" :class="{ italic: part[1] }">{{ part[0] }}</span>
-      <span v-else>Unknown Module</span>
-    </h3>
-
-    <LibraryShowcaseKnownHero v-if="mod?.type === 'known'" :mod="mod" />
-    <LibraryShowcaseUnknownHero v-else />
+  <div class="flex w-full flex-wrap items-stretch justify-center gap-5">
+    <LibraryShowcaseCardSubsystemCard v-if="mod?.type === 'known'" v-for="subsystem in mod.subsystems" :subsystem="subsystem" />
   </div>
 </template>
 
@@ -33,9 +25,6 @@ watch(
     }, 700);
   }
 );
-
-const route = useRoute();
-const router = useRouter();
 
 const mod = ref<AllModule>();
 

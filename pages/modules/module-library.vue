@@ -8,27 +8,30 @@
     </div>
 
     <div class="mt-4 flex w-full items-start justify-center gap-8">
-      <div class="sticky top-20 flex w-72 flex-col items-center justify-start gap-1 rounded-xl bg-neutral-100/25 p-2">
+      <div class="sticky top-20 flex w-72 shrink-0 flex-col items-center justify-start gap-1 rounded-xl bg-neutral-100/25 p-2">
         <LibrarySelection v-for="ship in data" :ship="ship" :currentShip="currentShip" @click="currentShip = ship" />
       </div>
 
       <div class="max-w-[50rem] grow" v-if="data && currentShip">
         <LibraryHero :currentShip="currentShip" />
 
-        <div class="relative mt-8 w-full overflow-x-hidden">
-          <div class="flex w-full flex-col items-center justify-center gap-2 transition-transform duration-700" :class="{ '-translate-x-full': currentModule }">
-            <LazyLibraryModCategory v-for="(mods, category) in moduleCategories" :modules="mods" :category="category" @select="(mod) => (currentModule = mod)" />
-          </div>
-          <div class="absolute left-full top-0 flex w-full flex-col items-center justify-center gap-2 px-8 transition-transform duration-700" :class="{ '-translate-x-full': currentModule }">
-            <button
-              class="absolute left-8 top-0 flex items-center justify-center gap-2 rounded-xl bg-neutral-100 p-2 px-8 transition duration-500 hover:bg-neutral-200 hover:duration-150"
-              @click="currentModule = undefined"
-            >
-              <img class="size-5 transition duration-500 dark:invert" src="/ui/arrowLeft.svg" alt="Go back to the module list" />
-              <p class="font-medium">Back</p>
-            </button>
+        <div class="mt-8 w-full overflow-x-hidden">
+          <div class="flex w-[200%] items-start justify-center">
+            <div class="flex w-1/2 flex-col items-center justify-center gap-2 transition-transform duration-700" :class="{ '-translate-x-full': currentModule }">
+              <LazyLibraryModCategory v-for="(mods, category) in moduleCategories" :modules="mods" :category="category" @select="(mod) => (currentModule = mod)" />
+            </div>
+            <div class="relative flex w-1/2 flex-col items-center justify-center gap-5 px-8 transition-transform duration-700" :class="{ '-translate-x-full': currentModule }">
+              <button
+                class="absolute left-8 top-0 flex items-center justify-center gap-2 rounded-xl bg-neutral-100 p-2 px-8 transition duration-500 hover:bg-neutral-200 hover:duration-150"
+                @click="currentModule = undefined"
+              >
+                <img class="size-5 transition duration-500 dark:invert" src="/ui/arrowLeft.svg" alt="Go back to the module list" />
+                <p class="font-medium">Back</p>
+              </button>
 
-            <LibraryShowcaseHero v-if="loaded" :currentModule="currentModule" />
+              <LibraryShowcaseHero class="mt-16" v-if="loaded" :currentModule="currentModule" />
+              <LibraryShowcaseCardSubsystemCards v-if="loaded" :currentModule="currentModule" />
+            </div>
           </div>
         </div>
       </div>
@@ -81,8 +84,6 @@ function handleQueries() {
 
   if (route.query.m) currentModule.value = currentShip.value?.modules.find((mod) => mod.system.toLowerCase() === String(route.query.m).toLowerCase());
   else currentModule.value = undefined;
-
-  console.log(currentModule.value);
 }
 </script>
 
