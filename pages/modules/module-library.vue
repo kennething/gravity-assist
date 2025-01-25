@@ -47,18 +47,34 @@
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig();
+
 const route = useRoute();
 const router = useRouter();
-
-const userStore = useUserStore();
-
-const loaded = ref(false);
 
 const currentShip = ref<SuperCapitalShip>();
 watch(currentShip, () => router.push({ query: { s: currentShip.value?.name } }));
 
 const currentModule = ref<AllModule>();
 watch(currentModule, () => router.push({ query: { ...route.query, m: currentModule.value?.system } }));
+
+useSeoMeta({
+  title: () => `${currentModule.value?.system} ${currentShip.value?.name} - RA Helper | Gravity Assist`,
+  ogTitle: () => `Module Library - Gravity Assist | ${route.query.m} / ${route.query.s}`,
+  description:
+    "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so feel free to reach out of you have a missing module :)",
+  ogDescription:
+    "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so feel free to reach out of you have a missing module :)",
+  twitterDescription:
+    "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so feel free to reach out of you have a missing module :)",
+  twitterImage: () =>
+    config.public.baseUrl +
+    (route.query.s ? `/ships/${(route.query.s as string).toLowerCase().replaceAll("-", "").replaceAll("'", "").replaceAll(".", "").split(" ").join("_")}.png` : "/ships/constantine_the_great.png")
+});
+
+const userStore = useUserStore();
+
+const loaded = ref(false);
 
 const moduleCategories = computed(() => {
   if (!currentShip.value) return;

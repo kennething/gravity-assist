@@ -52,7 +52,7 @@ useSeoMeta({
   title: () =>
     `${manufacturers[selectedManufacturer.value].split(" ")[0]}/${directions[selectedDirection.value].split(" ")[0]}/${scopes[selectedScope.value].split(" ")[0]} - RA Helper | Gravity Assist`,
   ogTitle: () =>
-    `RA Helper - Gravity Assist | ${manufacturers[selectedManufacturer.value].split(" ")[0]}/${directions[selectedDirection.value].split(" ")[0]}/${scopes[selectedScope.value].split(" ")[0]}`,
+    `RA Helper - Gravity Assist | ${route.query.shn && route.query.shv ? `${route.query.shn} (${route.query.shv})` : `${manufacturers[selectedManufacturer.value].split(" ")[0]}/${directions[selectedDirection.value].split(" ")[0]}/${scopes[selectedScope.value].split(" ")[0]}`}`,
 
   description:
     "The best Research Agreement tool on the market! Browse through any category and find the ship that best fits your needs. Or, search for a specific ship by name and we'll find the path that gives you the best chance to find it!",
@@ -64,44 +64,57 @@ useSeoMeta({
     config.public.baseUrl +
     (route.query.shn && route.query.shv
       ? `/ships/${(route.query.shn as string).toLowerCase().replaceAll("-", "").replaceAll("'", "").replaceAll(".", "").split(" ").join("_")}_${(route.query.shv as string).toLowerCase()}.png`
-      : "/ships/solarWhale.png")
+      : "/ships/solar_whale.png")
 });
+
+watch(
+  () => route.query,
+  () => {
+    const shipName = route.query.shn as string;
+    const shipVariant = route.query.shv as string;
+    if (shipName && shipVariant) selectedShip.value = findShip(data.value, undefined, shipName, shipVariant);
+    handleQueries();
+  }
+);
 
 const userStore = useUserStore();
 const data = computed(() => {
-  const shipData = userStore.shipData?.filter((ship) => ship.manufacturer !== "Empty" || ship.direction[0] !== "Empty" || ship.scope !== "Empty"); // remove unobtainable ships
+  const shipData = userStore.shipData;
   if (!shipData) return;
-
-  if (handleQueries(shipData)) return shipData;
 
   const shipName = route.query.shn as string;
   const shipVariant = route.query.shv as string;
-
-  if (!shipName || !shipVariant) {
+  if (shipName && shipVariant) selectedShip.value = findShip(shipData, undefined, shipName, shipVariant);
+  else {
     const autosave = localStorage.getItem("rahelper");
     if (autosave) {
-      const [manufacturer, direction, scope, name, variant] = JSON.parse(autosave) as [number, number, number, string | null, string | null];
+      const [x, y, z, name, variant] = JSON.parse(autosave) as [number, number, number, string | null, string | null];
       if (name && variant) selectedShip.value = findShip(shipData, undefined, name, variant);
-      if (manufacturer >= 0 && manufacturer < manufacturers.length) selectedManufacturer.value = manufacturer;
-      if (direction >= 0 && direction < directions.length) selectedDirection.value = direction;
-      if (scope >= 0 && scope < scopes.length) selectedScope.value = scope;
     }
   }
   return shipData;
 });
 
-function handleQueries(data: AllShip[]) {
+onMounted(() => {
+  if (handleQueries()) return;
+  const autosave = localStorage.getItem("rahelper");
+  if (autosave) {
+    const [manufacturer, direction, scope] = JSON.parse(autosave) as [number, number, number, string | null, string | null];
+    if (manufacturer >= 0 && manufacturer < manufacturers.length) selectedManufacturer.value = manufacturer;
+    if (direction >= 0 && direction < directions.length) selectedDirection.value = direction;
+    if (scope >= 0 && scope < scopes.length) selectedScope.value = scope;
+  }
+});
+
+function handleQueries() {
   const manufacturer = Number(route.query.m);
   const direction = Number(route.query.d);
   const scope = Number(route.query.s);
   const shipName = route.query.shn as string;
   const shipVariant = route.query.shv as string;
 
-  if (!manufacturer && !direction && !scope && !shipName && !shipVariant) return;
-  if ((shipName && !shipVariant) || (!shipName && shipVariant)) return;
-
-  if (shipName && shipVariant) selectedShip.value = findShip(data, undefined, shipName, shipVariant);
-  if (shipName && shipVariant && !manufacturer && !direction && !scope) return selectShip(selectedShip.value, true, data);
+  if (!manufacturer && !direction && !scope && !shipName && !shipVariant) return false;
+  if ((shipName && !shipVariant) || (!shipName && shipVariant)) return false;
 
   if (manufacturer) selectedManufacturer.value = manufacturer;
   if (direction) selectedDirection.value = direction;

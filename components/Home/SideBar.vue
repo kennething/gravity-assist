@@ -122,7 +122,11 @@ const navButtons: NavButton[] = [
   {
     displayName: "Module Library",
     src: "/ui/moduleLibrary.svg",
-    route: "/modules/module-library"
+    route: "/modules/module-library",
+    tag: {
+      name: "Updated",
+      color: "bg-blue-100"
+    }
   },
   {
     displayName: "Blueprint Tracker",
