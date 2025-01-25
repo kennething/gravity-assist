@@ -59,8 +59,8 @@ const currentModule = ref<AllModule>();
 watch(currentModule, () => router.push({ query: { ...route.query, m: currentModule.value?.system } }));
 
 useSeoMeta({
-  title: () => `${currentModule.value?.system} ${currentShip.value?.name} - RA Helper | Gravity Assist`,
-  ogTitle: () => `Module Library - Gravity Assist | ${route.query.m} / ${route.query.s}`,
+  title: () => `${currentModule.value?.system ? `${currentModule.value?.system} ` : ""}${currentShip.value?.name ?? "Constantine the Great"} - RA Helper | Gravity Assist`,
+  ogTitle: () => `Module Library - Gravity Assist | ${route.query.m ? `${route.query.m} / ` : ""}${route.query.s ?? "Constantine the Great"}`,
   description:
     "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so feel free to reach out of you have a missing module :)",
   ogDescription:
