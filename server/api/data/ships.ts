@@ -2094,9 +2094,9 @@ export default defineEventHandler(async (event) => {
           default: true,
           stats: {
             type: "weapon",
-            antiship: 11917,
+            antiship: 9000,
             antiair: null,
-            siege: 2502,
+            siege: 1890,
             hp: 19800
           },
           subsystems: [
@@ -2143,7 +2143,7 @@ export default defineEventHandler(async (event) => {
             type: "weapon",
             antiship: 19885,
             antiair: null,
-            siege: 2784,
+            siege: 1478,
             hp: 19800
           },
           subsystems: [
@@ -2190,9 +2190,9 @@ export default defineEventHandler(async (event) => {
           default: true,
           stats: {
             type: "weapon",
-            antiship: 24917,
+            antiship: 23717,
             antiair: null,
-            siege: 2016,
+            siege: 1920,
             hp: 19800
           },
           subsystems: [
@@ -2239,9 +2239,9 @@ export default defineEventHandler(async (event) => {
           name: `"Gamma Storm" Projectile Weapon System`,
           stats: {
             type: "weapon",
-            antiship: 40666,
-            antiair: 1643,
-            siege: 3138,
+            antiship: 29393,
+            antiair: 1163,
+            siege: 2287,
             hp: 19800
           },
           subsystems: [
@@ -2418,8 +2418,8 @@ export default defineEventHandler(async (event) => {
           name: `Pulse Anti-Aircraft System`,
           stats: {
             type: "weapon",
-            antiship: 5175,
-            antiair: 2040,
+            antiship: 3465,
+            antiair: 1365,
             siege: null,
             hp: 19800
           },
@@ -2616,7 +2616,7 @@ export default defineEventHandler(async (event) => {
           stats: {
             type: "weapon",
             antiship: null,
-            antiair: 1011,
+            antiair: 792,
             siege: null,
             hp: 19800
           },
@@ -2723,9 +2723,9 @@ export default defineEventHandler(async (event) => {
           default: true,
           stats: {
             type: "weapon",
-            antiship: 16000,
+            antiship: 20000,
             antiair: null,
-            siege: 3360,
+            siege: 4200,
             hp: 18000
           },
           subsystems: [
@@ -2772,9 +2772,9 @@ export default defineEventHandler(async (event) => {
           name: `Experimental Plasma Caster`,
           stats: {
             type: "weapon",
-            antiship: 15692,
-            antiair: 1883,
-            siege: 2824,
+            antiship: 23538,
+            antiair: 2824,
+            siege: 4236,
             hp: 18000
           },
           subsystems: [
@@ -2790,7 +2790,7 @@ export default defineEventHandler(async (event) => {
               attributes: ["Anti-Aircraft Counterattack"],
               stats: {
                 duration: 20,
-                attacksPerRound: [1, 4],
+                attacksPerRound: [1, 6],
                 cooldown: 6,
                 lockOnTime: 5,
                 targetPriority: {
@@ -2801,21 +2801,23 @@ export default defineEventHandler(async (event) => {
                       [1, "Carrier"],
                       [1, "Battlecruiser"],
                       [1, "Cruiser"],
-                      [2, "Auxiliary Ship"]
+                      [2, "Auxiliary Ship"],
+                      [3, "Destroyer"],
+                      [3, "Frigate"]
                     ],
-                    damage: 15692
+                    damage: 23538
                   },
                   antiair: {
                     position: 2,
                     priorities: [
-                      [3, "Corvette"],
-                      [4, "Fighter"]
+                      [4, "Corvette"],
+                      [5, "Fighter"]
                     ],
-                    damage: 1883
+                    damage: 2824
                   },
                   siege: {
                     position: 3,
-                    damage: 2824
+                    damage: 4236
                   }
                 }
               }
@@ -2931,7 +2933,30 @@ export default defineEventHandler(async (event) => {
               target: "Large Ship",
               lockonEfficiency: null,
               alpha: 1200,
-              attributes: null
+              attributes: null,
+              stats: {
+                duration: 6,
+                attacksPerRound: [1, 3],
+                cooldown: 30,
+                lockOnTime: 4,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    priorities: [
+                      [1, "Battleship"],
+                      [1, "Carrier"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"],
+                      [2, "Auxiliary Ship"]
+                    ],
+                    damage: 11900
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 10440
+                  }
+                }
+              }
             }
           ]
         },
@@ -2942,8 +2967,8 @@ export default defineEventHandler(async (event) => {
           name: `"Eternal Polaris" Mk II Projectile Launching System TEST`,
           stats: {
             type: "weapon",
-            antiship: 11345,
-            antiair: 593,
+            antiship: 12300,
+            antiair: 396,
             siege: 1440,
             hp: 18000
           },
@@ -3026,9 +3051,9 @@ export default defineEventHandler(async (event) => {
           name: `Generic Cannon Platform`,
           stats: {
             type: "weapon",
-            antiship: 5850,
-            antiair: 126,
-            siege: 1113,
+            antiship: 6000,
+            antiair: 405,
+            siege: 1110,
             hp: 18000
           },
           subsystems: [
@@ -3074,7 +3099,35 @@ export default defineEventHandler(async (event) => {
               target: "Aircraft",
               lockonEfficiency: null,
               alpha: 35,
-              attributes: ["Anti-Aircraft Counterattack"]
+              attributes: ["Anti-Aircraft Counterattack"],
+              stats: {
+                attacksPerRound: [1, 1],
+                cooldown: 4,
+                lockOnTime: 3,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ],
+                    damage: 900
+                  },
+                  antiair: {
+                    position: 1,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ],
+                    damage: 405
+                  },
+                  siege: {
+                    position: 3,
+                    damage: 60
+                  }
+                }
+              }
             }
           ]
         },
@@ -3124,11 +3177,26 @@ export default defineEventHandler(async (event) => {
               name: `Anti-Aircraft UAV Rack`,
               hanger: "Area-Denial Anti-Aircraft UAV",
               capacity: 3,
-              attributes: null,
               damageType: "Projectile",
+              alpha: 15,
               target: "Aircraft",
               lockonEfficiency: null,
-              alpha: 15
+              attributes: null,
+              stats: {
+                attacksPerRound: [1, 1],
+                cooldown: 2,
+                lockOnTime: 2,
+                targetPriority: {
+                  antiair: {
+                    position: 1,
+                    priorities: [
+                      [1, "Fighter"],
+                      [2, "Corvette"]
+                    ],
+                    damage: 3888
+                  }
+                }
+              }
             }
           ]
         },
@@ -3213,7 +3281,28 @@ export default defineEventHandler(async (event) => {
               target: "Large Ship",
               lockonEfficiency: null,
               alpha: 800,
-              attributes: null
+              attributes: null,
+              stats: {
+                duration: 3,
+                cooldown: 4,
+                damageFrequency: 1,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 6857,
+                    priorities: [
+                      [1, "Carrier"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"]
+                    ]
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 1028
+                  }
+                }
+              }
             }
           ]
         },
@@ -3239,7 +3328,23 @@ export default defineEventHandler(async (event) => {
               target: "Aircraft",
               lockonEfficiency: 60,
               alpha: 40,
-              attributes: ["Interception Capability", "Anti-Aircraft Counterattack"]
+              attributes: ["Interception Capability", "Anti-Aircraft Counterattack"],
+              stats: {
+                attacksPerRound: [1, 1],
+                cooldown: 2,
+                lockOnTime: 3,
+                targetPriority: {
+                  antiair: {
+                    position: 1,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ],
+                    damage: 432
+                  }
+                }
+              }
             }
           ]
         }
@@ -3537,6 +3642,7 @@ export default defineEventHandler(async (event) => {
             armor: null,
             extraHP: null,
             energyShield: null,
+            hpRecovery: 8100,
             hp: 20800
           },
           subsystems: [
@@ -3666,7 +3772,28 @@ export default defineEventHandler(async (event) => {
               target: "Large Ship",
               lockonEfficiency: null,
               alpha: 750,
-              attributes: null
+              attributes: null,
+              stats: {
+                duration: 6,
+                cooldown: 10.5,
+                damageFrequency: 3,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    priorities: [
+                      [1, "Carrier"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"]
+                    ],
+                    damage: 12857
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 1800
+                  }
+                }
+              }
             }
           ]
         },
@@ -3678,8 +3805,8 @@ export default defineEventHandler(async (event) => {
           default: true,
           stats: {
             type: "weapon",
-            antiship: 13120,
-            antiair: 636,
+            antiship: 15700,
+            antiair: 816,
             siege: 3075,
             hp: 19800
           },
@@ -3804,8 +3931,8 @@ export default defineEventHandler(async (event) => {
           name: `"Fortress" Battery System B`,
           stats: {
             type: "weapon",
-            antiship: 15986,
-            antiair: 216,
+            antiship: 18566,
+            antiair: 396,
             siege: 2880,
             hp: 19800
           },
@@ -3903,7 +4030,38 @@ export default defineEventHandler(async (event) => {
               target: "Small Ship",
               lockonEfficiency: 10,
               alpha: 200,
-              attributes: ["Anti-Aircraft Counterattack"]
+              attributes: ["Anti-Aircraft Counterattack"],
+              stats: {
+                attacksPerRound: [2, 1],
+                cooldown: 8,
+                lockOnTime: 4,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    priorities: [
+                      [1, "Destroyer"],
+                      [1, "Frigate"],
+                      [2, "Battleship"],
+                      [2, "Carrier"],
+                      [2, "Battlecruiser"],
+                      [2, "Cruiser"]
+                    ],
+                    damage: 17100
+                  },
+                  antiair: {
+                    position: 2,
+                    priorities: [
+                      [3, "Corvette"],
+                      [4, "Fighter"]
+                    ],
+                    damage: 810
+                  },
+                  siege: {
+                    position: 3,
+                    damage: 1800
+                  }
+                }
+              }
             },
             {
               type: "weapon",
@@ -3914,7 +4072,32 @@ export default defineEventHandler(async (event) => {
               target: "Aircraft",
               lockonEfficiency: 45,
               alpha: 10,
-              attributes: ["Anti-Aircraft Special Ammo", "Anti-Aircraft Counterattack"]
+              attributes: ["Anti-Aircraft Special Ammo", "Anti-Aircraft Counterattack"],
+              stats: {
+                duration: 3,
+                attacksPerRound: [1, 3],
+                cooldown: 3,
+                lockOnTime: 2,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ],
+                    damage: 120
+                  },
+                  antiair: {
+                    position: 1,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ],
+                    damage: 216
+                  }
+                }
+              }
             }
           ]
         },
@@ -3940,7 +4123,36 @@ export default defineEventHandler(async (event) => {
               target: "Aircraft",
               lockonEfficiency: null,
               alpha: 120,
-              attributes: ["Interception Capability", "Anti-Aircraft Counterattack"]
+              attributes: ["Interception Capability", "Anti-Aircraft Counterattack"],
+              stats: {
+                duration: 12,
+                attacksPerRound: [1, 12],
+                cooldown: 28,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ],
+                    damage: 5940
+                  },
+                  antiair: {
+                    position: 1,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ],
+                    damage: 680
+                  },
+                  siege: {
+                    position: 3,
+                    damage: 259
+                  }
+                }
+              }
             }
           ]
         },
@@ -4046,7 +4258,7 @@ export default defineEventHandler(async (event) => {
           stats: {
             type: "weapon",
             antiship: null,
-            antiair: 410,
+            antiair: 324,
             siege: null,
             hp: 19800
           },
@@ -4108,9 +4320,9 @@ export default defineEventHandler(async (event) => {
           default: true,
           stats: {
             type: "weapon",
-            antiship: 10875,
+            antiship: 10350,
             antiair: null,
-            siege: 3528,
+            siege: 3360,
             hp: 15750
           },
           subsystems: [
@@ -4219,7 +4431,30 @@ export default defineEventHandler(async (event) => {
               target: "Large Ship",
               lockonEfficiency: null,
               alpha: 850,
-              attributes: ["Crit"]
+              attributes: ["Crit"],
+              stats: {
+                duration: 2,
+                attacksPerRound: [1, 2],
+                cooldown: 16,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 11200,
+                    priorities: [
+                      [1, "Battleship"],
+                      [1, "Carrier"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"],
+                      [2, "Auxiliary Ship"]
+                    ]
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 2266
+                  }
+                }
+              }
             }
           ]
         },
@@ -4616,9 +4851,9 @@ export default defineEventHandler(async (event) => {
           default: true,
           stats: {
             type: "weapon",
-            antiship: 40628,
+            antiship: 27225,
             antiair: null,
-            siege: 8562,
+            siege: 5744,
             hp: 23400
           },
           subsystems: [
@@ -5018,9 +5253,9 @@ export default defineEventHandler(async (event) => {
           name: "Large Projectile Weapon System",
           stats: {
             type: "weapon",
-            antiship: 9948,
+            antiship: 9776,
             antiair: null,
-            siege: 2112,
+            siege: 2086,
             hp: 23400
           },
           subsystems: [
@@ -5276,8 +5511,8 @@ export default defineEventHandler(async (event) => {
           name: `Fortress Assault Railgun System`,
           stats: {
             type: "weapon",
-            antiship: 12000,
-            antiair: 319,
+            antiship: 11519,
+            antiair: 800,
             siege: 3150,
             hp: 18900
           },
@@ -5510,10 +5745,52 @@ export default defineEventHandler(async (event) => {
           ]
         },
         {
-          type: "unknown",
-          img: "/weapons/icons/unknown.png",
+          type: "known",
+          img: "/weapons/icons/cannon.png",
           system: "B3",
-          unknown: true
+          name: `"Colossus" Guard UAV System`,
+          stats: {
+            type: "weapon",
+            antiship: 7340,
+            antiair: null,
+            siege: 732,
+            hp: 19350
+          },
+          subsystems: [
+            {
+              type: "hanger",
+              count: 1,
+              title: `CFV-2`,
+              name: "Guard UAV Platform",
+              hanger: "Guard UAV",
+              capacity: 4,
+              attributes: null,
+              damageType: "Energy",
+              target: "Small Ship",
+              lockonEfficiency: null,
+              alpha: 65,
+              stats: {
+                duration: 6,
+                attacksPerRound: [1, 8],
+                cooldown: 11,
+                lockOnTime: 8,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 7340,
+                    priorities: [
+                      [1, "Destroyer"],
+                      [1, "Frigate"]
+                    ]
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 732
+                  }
+                }
+              }
+            }
+          ]
         },
         {
           type: "known",
@@ -6186,8 +6463,8 @@ export default defineEventHandler(async (event) => {
           name: `Anti-Aircraft Missile Platform`,
           stats: {
             type: "weapon",
-            antiship: 2868,
-            antiair: 372,
+            antiship: 2700,
+            antiair: 354,
             siege: null,
             hp: 25200
           },
@@ -6360,9 +6637,9 @@ export default defineEventHandler(async (event) => {
           default: true,
           stats: {
             type: "weapon",
-            antiship: null,
-            antiair: null,
-            siege: null,
+            antiship: 7752,
+            antiair: 2658,
+            siege: 774,
             hp: 24500
           },
           subsystems: [
@@ -6386,7 +6663,36 @@ export default defineEventHandler(async (event) => {
               target: "Aircraft",
               lockonEfficiency: null,
               alpha: 140,
-              attributes: ["UAV Cooperation", "Anti-Aircraft Lightweight Ammo"]
+              attributes: ["UAV Cooperation", "Anti-Aircraft Lightweight Ammo"],
+              stats: {
+                duration: 4,
+                attacksPerRound: [1, 4],
+                cooldown: 9,
+                lockOnTime: 8,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    damage: 7752,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ]
+                  },
+                  antiair: {
+                    position: 1,
+                    damage: 2658,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ]
+                  },
+                  siege: {
+                    position: 3,
+                    damage: 774
+                  }
+                }
+              }
             }
           ]
         },
@@ -6435,7 +6741,7 @@ export default defineEventHandler(async (event) => {
           stats: {
             type: "weapon",
             antiship: null,
-            antiair: null,
+            antiair: 5940,
             siege: null,
             hp: 24500
           },
@@ -6460,7 +6766,23 @@ export default defineEventHandler(async (event) => {
               target: "Aircraft",
               lockonEfficiency: null,
               alpha: 20,
-              attributes: ["UAV Aerial Cover Support", "Anti-Aircraft Counterattack"]
+              attributes: ["UAV Aerial Cover Support", "Anti-Aircraft Counterattack"],
+              stats: {
+                duration: 4,
+                attacksPerRound: [4, 3],
+                cooldown: 8,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiair: {
+                    position: 1,
+                    damage: 5940,
+                    priorities: [
+                      [1, "Fighter"],
+                      [2, "Corvette"]
+                    ]
+                  }
+                }
+              }
             }
           ]
         },
@@ -6487,7 +6809,30 @@ export default defineEventHandler(async (event) => {
               target: "Large Ship",
               lockonEfficiency: null,
               alpha: 320,
-              attributes: null
+              attributes: null,
+              stats: {
+                duration: 6,
+                attacksPerRound: [3, 1],
+                cooldown: 12,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 6200,
+                    priorities: [
+                      [1, "Battleship"],
+                      [1, "Carrier"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"],
+                      [2, "Auxiliary Ship"]
+                    ]
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 2240
+                  }
+                }
+              }
             },
             {
               type: "weapon",
@@ -6498,7 +6843,35 @@ export default defineEventHandler(async (event) => {
               target: "Small Ship",
               lockonEfficiency: 10,
               alpha: 100,
-              attributes: null
+              attributes: null,
+              stats: {
+                duration: 2,
+                attacksPerRound: [2, 1],
+                cooldown: 6,
+                lockOnTime: 4,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 4050,
+                    priorities: [
+                      [1, "Destroyer"],
+                      [1, "Frigate"]
+                    ]
+                  },
+                  antiair: {
+                    position: 2,
+                    damage: 472,
+                    priorities: [
+                      [2, "Corvette"],
+                      [3, "Fighter"]
+                    ]
+                  },
+                  siege: {
+                    position: 3,
+                    damage: 1575
+                  }
+                }
+              }
             }
           ]
         },
@@ -6524,7 +6897,28 @@ export default defineEventHandler(async (event) => {
               target: "Large Ship",
               lockonEfficiency: null,
               alpha: 400,
-              attributes: null
+              attributes: null,
+              stats: {
+                duration: 3,
+                cooldown: 4,
+                damageFrequency: 1,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 6857,
+                    priorities: [
+                      [1, "Carrier"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"]
+                    ]
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 548
+                  }
+                }
+              }
             },
             {
               type: "weapon",
@@ -6535,7 +6929,35 @@ export default defineEventHandler(async (event) => {
               target: "Aircraft",
               lockonEfficiency: 45,
               alpha: 35,
-              attributes: ["Anti-Aircraft Counterattack"]
+              attributes: ["Anti-Aircraft Counterattack"],
+              stats: {
+                duration: 2,
+                attacksPerRound: [1, 2],
+                cooldown: 4,
+                lockOnTime: 4,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    damage: 2000,
+                    priorities: [
+                      [3, "Destroyer"],
+                      [3, "Frigate"]
+                    ]
+                  },
+                  antiair: {
+                    position: 1,
+                    damage: 252,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"]
+                    ]
+                  },
+                  siege: {
+                    position: 3,
+                    damage: 280
+                  }
+                }
+              }
             }
           ]
         },
@@ -6598,7 +7020,30 @@ export default defineEventHandler(async (event) => {
               target: "Small Ship",
               lockonEfficiency: null,
               alpha: 350,
-              attributes: null
+              attributes: null,
+              stats: {
+                duration: 4,
+                attacksPerRound: [2, 1],
+                cooldown: 16,
+                lockOnTime: 6,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 4080,
+                    priorities: [
+                      [1, "Destroyer"],
+                      [1, "Frigate"],
+                      [2, "Carrier"],
+                      [2, "Battlecruiser"],
+                      [2, "Cruiser"]
+                    ]
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 630
+                  }
+                }
+              }
             },
             {
               type: "weapon",
@@ -6609,7 +7054,27 @@ export default defineEventHandler(async (event) => {
               target: "Small Ship",
               lockonEfficiency: null,
               alpha: 140,
-              attributes: null
+              attributes: null,
+              stats: {
+                duration: 2,
+                attacksPerRound: [1, 1],
+                cooldown: 8,
+                lockOnTime: 4,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 1560,
+                    priorities: [
+                      [1, "Destroyer"],
+                      [1, "Frigate"]
+                    ]
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 252
+                  }
+                }
+              }
             }
           ]
         },
@@ -6635,7 +7100,30 @@ export default defineEventHandler(async (event) => {
               target: "Small Ship",
               lockonEfficiency: null,
               alpha: 145,
-              attributes: null
+              attributes: null,
+              stats: {
+                duration: 6,
+                attacksPerRound: [3, 1],
+                cooldown: 16,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 1104,
+                    priorities: [
+                      [1, "Destroyer"],
+                      [1, "Frigate"],
+                      [2, "Carrier"],
+                      [2, "Battlecruiser"],
+                      [2, "Cruiser"]
+                    ]
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 225
+                  }
+                }
+              }
             },
             {
               type: "weapon",
@@ -6646,7 +7134,24 @@ export default defineEventHandler(async (event) => {
               target: "Aircraft",
               lockonEfficiency: 60,
               alpha: 35,
-              attributes: ["Interception Capability", "Anti-Aircraft Counterattack"]
+              attributes: ["Interception Capability", "Anti-Aircraft Counterattack"],
+              stats: {
+                duration: 12,
+                attacksPerRound: [2, 12],
+                cooldown: 35,
+                lockOnTime: 4,
+                targetPriority: {
+                  antiair: {
+                    position: 1,
+                    damage: 257,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ]
+                  }
+                }
+              }
             }
           ]
         },
@@ -7418,7 +7923,7 @@ export default defineEventHandler(async (event) => {
             type: "weapon",
             antiship: 8888,
             antiair: 1021,
-            siege: 630,
+            siege: 588,
             hp: 27000
           },
           subsystems: [
@@ -7431,7 +7936,39 @@ export default defineEventHandler(async (event) => {
               target: "Small Ship",
               lockonEfficiency: 10,
               alpha: 220,
-              attributes: ["Anti-Aircraft Counterattack"]
+              attributes: ["Anti-Aircraft Counterattack"],
+              stats: {
+                duration: 8,
+                attacksPerRound: [1, 8],
+                cooldown: 35,
+                lockOnTime: 4,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 4688,
+                    priorities: [
+                      [1, "Destroyer"],
+                      [1, "Frigate"],
+                      [2, "Battleship"],
+                      [2, "Carrier"],
+                      [2, "Battlecruiser"],
+                      [2, "Cruiser"]
+                    ]
+                  },
+                  antiair: {
+                    position: 2,
+                    damage: 589,
+                    priorities: [
+                      [3, "Corvette"],
+                      [4, "Fighter"]
+                    ]
+                  },
+                  siege: {
+                    position: 3,
+                    damage: 252
+                  }
+                }
+              }
             },
             {
               type: "weapon",
@@ -7442,7 +7979,35 @@ export default defineEventHandler(async (event) => {
               target: "Aircraft",
               lockonEfficiency: null,
               alpha: 80,
-              attributes: ["Anti-Aircraft Counterattack"]
+              attributes: ["Anti-Aircraft Counterattack"],
+              stats: {
+                attacksPerRound: [2, 1],
+                cooldown: 8,
+                lockOnTime: 4,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    damage: 4200,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ]
+                  },
+                  antiair: {
+                    position: 1,
+                    damage: 432,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ]
+                  },
+                  siege: {
+                    position: 3,
+                    damage: 336
+                  }
+                }
+              }
             }
           ]
         },
@@ -7526,7 +8091,7 @@ export default defineEventHandler(async (event) => {
             type: "weapon",
             antiship: null,
             antiair: null,
-            siege: 6652,
+            siege: 6048,
             hp: 24750
           },
           subsystems: [

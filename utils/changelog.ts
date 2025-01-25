@@ -393,7 +393,8 @@ export const changelog: Readonly<Changelog[]> = [
       "Added Inostrancevia, Tempel I, and Shield of Plutus to RA Helper",
       "Added Shield of Plutus to Module Library",
       "Fixed RA Helper search function not properly finding optimal path",
-      "Removed Equipment Encyclopedia"
+      "Removed Equipment Encyclopedia",
+      "Improved icons in Module Library"
     ]
   }
 ];

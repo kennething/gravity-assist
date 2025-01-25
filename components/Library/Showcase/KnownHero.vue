@@ -1,10 +1,10 @@
 <template>
   <div class="mt-2 flex w-full flex-col items-center justify-center gap-2">
-    <div class="flex w-full items-center justify-around">
-      <div class="flex flex-col items-center justify-center px-10">
+    <div class="flex w-full flex-col items-center justify-around xl:flex-row">
+      <div class="mb-3 flex flex-col items-center justify-center px-10 xl:mb-0">
         <ClientOnly>
-          <p class="text-lg">
-            <span class="font-medium">{{ mod.stats.hp.toLocaleString() }}</span> System HP
+          <p class="text-lg transition duration-500">
+            <span class="font-medium transition duration-500">{{ mod.stats.hp.toLocaleString() }}</span> System HP
           </p>
         </ClientOnly>
         <div class="du-label flex w-full select-auto items-center justify-start gap-2">
@@ -21,18 +21,21 @@
         </div>
       </div>
 
-      <div class="flex grow items-center justify-center gap-2 pr-10">
-        <div class="flex grow flex-col items-center justify-center" v-for="(stat, name) in stats">
-          <div class="relative h-40 w-6 overflow-hidden rounded-full bg-neutral-300">
-            <aside class="absolute bottom-0 left-0 w-full rounded-t-lg bg-neutral-500 transition-all duration-1000" :style="{ height: calculateBarFill(stat) + '%' }"></aside>
+      <div class="flex w-full grow-0 flex-col items-center justify-center gap-2 xl:w-auto xl:grow xl:flex-row xl:pr-10">
+        <div class="flex w-full grow-0 items-center justify-around gap-2 xl:w-auto xl:grow xl:flex-col xl:justify-center" v-for="(stat, name) in stats">
+          <div class="relative h-6 w-40 overflow-hidden rounded-full bg-neutral-300 transition duration-500 xl:h-40 xl:w-6 dark:bg-neutral-700">
+            <aside class="absolute left-0 top-0 block h-full rounded-r-lg bg-neutral-500 transition-all duration-1000 xl:hidden" :style="{ width: calculateBarFill(stat) + '%' }"></aside>
+            <aside class="absolute bottom-0 left-0 hidden w-full rounded-t-lg bg-neutral-500 transition-all duration-1000 xl:block" :style="{ height: calculateBarFill(stat) + '%' }"></aside>
           </div>
-          <p class="mt-2 text-sm">{{ statNames[name] }}</p>
-          <ClientOnly>
-            <h5 class="inline-flex items-center justify-center gap-1 font-semibold">
-              {{ ((stat as string)?.toLocaleString() ?? 0) + (name === "energyShield" ? "%" : "") }}
-              <img class="size-4 invert dark:invert-0" :src="`/weapons/stats/${name}.svg`" aria-hidden="true" />
-            </h5>
-          </ClientOnly>
+          <div class="flex-col items-center justify-center">
+            <p class="text-sm transition duration-500">{{ statNames[name] }}</p>
+            <ClientOnly>
+              <h5 class="inline-flex items-center justify-center gap-1 font-semibold transition duration-500">
+                {{ ((stat as string)?.toLocaleString() ?? 0) + (name === "energyShield" ? "%" : "") }}
+                <img class="size-4 transition duration-500 dark:invert" :src="`/weapons/stats/${name}.svg`" aria-hidden="true" />
+              </h5>
+            </ClientOnly>
+          </div>
         </div>
       </div>
     </div>
@@ -50,9 +53,9 @@ const stats = computed(() => {
 });
 
 const statNames = {
-  antiship: "Anti-Ship",
-  antiair: "Anti-Air",
-  siege: "Siege",
+  antiship: "Anti-Ship Fire",
+  antiair: "Air Defense",
+  siege: "Siege Fire",
   extraHP: "HP",
   armor: "Armor",
   energyShield: "Energy Shield",

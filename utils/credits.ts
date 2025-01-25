@@ -37,6 +37,11 @@ export const credits: Readonly<Credit[]> = [
     dateAdded: "2024-06-25"
   },
   {
+    name: "Sector",
+    specific: ["Ediacaran B3"],
+    dateAdded: "2025-01-24"
+  },
+  {
     name: "Bullet",
     specific: ["Color Generator feedback", "Color suggestions"],
     dateAdded: "2023-11-27"
@@ -47,14 +52,14 @@ export const credits: Readonly<Credit[]> = [
     dateAdded: "2024-02-16"
   },
   {
-    name: "LunatiCorp",
-    specific: ["Eternal Heavens A2"],
-    dateAdded: "2024-03-01"
-  },
-  {
     name: "Spy Shark",
     specific: ["Eternal Heavens B1", "Eternal Heavens C1", "Eternal Heavens C2"],
     dateAdded: "2024-03-13"
+  },
+  {
+    name: "LunatiCorp",
+    specific: ["Eternal Heavens A2"],
+    dateAdded: "2024-03-01"
   },
   {
     name: "kitty7hell",

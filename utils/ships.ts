@@ -229,7 +229,7 @@ interface UAVSubsystem extends Subsystem {
 }
 
 export interface AttackUAVSubsystem extends UAVSubsystem {
-  hanger: "Area-Denial Anti-Aircraft UAV" | "Cooperative Offensive UAV" | "Tactical UAV" | "Siege UAV" | "Military UAV";
+  hanger: "Area-Denial Anti-Aircraft UAV" | "Cooperative Offensive UAV" | "Tactical UAV" | "Siege UAV" | "Military UAV" | "Guard UAV";
   damageType: "Projectile" | "Energy";
   target: "Building" | "Aircraft" | "Small Ship" | "Large Ship";
   /** Percentage represented as a number between 0 and 100 */

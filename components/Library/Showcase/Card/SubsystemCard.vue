@@ -1,69 +1,78 @@
 <template>
-  <div class="flex items-stretch justify-between rounded-xl bg-neutral-100/25 p-4" :class="priority ? 'w-full' : 'grow'">
-    <div class="flex flex-col items-start justify-start" :class="priority ? 'w-[45%]' : 'w-full'">
-      <p class="text-neutral-800">{{ subsystem.name }}</p>
-      <h5 class="text-lg font-medium">
-        <span class="text-sm font-normal text-yellow-600">x{{ subsystem.count }}</span>
+  <div class="flex flex-col items-stretch justify-between rounded-xl bg-neutral-100/25 p-4 transition duration-500 xl:flex-row dark:bg-neutral-900" :class="priority ? 'w-full' : 'grow'">
+    <div class="flex w-full flex-col items-start justify-start" :class="{ 'xl:w-[45%]': priority }">
+      <p class="text-left text-neutral-800 transition duration-500 dark:text-neutral-300">{{ subsystem.name }}</p>
+      <h5 class="text-lg font-medium transition duration-500">
+        <span class="text-sm font-normal text-yellow-600 transition duration-500 dark:text-yellow-400">x{{ subsystem.count }}</span>
         {{ subsystem.title }}
       </h5>
 
       <h4 class="mt-2 inline-flex items-center justify-center gap-1" v-if="priority && priority[0][0]">
-        <img class="size-4 invert dark:invert-0" :src="`/weapons/stats/${priority[0][0]}.svg`" aria-hidden="true" />
+        <img class="size-4 transition duration-500 dark:invert" :src="`/weapons/stats/${priority[0][0]}.svg`" aria-hidden="true" />
         <ClientOnly>
           <span>
-            <span class="text-lg font-medium text-yellow-600">{{ priority[0][2]?.toLocaleString() }}</span
-            ><span class="text-sm text-yellow-600">/min</span>
-            <span class="ms-1 text-sm">({{ categoryNames[priority[0][0]] }})</span>
+            <span class="text-lg font-medium text-yellow-600 transition duration-500 dark:text-yellow-400">{{ priority[0][2]?.toLocaleString() }}</span
+            ><span class="text-sm text-yellow-600 transition duration-500 dark:text-yellow-400">/min</span>
+            <span class="ms-1 text-sm transition duration-500">({{ categoryNames[priority[0][0]] }})</span>
           </span>
         </ClientOnly>
       </h4>
 
       <div class="mt-3 flex w-full flex-col items-center justify-center gap-1">
         <div class="flex w-full items-center justify-between" v-for="(property, name) in properties">
-          <h5 class="inline-flex items-center justify-center gap-1 font-medium">
-            <img class="size-6 invert dark:invert-0" :src="`/weapons/types/${propertyNames[name][1]}.svg`" aria-hidden="true" />
+          <h5 class="inline-flex items-center justify-center gap-1 text-left font-medium transition duration-500">
+            <img class="size-6 transition duration-500 dark:invert" :src="`/weapons/types/${propertyNames[name][1]}.svg`" aria-hidden="true" />
             {{ propertyNames[name][0] }}
           </h5>
           <ClientOnly>
-            <p>{{ ((property ?? 0) as number).toLocaleString() + (name === "lockonEfficiency" ? "%" : "") }}</p>
+            <p class="text-right transition duration-500">{{ ((property ?? 0) as number).toLocaleString() + (name === "lockonEfficiency" ? "%" : "") }}</p>
           </ClientOnly>
         </div>
       </div>
 
       <div class="mt-3 flex w-full flex-col items-center justify-center gap-1" v-if="stats">
         <div class="flex w-full items-center justify-between" v-for="(property, name) in stats">
-          <h5 class="inline-flex items-center justify-center gap-1 font-medium">
-            <!-- TODO: add icons -->
-            <img class="size-6 invert dark:invert-0" :src="`/weapons/types/${propertyNames[name][1]}.svg`" aria-hidden="true" />
+          <h5 class="inline-flex items-center justify-center gap-1 text-left font-medium transition duration-500">
+            <img class="size-6 transition duration-500 dark:invert" :src="`/weapons/types/${propertyNames[name][1]}.svg`" aria-hidden="true" />
             {{ propertyNames[name][0] }}
           </h5>
-          <p v-if="Array.isArray(property)">{{ property[0] }} x {{ property[1] }}</p>
-          <p v-else>{{ (property ?? 0) + ((name as string) === "damageFrequency" ? " time(s)" : "s") }}</p>
+          <p class="text-right transition duration-500" v-if="Array.isArray(property)">{{ property[0] }} x {{ property[1] }}</p>
+          <p class="text-right transition duration-500" v-else>{{ (property ?? 0) + ((name as string) === "damageFrequency" ? " time(s)" : "s") }}</p>
+        </div>
+      </div>
+
+      <div class="mt-4 flex w-full flex-col items-start justify-center gap-1" v-if="subsystem.attributes">
+        <h4 class="text-lg font-medium transition duration-500">Attributes</h4>
+        <div class="tooltip-container flex items-start justify-center gap-1" v-for="attribute in subsystem.attributes">
+          <p class="transition duration-500">{{ attribute }}</p>
+          <span class="tooltip-block text-left text-xs text-neutral-800 transition duration-500 dark:text-neutral-300">{{ attributes[attribute] }}</span>
+          <div class="tooltip du-tooltip cursor-help" :data-tip="attributes[attribute]">
+            <img class="size-4 transition duration-500 dark:invert" src="/ui/info.svg" alt="Hover for attribute description" />
+          </div>
         </div>
       </div>
     </div>
 
-    <aside class="w-1.5 rounded-full bg-neutral-100" v-if="priority"></aside>
+    <aside class="my-3 min-h-1.5 w-full rounded-full bg-neutral-100 transition duration-500 xl:my-0 xl:w-1.5 dark:bg-neutral-800" v-if="priority"></aside>
 
-    <div class="flex w-[45%] flex-col items-end justify-start" v-if="priority">
-      <h5 class="text-lg font-medium">{{ priority[0][0] ? "Attack" : "System" }} Priority</h5>
+    <div class="flex w-full flex-col items-start justify-start xl:w-[45%] xl:items-end" v-if="priority">
+      <h5 class="text-lg font-medium transition duration-500">{{ priority[0][0] ? "Attack" : "System" }} Priority</h5>
 
       <div class="mt-3 flex w-full flex-col items-center justify-center gap-2">
         <div class="flex w-full flex-col items-center justify-center" v-for="[name, priorities, damage] in priority">
-          <div class="flex w-full items-center justify-between rounded-t-xl bg-neutral-200 px-3 py-1 last:rounded-xl" v-if="name">
-            <h6 class="inline-flex items-center justify-center gap-1">
-              <img class="size-4 invert dark:invert-0" :src="`/weapons/stats/${name}.svg`" aria-hidden="true" />
-              {{ categoryNames[name] }} Fire
+          <div class="flex w-full items-center justify-between rounded-t-xl bg-neutral-200 px-3 py-1 transition duration-500 last:rounded-xl dark:bg-neutral-700" v-if="name">
+            <h6 class="inline-flex items-center justify-center gap-1 transition duration-500">
+              <img class="size-4 transition duration-500 dark:invert" :src="`/weapons/stats/${name}.svg`" aria-hidden="true" />
+              {{ categoryNames[name] }}
             </h6>
             <ClientOnly>
-              <p>{{ damage?.toLocaleString() }}/min</p>
+              <p class="transition duration-500">{{ damage?.toLocaleString() }}/min</p>
             </ClientOnly>
           </div>
-          <div class="flex w-full items-center justify-center gap-1 bg-neutral-200/25 px-3 last:rounded-b-xl last:pb-1" v-for="target in priorities">
-            <h5 class="select-none">{{ String(target[0]).padStart(2, "0") }}</h5>
-            <!-- TODO: add ship type icons -->
-            <img class="size-4" src="" alt="" />
-            <p class="grow text-left">{{ target[1] }}</p>
+          <div class="flex w-full items-center justify-center gap-1 bg-neutral-200/25 px-3 transition duration-500 last:rounded-b-xl last:pb-1 dark:bg-neutral-700/50" v-for="target in priorities">
+            <h5 class="select-none text-neutral-700 transition duration-500 dark:text-neutral-300">{{ String(target[0]).padStart(2, "0") }}</h5>
+            <img class="size-4 transition duration-500 dark:invert" :src="`/ships/classes/${target[1].toLowerCase()}.svg`" :alt="target[1]" />
+            <p class="grow text-left transition duration-500">{{ target[1] }}</p>
           </div>
         </div>
       </div>
@@ -106,9 +115,9 @@ const stats = computed(() => {
 });
 
 const categoryNames: Readonly<Record<string, string>> = {
-  antiship: "Anti-Ship",
-  antiair: "Anti-Air",
-  siege: "Siege"
+  antiship: "Anti-Ship Fire",
+  antiair: "Air Defense",
+  siege: "Siege Fire"
 };
 
 /** 2d array of [`name`, `priorities`, `damage`] */
@@ -124,4 +133,24 @@ const priority = computed<[string | null, [number, string][], number | null][] |
 });
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.tooltip {
+  @apply inline-block;
+}
+
+.tooltip-block {
+  @apply hidden;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .tooltip-container {
+    @apply flex-col;
+  }
+  .tooltip {
+    @apply hidden;
+  }
+  .tooltip-block {
+    @apply block;
+  }
+}
+</style>
