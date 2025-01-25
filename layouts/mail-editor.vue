@@ -8,6 +8,7 @@
       <div role="tablist" class="du-tabs du-tabs-bordered">
         <NuxtLink
           v-for="tab in tabs"
+          :key="Symbol(tab.name)"
           type="button"
           class="du-tab flex items-center justify-center gap-2 transition duration-500 dark:text-white"
           :class="{ 'du-tab-active': '/modules/mail-editor' + tab.route === route.path }"

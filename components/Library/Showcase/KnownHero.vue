@@ -22,7 +22,7 @@
       </div>
 
       <div class="flex w-full grow-0 flex-col items-center justify-center gap-2 xl:w-auto xl:grow xl:flex-row xl:pr-10">
-        <div class="flex w-full grow-0 items-center justify-around gap-2 xl:w-auto xl:grow xl:flex-col xl:justify-center" v-for="(stat, name) in stats">
+        <div v-for="(stat, name) in stats" class="flex w-full grow-0 items-center justify-around gap-2 xl:w-auto xl:grow xl:flex-col xl:justify-center">
           <div class="relative h-6 w-40 overflow-hidden rounded-full bg-neutral-300 transition duration-500 xl:h-40 xl:w-6 dark:bg-neutral-700">
             <aside class="absolute left-0 top-0 block h-full rounded-r-lg bg-neutral-500 transition-all duration-1000 xl:hidden" :style="{ width: calculateBarFill(stat) + '%' }"></aside>
             <aside class="absolute bottom-0 left-0 hidden w-full rounded-t-lg bg-neutral-500 transition-all duration-1000 xl:block" :style="{ height: calculateBarFill(stat) + '%' }"></aside>
@@ -43,11 +43,10 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  mod: WeaponModule | PropulsionModule | MiscModule;
-}>();
+const props = defineProps<{ mod: WeaponModule | PropulsionModule | MiscModule }>();
 
 const stats = computed(() => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { type, hp, ...otherStats } = props.mod.stats;
   return otherStats;
 });

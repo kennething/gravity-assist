@@ -1,15 +1,3 @@
-export type ShipSorter = (shipA: BlueprintAllShip, shipB: BlueprintAllShip) => number;
-export type ShipFilter = (ship: BlueprintAllShip) => boolean;
-
-export type BlueprintAllShip =
-  | BlueprintFighter
-  | BlueprintCorvette
-  | BlueprintCapitalShip
-  | BlueprintMediumFighterCapitalShip
-  | BlueprintLargeFighterCapitalShip
-  | BlueprintCorvetteCapitalShip
-  | BlueprintSuperCapitalShip;
-
 export interface BlueprintFighter extends Fighter {
   unlocked: boolean;
   techPoints: number;
@@ -68,3 +56,15 @@ export interface BlueprintSuperCapitalShip extends SuperCapitalShip {
   mirrorTechPoints: boolean;
   modules: (BlueprintUnknownModule | BlueprintWeaponModule | BlueprintPropulsionModule | BlueprintMiscModule)[];
 }
+
+export type BlueprintAllShip =
+  | BlueprintFighter
+  | BlueprintCorvette
+  | BlueprintCapitalShip
+  | BlueprintMediumFighterCapitalShip
+  | BlueprintLargeFighterCapitalShip
+  | BlueprintCorvetteCapitalShip
+  | BlueprintSuperCapitalShip;
+
+export type ShipSorter = (shipA: BlueprintAllShip, shipB: BlueprintAllShip) => number;
+export type ShipFilter = (ship: BlueprintAllShip) => boolean;

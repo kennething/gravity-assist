@@ -4,8 +4,8 @@
       <ul class="w-full space-y-2 font-medium">
         <li v-for="button in navButtons" :key="button.displayName">
           <button
-            type="button"
             v-if="button.disabled"
+            type="button"
             disabled
             class="group flex w-full cursor-not-allowed items-center rounded-lg bg-neutral-200 p-2 text-neutral-900 transition duration-500 dark:bg-neutral-700"
           >
@@ -32,7 +32,7 @@
         </li>
 
         <Transition name="alert">
-          <div class="mt-6 rounded-lg bg-blue-50 p-4 transition duration-500 dark:bg-blue-900" role="alert" v-if="alert && alert.show">
+          <div v-if="alert && alert.show" class="mt-6 rounded-lg bg-blue-50 p-4 transition duration-500 dark:bg-blue-900" role="alert">
             <div class="mb-3 flex items-center">
               <span class="me-2 rounded bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 transition duration-500 dark:bg-orange-200 dark:text-orange-900">{{ alert.tag }}</span>
               <button

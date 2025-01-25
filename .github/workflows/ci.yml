@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  files:
+    name: Get changed files
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.changed_files.outputs.only_changed == 'true' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 100
+
+      - name: Get changed files
+        id: changed_files
+        uses: tj-actions/changed-files@v45.0.6
+        with:
+          files: |
+            assets/**
+            public/**
+            .vscode/**
+            .github/**
+            !.github/workflows/ci.yml
+            **.md
+
+  lint:
+    needs: files
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    name: Lint
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Node.js version to 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Lint
+        run: npm run lint
+
+  test:
+    needs: files
+    if: needs.files.outputs.should_skip != 'true'
+
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    name: Build & Test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Node.js version to 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm run test
+        env:
+          NUXT_BASE64_SERVICE_ACCOUNT: ""
+          NUXT_PUBLIC_BASE_URL: ""

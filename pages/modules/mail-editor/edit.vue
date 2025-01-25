@@ -12,26 +12,26 @@
     </div>
 
     <Transition name="menu">
-      <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-show="showMailTemplates" @click="showMailTemplates = false">
+      <div v-show="showMailTemplates" class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" @click="showMailTemplates = false">
         <MailTemplates @template="(template) => (selectedMailTemplate = template)" />
       </div>
     </Transition>
 
     <div v-if="loading" class="fo-skeleton fo-skeleton-animated h-96 w-full rounded-2xl shadow transition duration-500 md:w-[25rem] lg:w-[40rem] xl:w-[50rem]"></div>
-    <MailEditor v-else @output="(text) => (outputText = text)" @output-ops="(ops) => (outputOps = ops)" :clear-text="isClearText" :template="selectedMailTemplate" />
+    <MailEditor v-else :clear-text="isClearText" :template="selectedMailTemplate" @output="(text) => (outputText = text)" @output-ops="(ops) => (outputOps = ops)" />
 
     <div class="flex items-center justify-center gap-5">
       <MailButtonsClear :show-dialog="showClearDialog" @toggle-dialog="(val) => (showClearDialog = val)" @clear-text="isClearText = true" @click="deselectOthers('clear')" />
-      <MailButtonsCopy :show-dialog="showCopyDialog" @toggle-dialog="(val) => (showCopyDialog = val)" :output-text="outputText" @click="deselectOthers('copy')" />
+      <MailButtonsCopy :show-dialog="showCopyDialog" :output-text="outputText" @toggle-dialog="(val) => (showCopyDialog = val)" @click="deselectOthers('copy')" />
       <MailButtonsSave
         :show-dialog="showSaveDialog"
-        @toggle-dialog="(val) => (showSaveDialog = val)"
         :output-ops="outputOps"
         :saved-mail="savedMail"
+        @toggle-dialog="(val) => (showSaveDialog = val)"
         @new-query="(uid, id) => getMail(uid, id)"
         @click="deselectOthers('save')"
       />
-      <MailButtonsShare :show-dialog="showShareDialog" @toggle-dialog="(val) => (showShareDialog = val)" :saved-mail="savedMail" @click="deselectOthers('share')" />
+      <MailButtonsShare :show-dialog="showShareDialog" :saved-mail="savedMail" @toggle-dialog="(val) => (showShareDialog = val)" @click="deselectOthers('share')" />
     </div>
 
     <div
@@ -52,9 +52,7 @@
 <script setup lang="ts">
 import type { Op } from "quill";
 
-definePageMeta({
-  layout: "mail-editor"
-});
+definePageMeta({ layout: "mail-editor" });
 
 const route = useRoute();
 
@@ -96,10 +94,6 @@ watch(selectedMailTemplate, async (val) => {
   selectedMailTemplate.value = undefined;
 });
 
-onMounted(async () => {
-  getMail();
-});
-
 async function getMail(uid?: string, id?: string) {
   const userQuery = uid ?? route.query.u;
   const idQuery = id ?? route.query.id;
@@ -115,8 +109,9 @@ async function getMail(uid?: string, id?: string) {
     }
   }
 }
+onMounted(getMail);
 
-const dialogButtons: Record<string, Ref<boolean>> = {
+const dialogButtons: Readonly<Record<string, Ref<boolean>>> = {
   clear: showClearDialog,
   save: showSaveDialog
 };

@@ -18,7 +18,7 @@
           :raw-data="data"
           :ship="selectedShip"
           :chance="selectedShipChance"
-          @bestPath="(ship) => selectShip(ship, true)"
+          @best-path="(ship) => selectShip(ship, true)"
         />
       </div>
       <div class="flex flex-col items-center justify-center gap-2">
@@ -67,15 +67,7 @@ useSeoMeta({
       : "/ships/solar_whale.png")
 });
 
-watch(
-  () => route.query,
-  () => {
-    const shipName = route.query.shn as string;
-    const shipVariant = route.query.shv as string;
-    if (shipName && shipVariant) selectedShip.value = findShip(data.value, undefined, shipName, shipVariant);
-    handleQueries();
-  }
-);
+const selectedShip = ref<AllShip>();
 
 const userStore = useUserStore();
 const data = computed(() => {
@@ -88,22 +80,33 @@ const data = computed(() => {
   else {
     const autosave = localStorage.getItem("rahelper");
     if (autosave) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [x, y, z, name, variant] = JSON.parse(autosave) as [number, number, number, string | null, string | null];
       if (name && variant) selectedShip.value = findShip(shipData, undefined, name, variant);
     }
   }
   return shipData;
 });
+const filteredData = computed(() => {
+  if (!data.value) return [];
 
-onMounted(() => {
-  if (handleQueries()) return;
-  const autosave = localStorage.getItem("rahelper");
-  if (autosave) {
-    const [manufacturer, direction, scope] = JSON.parse(autosave) as [number, number, number, string | null, string | null];
-    if (manufacturer >= 0 && manufacturer < manufacturers.length) selectedManufacturer.value = manufacturer;
-    if (direction >= 0 && direction < directions.length) selectedDirection.value = direction;
-    if (scope >= 0 && scope < scopes.length) selectedScope.value = scope;
-  }
+  const manufacturer = selectedManufacturerValue.value;
+  const direction = selectedDirectionValue.value;
+  const scope = selectedScopeValue.value;
+
+  return data.value.filter((ship) => {
+    const manufacturerCheck = manufacturer === "Empty" ? true : ship.manufacturer === manufacturer;
+    const directionCheck = direction === "Empty" ? true : ship.direction.includes(direction);
+    const scopeCheck = scope === "Empty" ? true : ship.scope === scope;
+
+    return manufacturerCheck && directionCheck && scopeCheck;
+  });
+});
+
+const selectedShipChance = computed(() => {
+  if (!selectedShip.value) return 0;
+  if (!findShip(filteredData.value, selectedShip.value)) return -1;
+  return ((selectedShip.value?.weight ?? 0) / filteredData.value.reduce((total, ship) => total + ship.weight, 0)) * 100;
 });
 
 function handleQueries() {
@@ -123,27 +126,25 @@ function handleQueries() {
   return true;
 }
 
-const filteredData = computed(() => {
-  if (!data.value) return [];
+watch(
+  () => route.query,
+  () => {
+    const shipName = route.query.shn as string;
+    const shipVariant = route.query.shv as string;
+    if (shipName && shipVariant) selectedShip.value = findShip(data.value, undefined, shipName, shipVariant);
+    handleQueries();
+  }
+);
 
-  const manufacturer = selectedManufacturerValue.value;
-  const direction = selectedDirectionValue.value;
-  const scope = selectedScopeValue.value;
-
-  return data.value.filter((ship) => {
-    const manufacturerCheck = manufacturer === "Empty" ? true : ship.manufacturer === manufacturer;
-    const directionCheck = direction === "Empty" ? true : ship.direction.includes(direction);
-    const scopeCheck = scope === "Empty" ? true : ship.scope === scope;
-
-    return manufacturerCheck && directionCheck && scopeCheck;
-  });
-});
-
-const selectedShip = ref<AllShip>();
-const selectedShipChance = computed(() => {
-  if (!selectedShip.value) return 0;
-  if (!findShip(filteredData.value, selectedShip.value)) return -1;
-  return ((selectedShip.value?.weight ?? 0) / filteredData.value.reduce((total, ship) => total + ship.weight, 0)) * 100;
+onMounted(() => {
+  if (handleQueries()) return;
+  const autosave = localStorage.getItem("rahelper");
+  if (autosave) {
+    const [manufacturer, direction, scope] = JSON.parse(autosave) as [number, number, number, string | null, string | null];
+    if (manufacturer >= 0 && manufacturer < manufacturers.length) selectedManufacturer.value = manufacturer;
+    if (direction >= 0 && direction < directions.length) selectedDirection.value = direction;
+    if (scope >= 0 && scope < scopes.length) selectedScope.value = scope;
+  }
 });
 
 function handleOptionChange(type: "manufacturer" | "direction" | "scope", next: number) {
@@ -154,7 +155,7 @@ function handleOptionChange(type: "manufacturer" | "direction" | "scope", next: 
   };
   options[type].value = next;
   localStorage.setItem("rahelper", JSON.stringify([selectedManufacturer.value, selectedDirection.value, selectedScope.value, selectedShip.value?.name, selectedShip.value?.variant]));
-  router.push({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
+  void router.push({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
 }
 
 function selectShip(ship: AllShip | undefined, setPath = false, manualData?: AllShip[]) {
@@ -169,7 +170,7 @@ function selectShip(ship: AllShip | undefined, setPath = false, manualData?: All
   }
 
   localStorage.setItem("rahelper", JSON.stringify([selectedManufacturer.value, selectedDirection.value, selectedScope.value, selectedShip.value?.name, selectedShip.value?.variant]));
-  router.push({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
+  void router.push({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
 }
 </script>
 

@@ -7,11 +7,10 @@
           <img class="size-5 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
         </span>
         <input
-          ref="searchInput"
+          v-model="search"
           type="text"
           class="fo-input grow rounded-e-xl text-left text-black transition duration-500 placeholder:transition placeholder:duration-500 dark:text-white dark:placeholder:text-neutral-300"
           placeholder="Search"
-          v-model="search"
         />
         <div class="du-tooltip fo-input-group-text p-0" data-tip="Clear" :class="search ? 'visible' : 'invisible'">
           <button tabindex="-1" class="fo-btn fo-btn-circle fo-btn-text rounded-xl" type="button" @click="search = ''">
@@ -24,13 +23,12 @@
           <p class="mb-2">Recently searched</p>
           <div class="flex w-full flex-col items-start justify-center gap-1" role="listbox">
             <button
-              ref="searchButton"
+              v-for="(ship, index) in recentlySearched.slice(0, 4)"
               type="button"
               class="flex w-full items-center justify-start gap-3 rounded-xl py-0.5 hover:bg-neutral-100/50 focus:bg-neutral-100/50"
-              v-for="(ship, index) in recentlySearched.slice(0, 4)"
-              @click="selectShip(ship)"
               :data-ship-name="ship.name"
               :data-ship-variant="ship.variant"
+              @click="selectShip(ship)"
               @focus="emit('focusButton', index)"
             >
               <img class="w-16" :src="ship.img" :alt="ship.name" />
@@ -41,17 +39,16 @@
           </div>
         </div>
 
-        <div class="flex w-full flex-col items-start justify-center gap-1" v-else>
+        <div v-else class="flex w-full flex-col items-start justify-center gap-1">
           <p v-if="filteredData.length === 0" class="text-sm italic text-neutral-700/75 dark:text-neutral-300">No results. Maybe search for something else?</p>
           <button
-            ref="searchButton"
+            v-for="(ship, index) in filteredData.slice(0, 4)"
+            v-else
             type="button"
             class="flex w-full items-center justify-start gap-3 rounded-xl py-0.5 hover:bg-neutral-100/50 focus:bg-neutral-100/50"
-            v-else
-            v-for="(ship, index) in filteredData.slice(0, 4)"
-            @click="selectShip(ship)"
             :data-ship-name="ship.name"
             :data-ship-variant="ship.variant"
+            @click="selectShip(ship)"
             @focus="emit('focusButton', index)"
           >
             <img class="w-16" :src="ship.img" :alt="ship.name" />
@@ -67,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   recentlySearched: AllShip[];
   filteredData: AllShip[];
 }>();
@@ -78,9 +75,7 @@ const emit = defineEmits<{
 }>();
 
 const search = ref("");
-watch(search, (value) => {
-  emit("search", value);
-});
+watch(search, (value) => emit("search", value));
 
 function selectShip(ship: AllShip) {
   search.value = "";

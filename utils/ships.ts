@@ -6,8 +6,6 @@ export const manufacturers: ManufacturerOption[] = ["Jupiter Industry", "Dawn Ac
 export const directions: DirectionOption[] = ["Outstanding Firepower", "Sustained Combat", "Strategy & Support", "Fighter & Corvette", "Empty"];
 export const scopes: ScopeOption[] = ["Projectile Weapon", "Direct-Fire Weapon", "Empty"];
 
-export type AllShip = Fighter | Corvette | CapitalShip | MediumFighterCapitalShip | LargeFighterCapitalShip | CorvetteCapitalShip | SuperCapitalShip;
-
 export interface Ship {
   id: number;
   /** Name of the ship, as shown ingame.
@@ -312,6 +310,8 @@ export interface SuperCapitalShip extends Ship {
   type: "Battlecruiser" | "Auxiliary Ship" | "Carrier" | "Battleship";
   modules: AllModule[];
 }
+
+export type AllShip = Fighter | Corvette | CapitalShip | MediumFighterCapitalShip | LargeFighterCapitalShip | CorvetteCapitalShip | SuperCapitalShip;
 
 export function findShip(ships: AllShip[] | undefined, ship: AllShip | undefined, name?: string, variant?: string) {
   if (ship) return ships?.find((s) => s.name.toLowerCase() === ship.name.toLowerCase() && s.variant.toLowerCase() === ship.variant.toLowerCase());

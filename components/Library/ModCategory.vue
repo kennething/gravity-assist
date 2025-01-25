@@ -6,19 +6,17 @@
       {{ category }}
     </div>
     <div class="flex w-full grid-cols-3 grid-rows-1 flex-col items-center justify-center gap-2 sm:grid">
-      <LibraryModCard v-for="mod in modules" :mod="mod" @click="emit('select', mod)" />
+      <LibraryModCard v-for="mod in modules" :key="mod.system" :mod="mod" @click="emit('select', mod)" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   modules: AllModule[];
   category: string;
 }>();
-const emit = defineEmits<{
-  select: [AllModule];
-}>();
+const emit = defineEmits<{ select: [AllModule] }>();
 </script>
 
 <style scoped></style>

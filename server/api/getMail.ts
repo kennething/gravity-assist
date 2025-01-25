@@ -2,10 +2,10 @@ import { SaveTemplate, TruncatedOp, UserData } from "~/utils/types";
 import { untruncateOps } from "~/utils/functions";
 import admin from "firebase-admin";
 
-type Body = {
+interface Body {
   uid: string;
   mailId: string;
-};
+}
 
 export default defineEventHandler(async (event) => {
   const body = (await readBody(event)) as Body;

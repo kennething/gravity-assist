@@ -5,9 +5,10 @@
   >
     <Transition name="unlock">
       <button
+        v-if="!mod.unlocked"
         class="overlay group absolute left-1/2 top-1/2 z-[1] h-full w-full -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black/50 transition duration-200 hover:bg-black/60"
         :class="{ 'dark:border dark:border-neutral-600': !mod.unlocked }"
-        v-if="!mod.unlocked"
+        type="button"
         @click="unlock"
       >
         <div class="message flex w-full flex-col items-center justify-center gap-3 transition group-hover:brightness-110">
@@ -26,6 +27,7 @@
       <button
         v-if="owner"
         class="fo-btn grow border-red-300 bg-red-300 text-sm text-black transition duration-500 hover:border-red-500 hover:bg-red-500 dark:border-red-600 dark:bg-red-600 dark:text-white dark:hover:border-red-700 dark:hover:bg-red-700"
+        type="button"
         @click="remove"
       >
         Remove
@@ -47,9 +49,7 @@ const props = defineProps<{
   mod: BlueprintUnknownModule | BlueprintWeaponModule | BlueprintPropulsionModule | BlueprintMiscModule;
   owner: boolean | undefined;
 }>();
-const emit = defineEmits<{
-  change: [void];
-}>();
+const emit = defineEmits<{ change: [void] }>();
 
 function unlock() {
   if (!props.owner) return;

@@ -1,17 +1,14 @@
 <template>
-  <div></div>
+  <div class="flex h-full min-h-[calc(100dvh-8rem)] w-full flex-col items-center justify-start p-8"></div>
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  layout: "mail-editor"
-});
+definePageMeta({ layout: "mail-editor" });
 
-const route = useRoute();
 const router = useRouter();
 
 onMounted(() => {
-  router.replace("/modules/mail-editor/edit");
+  void router.replace("/modules/mail-editor/edit");
 });
 </script>
 

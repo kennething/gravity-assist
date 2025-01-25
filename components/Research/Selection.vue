@@ -1,6 +1,8 @@
 <template>
   <button
+    v-for="(ship, index) in ships"
     v-if="ships.length > 0"
+    :key="index"
     class="flex w-[90vw] items-center justify-between rounded-xl bg-neutral-100/50 p-2 px-10 transition duration-500 hover:bg-neutral-200/75 hover:duration-200 sm:w-96 lg:w-[35rem] xl:w-[31rem] min-[1338px]:w-[35rem] dark:hover:bg-neutral-800"
     :class="{
       'bg-neutral-200/75 dark:bg-neutral-800': isSelected(ship),
@@ -8,8 +10,7 @@
       'border border-yellow-300/40 hover:border-yellow-300 dark:border-yellow-300/25': isBestPath(ship) && !isSelected(ship),
       'border border-yellow-300': isBestPath(ship) && isSelected(ship)
     }"
-    v-for="(ship, index) in ships"
-    :key="index"
+    type="button"
     @click="emit('select', ship.name === selected?.name && ship.variant === selected?.variant ? undefined : ship)"
   >
     <div class="hidden w-1/3 items-start sm:flex">
@@ -18,17 +19,17 @@
     <div class="flex grow flex-col items-start justify-center sm:items-center">
       <p class="font-medium transition duration-500">{{ ship.name }}</p>
       <p class="text-sm transition duration-500">
-        {{ ship.variantName }} <span class="text-sm transition duration-500" v-if="ship.hasVariants">({{ ship.variant }})</span>
+        {{ ship.variantName }} <span v-if="ship.hasVariants" class="text-sm transition duration-500">({{ ship.variant }})</span>
       </p>
     </div>
     <p class="w-1/5 text-right transition duration-500">{{ ((ship.weight / ships.reduce((total, ship) => total + ship.weight, 0)) * 100).toFixed(2) }}%</p>
   </button>
 
   <div
-    v-else
-    class="fo-skeleton fo-skeleton-animated flex h-16 w-[90vw] items-center justify-between rounded-xl bg-neutral-100/50 p-2 px-10 transition duration-500 sm:h-24 sm:w-96 lg:w-[35rem] xl:w-[31rem] min-[1338px]:w-[35rem]"
     v-for="i in 5"
+    v-else
     :key="i"
+    class="fo-skeleton fo-skeleton-animated flex h-16 w-[90vw] items-center justify-between rounded-xl bg-neutral-100/50 p-2 px-10 transition duration-500 sm:h-24 sm:w-96 lg:w-[35rem] xl:w-[31rem] min-[1338px]:w-[35rem]"
   ></div>
 </template>
 
@@ -41,9 +42,7 @@ const props = defineProps<{
   ships: AllShip[];
   selected: AllShip | undefined;
 }>();
-const emit = defineEmits<{
-  select: [AllShip | undefined];
-}>();
+const emit = defineEmits<{ select: [AllShip | undefined] }>();
 
 function isBestPath(ship: AllShip) {
   if (!props.rawData) return;

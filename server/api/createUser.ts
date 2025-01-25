@@ -13,7 +13,7 @@ async function generateUid() {
   return uid;
 }
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   const config = useRuntimeConfig();
   const db = admin.firestore();
 

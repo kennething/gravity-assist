@@ -8,7 +8,7 @@
       <aside class="flex w-4/6 items-center justify-center sm:w-1/2 md:w-1/3 lg:w-1/2">
         <p class="text-center transition duration-500">
           Gravity Assist
-          <button type="button" @click="footerOpenChangelog" class="text-lg font-semibold no-underline transition duration-500 hover:underline hover:duration-150 dark:hover:text-white">
+          <button type="button" class="text-lg font-semibold no-underline transition duration-500 hover:underline hover:duration-150 dark:hover:text-white" @click="footerOpenChangelog">
             v{{ changelog[changelog.length - 1].version }}
           </button>
           by DubNubz
@@ -18,7 +18,7 @@
         <!-- <a href="https://github.com/DubNubz/gravity-assist" target="_blank" class="fo-link" aria-label="GitHub Link">
           <img class="size-6 transition duration-500 dark:invert" src="/logo/github.svg" aria-hidden="true" />
         </a> -->
-        <a href="https://discord.com/invite/9mJ9b2Bbzx" target="_blank" class="fo-link" aria-label="Discord Link">
+        <a href="https://discord.com/invite/9mJ9b2Bbzx" target="_blank" rel="noopener noreferrer" class="fo-link" aria-label="Discord Link">
           <img class="size-6 transition duration-500 dark:invert" src="/logo/discord.svg" aria-hidden="true" />
         </a>
       </div>
@@ -30,7 +30,7 @@
 const router = useRouter();
 
 function footerOpenChangelog() {
-  router.push({ query: { v: changelog[changelog.length - 1].version } });
+  void router.push({ query: { v: changelog[changelog.length - 1].version } });
 }
 </script>
 

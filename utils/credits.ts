@@ -6,7 +6,7 @@ export type Credit = {
   dateAdded: string;
 };
 
-export const credits: Readonly<Credit[]> = [
+export const credits: readonly Credit[] = [
   {
     name: "Windserpent",
     specific: [

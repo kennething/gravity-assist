@@ -6,7 +6,7 @@
     <h3 class="text-2xl font-medium">{{ name }}</h3>
     <p>{{ selected ? "Selected" : "Click to select" }}</p>
     <div class="editor-bg mt-2 h-96 w-full rounded-2xl">
-      <LazyMailQuill :underline="false" :clear-text="false" color="#ffffff" readOnly :start-text="template" />
+      <LazyMailQuill :underline="false" :clear-text="false" color="#ffffff" read-only :start-text="template" />
     </div>
   </div>
 </template>
@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { Op } from "quill";
 
-const props = defineProps<{
+defineProps<{
   name: string;
   template: Op[];
   selected: boolean;

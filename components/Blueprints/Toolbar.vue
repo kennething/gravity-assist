@@ -22,13 +22,13 @@
     <button
       v-if="isOwner"
       type="button"
-      @click="saveBlueprints"
       class="du-btn flex h-9 min-h-9 items-center justify-center gap-2 rounded-full border-blue-300 bg-blue-100 py-2 transition duration-500 hover:scale-105 hover:border-blue-400 hover:bg-blue-200 dark:border-blue-500 dark:bg-blue-800 dark:hover:bg-blue-700"
       :class="{ 'pointer-events-none opacity-50 brightness-50': !userStore.hasUnsavedChanges }"
+      @click="saveBlueprints"
     >
       <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">{{ success ? "Saved!" : loading ? "Saving" : "Save" }}</span>
-      <img class="size-5 transition duration-500 dark:invert" src="/ui/save.svg" aria-hidden="true" v-if="!loading" />
-      <span class="fo-loading fo-loading-spinner fo-loading-sm" v-else></span>
+      <img v-if="!loading" class="size-5 transition duration-500 dark:invert" src="/ui/save.svg" aria-hidden="true" />
+      <span v-else class="fo-loading fo-loading-spinner fo-loading-sm"></span>
     </button>
     <p
       class="absolute -bottom-7 rounded-full bg-body px-3 py-1 opacity-0 transition duration-500"
@@ -39,16 +39,16 @@
 
     <Teleport to="body">
       <Transition name="menu">
-        <div class="fixed left-0 top-0 z-30 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="editName !== undefined && userStore.user" @click="editName = undefined">
-          <form @submit.prevent="rename" id="menu" class="flex w-[80vw] flex-col items-center justify-center gap-2 rounded-2xl bg-white p-4 md:w-[30rem] md:p-10 dark:bg-neutral-800" @click.stop>
+        <div v-if="editName !== undefined && userStore.user" class="fixed left-0 top-0 z-30 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" @click="editName = undefined">
+          <form id="menu" class="flex w-[80vw] flex-col items-center justify-center gap-2 rounded-2xl bg-white p-4 md:w-[30rem] md:p-10 dark:bg-neutral-800" @submit.prevent="rename" @click.stop>
             <!-- prettier-ignore -->
             <label for="new-name" class="text-xl font-semibold">Rename <span class="text-xl font-bold">{{ getObjectKey(userStore.user.blueprints[editName]) }}</span>?</label>
             <input
               id="new-name"
+              v-model="newName"
               type="text"
               class="search-input fo-input grow rounded-full text-left text-black transition duration-500 placeholder:transition placeholder:duration-500 dark:text-white dark:placeholder:text-neutral-300"
               placeholder="Enter new account name"
-              v-model="newName"
               required
               minlength="1"
               maxlength="20"
@@ -59,19 +59,19 @@
               :class="{ 'pointer-events-none opacity-50 brightness-50': newName.length < 1 || newName.length > 20 }"
             >
               <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">{{ renameSuccess ? "Saved!" : renameLoading ? "Saving" : "Save" }}</span>
-              <img class="size-5 transition duration-500 dark:invert" src="/ui/save.svg" aria-hidden="true" v-if="!renameLoading" />
-              <span class="fo-loading fo-loading-spinner fo-loading-sm" v-else></span>
+              <img v-if="!renameLoading" class="size-5 transition duration-500 dark:invert" src="/ui/save.svg" aria-hidden="true" />
+              <span v-else class="fo-loading fo-loading-spinner fo-loading-sm"></span>
             </button>
           </form>
         </div>
       </Transition>
 
       <Transition name="menu">
-        <div class="fixed left-0 top-0 z-30 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="deleteModal !== undefined && userStore.user" @click="deleteModal = undefined">
+        <div v-if="deleteModal !== undefined && userStore.user" class="fixed left-0 top-0 z-30 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" @click="deleteModal = undefined">
           <form
-            @submit.prevent="deleteAccount"
             id="menu"
             class="flex w-[80vw] flex-col items-center justify-center gap-2 rounded-2xl bg-white p-4 md:w-[30rem] md:p-10 dark:bg-neutral-800"
+            @submit.prevent="deleteAccount"
             @click.stop
           >
             <!-- prettier-ignore -->
@@ -81,8 +81,8 @@
               class="du-btn flex h-9 min-h-9 items-center justify-center gap-2 rounded-full border-blue-300 bg-blue-100 py-2 transition duration-500 hover:scale-105 hover:border-blue-400 hover:bg-blue-200 dark:border-blue-500 dark:bg-blue-800 dark:hover:bg-blue-700"
             >
               <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">{{ deleteSuccess ? "Deleted!" : deleteLoading ? "Deleting" : "Delete" }}</span>
-              <img class="size-5 transition duration-500 dark:invert" src="/ui/trash.svg" aria-hidden="true" v-if="!deleteLoading" />
-              <span class="fo-loading fo-loading-spinner fo-loading-sm" v-else></span>
+              <img v-if="!deleteLoading" class="size-5 transition duration-500 dark:invert" src="/ui/trash.svg" aria-hidden="true" />
+              <span v-else class="fo-loading fo-loading-spinner fo-loading-sm"></span>
             </button>
           </form>
         </div>
@@ -98,12 +98,6 @@ const props = defineProps<{
   isOwner: boolean | undefined;
   accountIndex: number;
 }>();
-watch(
-  () => props.closeToolbar,
-  (val) => {
-    if (val) closeOptions();
-  }
-);
 
 const emit = defineEmits<{
   list: [void];
@@ -112,6 +106,28 @@ const emit = defineEmits<{
   filter: [ShipFilter];
   search: [string];
 }>();
+
+const closeFilters = ref(false);
+const closeSorters = ref(false);
+const closeSettings = ref(false);
+
+async function closeOptions(settings = true, filters = true, sorters = true) {
+  if (settings) closeSettings.value = true;
+  if (filters) closeFilters.value = true;
+  if (sorters) closeSorters.value = true;
+
+  await nextTick();
+  if (settings) closeSettings.value = false;
+  if (filters) closeFilters.value = false;
+  if (sorters) closeSorters.value = false;
+}
+
+watch(
+  () => props.closeToolbar,
+  (val) => {
+    if (val) void closeOptions();
+  }
+);
 
 const route = useRoute();
 const router = useRouter();
@@ -128,13 +144,13 @@ const renameSuccess = ref(false);
 const deleteLoading = ref(false);
 const deleteSuccess = ref(false);
 
-const closeFilters = ref(false);
-const closeSorters = ref(false);
-const closeSettings = ref(false);
-
 const deleteModal = ref<number>();
 const editName = ref<number>();
 const newName = ref("");
+
+function warnForUnsavedChanges(event: BeforeUnloadEvent) {
+  event.preventDefault();
+}
 
 watch(
   () => userStore.hasUnsavedChanges,
@@ -144,20 +160,8 @@ watch(
   }
 );
 
-function warnForUnsavedChanges(event: BeforeUnloadEvent) {
-  event.preventDefault();
-}
-
-onMounted(() => {
-  window.addEventListener("scroll", detectSticky);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("scroll", detectSticky);
-});
-
 let previousPosition = 0;
-function detectSticky(event: Event) {
+function detectSticky() {
   if (!toolbar.value) return;
   const newPosition = toolbar.value.getBoundingClientRect().top;
 
@@ -167,19 +171,11 @@ function detectSticky(event: Event) {
   isSticky.value = false;
 }
 
-function closeOptions(settings = true, filters = true, sorters = true) {
-  if (settings) closeSettings.value = true;
-  if (filters) closeFilters.value = true;
-  if (sorters) closeSorters.value = true;
-  setTimeout(() => {
-    if (settings) closeSettings.value = false;
-    if (filters) closeFilters.value = false;
-    if (sorters) closeSorters.value = false;
-  }, 1);
-}
+onMounted(() => window.addEventListener("scroll", detectSticky));
+onBeforeUnmount(() => window.removeEventListener("scroll", detectSticky));
 
 function createNewAccount() {
-  router.push({ query: { ...route.query, a: props.accountIndex + 1 } });
+  void router.push({ query: { ...route.query, a: props.accountIndex + 1 } });
 }
 
 async function saveBlueprints() {

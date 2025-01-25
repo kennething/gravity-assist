@@ -6,11 +6,10 @@
       <img class="size-5 shrink-0 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
     </span>
     <input
-      ref="searchInput"
+      v-model="search"
       type="text"
       class="search-input fo-input grow rounded-e-full text-left text-black transition duration-500 placeholder:transition placeholder:duration-500 dark:text-white dark:placeholder:text-neutral-300"
       placeholder="Search"
-      v-model="search"
     />
     <div class="du-tooltip fo-input-group-text p-0" data-tip="Clear" :class="search ? 'visible' : 'invisible'">
       <button tabindex="-1" class="fo-btn fo-btn-circle fo-btn-text rounded-full" type="button" @click="search = ''">
@@ -21,9 +20,7 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits<{
-  search: [string];
-}>();
+const emit = defineEmits<{ search: [string] }>();
 
 const search = ref("");
 watch(search, (value) => emit("search", value));

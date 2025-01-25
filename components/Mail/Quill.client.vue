@@ -4,7 +4,9 @@
 
 <script setup lang="ts">
 import Quill, { Delta, Op, Range } from "quill";
-import { FormattingColors } from "~/utils/mailTemplates";
+
+const editor = useTemplateRef("editor");
+let quill: Quill | null = null;
 
 const props = defineProps<{
   underline: boolean;
@@ -13,6 +15,12 @@ const props = defineProps<{
   readOnly?: boolean;
   startText?: Op[];
 }>();
+
+const emit = defineEmits<{
+  event: [boolean, string | string[]];
+  output: [Delta | Op[]];
+}>();
+
 watch(
   () => props.underline,
   (val) => {
@@ -38,12 +46,30 @@ watch(
     emit("output", quill.getContents());
   }
 );
-watch(
-  () => props.startText,
-  (text) => {
-    setTemplate(text);
-  }
-);
+
+async function formatSelection(selectionRange: Range, selection: Record<string, unknown>) {
+  if (!quill) return;
+
+  await nextTick();
+
+  if (selection.color !== "#278451" || quill.getText(selectionRange.index - 1, 1) !== ")") return;
+
+  selection = quill.getFormat(selectionRange.index + 1);
+  const color = props.color !== "#278451" ? props.color : "#ffffff";
+  quill.format("color", color);
+  quill.format("underline", false);
+  emit("event", false, color);
+}
+
+async function init() {
+  await delay(1);
+  if (!editor.value) return init();
+  return new Quill(editor.value, {
+    placeholder: "Start composing your mail here...",
+    formats: ["underline", "color"],
+    readOnly: props.readOnly
+  });
+}
 
 async function setTemplate(text: Op[] | undefined) {
   if (!quill || !text) {
@@ -60,17 +86,65 @@ async function setTemplate(text: Op[] | undefined) {
   if (!selection) return;
 
   const selectionFormat = quill.getFormat();
-  formatSelection(selection, selectionFormat);
+  void formatSelection(selection, selectionFormat);
   emit("event", Boolean(selectionFormat.underline), (selectionFormat.color as string) ?? "#ffffff");
 }
 
-const emit = defineEmits<{
-  event: [boolean, string | string[]];
-  output: [Delta | Op[]];
-}>();
+watch(
+  () => props.startText,
+  (text) => {
+    void setTemplate(text);
+  }
+);
 
-const editor = ref<HTMLElement>();
-let quill: Quill | null = null;
+function defaultFormat(delta: Delta, text: Delta): [Delta, number] {
+  let selectionOffset = 0;
+
+  for (let i = 0; i < text.ops.length; i++) {
+    const op = text.ops[i];
+    const insert = op.insert as string | undefined;
+
+    if (insert?.slice(0, 2) !== "\n" && !op.attributes?.color) op.attributes = { ...op.attributes, color: props.color };
+
+    const coordinateRegex = /([^\(]*)(\(\d{1,4},\d{1,4}\))(.*)/; // Apply coordinate formatting to coordinates
+    let coordinateMatch = insert?.match(coordinateRegex);
+    if (coordinateMatch && !op.attributes?.underline && op.attributes?.color !== "#278451") {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [fullMatch, before, coordinates, after] = coordinateMatch;
+      if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
+      if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes, color: "#ffffff" } });
+      op.insert = coordinates;
+
+      op.attributes = { underline: true, color: "#278451" };
+      coordinateMatch = insert?.match(coordinateRegex);
+    }
+
+    const formattingRegex = /(#[rEeRODYGBUPWK]|#c[0-9a-fA-F]{6})/; // Convert IL formatting markers to quill
+    if (insert && formattingRegex.test(insert)) {
+      const [before, code, after] = insert.split(formattingRegex);
+      selectionOffset += delta.ops[delta.ops.length - 1].insert === "#" ? 1 : code.length;
+      if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
+      if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes } });
+
+      if (code === "#r") {
+        op.insert = "\n";
+        selectionOffset = -1;
+      } else {
+        const colorToInsert = !["r", "e", "E"].includes(code[1])
+          ? code.length === 2
+            ? formattingColors[code[1] as keyof typeof formattingColors]
+            : `#${code.slice(2)}`
+          : (op.attributes?.color ?? props.color);
+        const underline = op.attributes?.underline ? code !== "#e" : code === "#E";
+        emit("event", underline, colorToInsert as string);
+
+        text.ops.splice(i + (before ? 1 : 0), 1);
+      }
+    }
+  }
+
+  return [text, selectionOffset];
+}
 
 onMounted(async () => {
   quill = await init();
@@ -134,85 +208,12 @@ onMounted(async () => {
     selection = quill.getSelection();
     if (!selection) return;
 
-    formatSelection(selection, quill.getFormat());
+    void formatSelection(selection, quill.getFormat());
   });
 });
-
-async function formatSelection(selectionRange: Range, selection: Record<string, unknown>) {
-  if (!quill) return;
-
-  await nextTick();
-
-  if (selection.color !== "#278451" || quill.getText(selectionRange.index - 1, 1) !== ")") return;
-
-  selection = quill.getFormat(selectionRange.index + 1);
-  const color = props.color !== "#278451" ? props.color : "#ffffff";
-  quill.format("color", color);
-  quill.format("underline", false);
-  emit("event", false, color);
-}
-
-async function init() {
-  await delay(1);
-  if (!editor.value) return init();
-  return new Quill(editor.value, {
-    placeholder: "Start composing your mail here...",
-    formats: ["underline", "color"],
-    readOnly: props.readOnly
-  });
-}
-
-function defaultFormat(delta: Delta, text: Delta): [Delta, number] {
-  let selectionOffset = 0;
-
-  for (let i = 0; i < text.ops.length; i++) {
-    const op = text.ops[i];
-    const insert = op.insert as string | undefined;
-
-    if (insert?.slice(0, 2) !== "\n" && !op.attributes?.color) {
-      op.attributes = { ...op.attributes, color: props.color };
-    }
-
-    const coordinateRegex = /([^\(]*)(\(\d{1,4},\d{1,4}\))(.*)/; // Apply coordinate formatting to coordinates
-    let coordinateMatch = insert?.match(coordinateRegex);
-    if (coordinateMatch && !op.attributes?.underline && op.attributes?.color !== "#278451") {
-      const [fullMatch, before, coordinates, after] = coordinateMatch;
-      if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
-      if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes, color: "#ffffff" } });
-      op.insert = coordinates;
-
-      op.attributes = { underline: true, color: "#278451" };
-      coordinateMatch = insert?.match(coordinateRegex);
-    }
-
-    const formattingRegex = /(#[rEeRODYGBUPWK]|#c[0-9a-fA-F]{6})/; // Convert IL formatting markers to quill
-    if (insert && formattingRegex.test(insert)) {
-      const [before, code, after] = insert.split(formattingRegex);
-      selectionOffset += delta.ops[delta.ops.length - 1].insert === "#" ? 1 : code.length;
-      if (before) text.ops.splice(i, 0, { insert: before, attributes: { ...op.attributes } });
-      if (after) text.ops.splice(i + 2, 0, { insert: after, attributes: { ...op.attributes } });
-
-      if (code === "#r") {
-        op.insert = "\n";
-        selectionOffset = -1;
-      } else {
-        const colorToInsert = !["r", "e", "E"].includes(code[1])
-          ? code.length === 2
-            ? FormattingColors[code[1] as keyof typeof FormattingColors]
-            : "#" + code.slice(2)
-          : (op.attributes?.color ?? props.color);
-        const underline = op.attributes?.underline ? code !== "#e" : code === "#E";
-        emit("event", underline, colorToInsert as string);
-
-        text.ops.splice(i + (before ? 1 : 0), 1);
-      }
-    }
-  }
-
-  return [text, selectionOffset];
-}
 </script>
 
+<!-- eslint-disable-next-line vue/enforce-style-attribute -->
 <style lang="scss">
 .ql-editor {
   @apply h-full text-base;

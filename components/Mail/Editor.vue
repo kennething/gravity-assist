@@ -6,32 +6,32 @@
           <div class="flex items-center space-x-1 sm:pe-4 rtl:space-x-reverse">
             <div class="du-tooltip" data-tip="Underline">
               <button
-                @click="underline = !underline"
                 :class="{ 'bg-neutral-600 text-white': underline }"
                 type="button"
                 class="cursor-pointer rounded p-1 text-neutral-400 transition hover:bg-neutral-600 hover:text-white"
+                @click="underline = !underline"
               >
                 <img class="size-6 invert" src="/ui/underline.svg" aria-hidden="true" />
               </button>
             </div>
             <div class="du-tooltip" data-tip="Text Color">
               <button
-                @click.stop="openColorMenu = !openColorMenu"
                 :class="{ 'bg-neutral-600 text-white': openColorMenu }"
                 type="button"
                 class="cursor-pointer rounded p-1 text-neutral-400 transition hover:bg-neutral-600 hover:text-white"
+                @click.stop="openColorMenu = !openColorMenu"
               >
                 <img class="size-6 invert" src="/ui/colorGenerator.svg" aria-hidden="true" />
               </button>
               <div class="absolute bottom-0 h-[3px] w-8 rounded-full" :style="{ backgroundColor: currentColor }"></div>
               <Transition name="fade">
-                <div class="fo-tooltip-content visible -left-6 top-8 opacity-100" role="popover" v-show="openColorMenu" @click.stop>
+                <div v-show="openColorMenu" class="fo-tooltip-content visible -left-6 top-8 opacity-100" role="popover" @click.stop>
                   <div class="fo-tooltip-body flex w-48 flex-col items-center justify-center gap-3 rounded-lg bg-neutral-600 p-4 text-start shadow">
                     <div class="flex w-full flex-wrap items-center justify-center gap-1">
                       <button
+                        v-for="color in formattingColors"
                         type="button"
                         class="size-7 rounded-full border border-neutral-700 shadow-sm transition hover:scale-110 hover:shadow"
-                        v-for="color in FormattingColors"
                         :style="{ backgroundColor: color }"
                         @click.stop="selectColor(color)"
                       ></button>
@@ -44,7 +44,7 @@
                           class="size-full rounded-full border border-neutral-700 shadow-sm transition-transform hover:scale-110 hover:shadow"
                           :style="{ backgroundColor: currentColor }"
                         ></button>
-                        <input class="absolute left-0 top-0 size-full rounded-full opacity-0" type="color" v-model="currentColor" />
+                        <input v-model="currentColor" class="absolute left-0 top-0 size-full rounded-full opacity-0" type="color" />
                       </div>
                     </div>
                   </div>
@@ -55,12 +55,14 @@
           <div class="flex flex-wrap items-center space-x-6 ps-4 lg:space-x-10 rtl:space-x-reverse">
             <ClientOnly>
               <p class="text-white">
+                <!-- eslint-disable-next-line vue/html-closing-bracket-newline -->
                 <span class="hidden text-white lg:inline">Output length: </span><strong class="text-white">{{ outputText.length.toLocaleString() }}</strong
                 ><span class="text-white">/{{ Number(1000).toLocaleString() }}</span>
               </p>
             </ClientOnly>
             <div class="inline-flex items-center justify-center gap-1 text-white">
               <p>
+                <!-- eslint-disable-next-line vue/html-closing-bracket-newline -->
                 <span class="hidden text-white lg:inline">Profanity detected: </span><strong class="text-white">{{ profaneWords.length }}</strong
                 ><span class="inline text-white lg:hidden"> detections</span>
               </p>
@@ -77,7 +79,7 @@
                     <div class="flex flex-col items-center justify-center">
                       <p class="text-lg text-white">Infringing words:</p>
                       <ul class="mb-4 flex w-full flex-col items-center justify-center text-base font-normal text-neutral-300">
-                        <li v-if="profaneWords.length > 0" v-for="word in profaneWords" class="text-neutral-200">{{ word }}</li>
+                        <li v-for="word in profaneWords" v-if="profaneWords.length > 0" class="text-neutral-200">{{ word }}</li>
                         <p v-else class="text-neutral-200">None!</p>
                       </ul>
                     </div>
@@ -93,7 +95,7 @@
           :underline="underline"
           :color="currentColor"
           :clear-text="clearText"
-          :start-text="template"
+          :start-text="templateText"
           @event="(underlineEmit, colorEmit) => handleEmit(underlineEmit, colorEmit)"
           @click="openColorMenu = false"
           @output="(output) => handleOutput(output)"
@@ -106,12 +108,14 @@
 <script setup lang="ts">
 import { DataSet, RegExpMatcher, englishDataset, englishRecommendedTransformers, pattern } from "obscenity";
 import type { Delta, Op } from "quill";
-import { FormattingColors } from "~/utils/mailTemplates";
 
 const props = defineProps<{
   clearText: boolean;
   template: Op[] | undefined;
 }>();
+
+const underline = ref(false);
+const currentColor = ref("#ffffff");
 watch(
   () => props.clearText,
   () => {
@@ -119,10 +123,12 @@ watch(
     currentColor.value = "#ffffff";
   }
 );
+
+const templateText = ref<Op[]>();
 watch(
   () => props.template,
   (text) => {
-    template.value = text;
+    templateText.value = text;
   }
 );
 
@@ -131,10 +137,7 @@ const emit = defineEmits<{
   outputOps: [Op[]];
 }>();
 
-const underline = ref(false);
 const openColorMenu = ref(false);
-const currentColor = ref("#ffffff");
-const template = ref<Op[]>();
 
 const outputText = ref("");
 watch(outputText, (val) => {
@@ -174,6 +177,15 @@ function handleEmit(underlineEmit: boolean, colorEmit: string | string[]) {
   if (typeof colorEmit === "string") currentColor.value = colorEmit;
 }
 
+function checkProfanity(text: string) {
+  if (!profanityMatcher?.hasMatch(text)) return (profaneWords.value.length = 0);
+
+  const matches = profanityMatcher.getAllMatches(text);
+  const metadata = matches.map((match) => dataset.getPayloadWithPhraseMetadata(match));
+
+  profaneWords.value = metadata.map((data) => data.phraseMetadata?.originalWord ?? "");
+}
+
 let isOnCooldown = false;
 let queuedOutput: Delta | Op[] | null = null;
 function handleOutput(output: Delta | Op[]) {
@@ -194,6 +206,7 @@ function handleOutput(output: Delta | Op[]) {
   const ops = "ops" in output ? output.ops : output;
   emit("outputOps", ops);
   for (const op of ops) {
+    // eslint-disable-next-line no-use-before-define
     outputString += insertFormatting(op);
   }
 
@@ -211,10 +224,10 @@ function handleOutput(output: Delta | Op[]) {
 
     const underline = op.attributes?.underline;
     if (!isCoordinate && underline) {
-      if (!previousIsUnderline) string = "#E" + string;
+      if (!previousIsUnderline) string = `#E${string}`;
       previousIsUnderline = true;
     } else if (!isCoordinate && !underline) {
-      if (previousIsUnderline) string = "#e" + string;
+      if (previousIsUnderline) string = `#e${string}`;
       previousIsUnderline = false;
     }
 
@@ -222,27 +235,18 @@ function handleOutput(output: Delta | Op[]) {
     if (color && !isCoordinate) {
       // Only apply color formatting if it's not a coordinate
       if (typeof color !== "string") color = color[0];
-      if (color !== previousColor) string = "#c" + color.slice(1) + string;
+      if (color !== previousColor) string = `#c${color.slice(1)}${string}`;
       previousColor = color;
 
       // Replace hex code with IL shorthand code
-      string = Object.entries(FormattingColors).reduce((result, [key, value]) => {
-        const regex = new RegExp("#c" + value.slice(1), "g");
+      string = Object.entries(formattingColors).reduce((result, [key, value]) => {
+        const regex = new RegExp(`#c${value.slice(1)}`, "g");
         return result.replace(regex, `#${key}`);
       }, string);
     }
 
     return string;
   }
-}
-
-async function checkProfanity(text: string) {
-  if (!profanityMatcher || !profanityMatcher.hasMatch(text)) return (profaneWords.value.length = 0);
-
-  const matches = profanityMatcher.getAllMatches(text);
-  const metadata = matches.map((match) => dataset.getPayloadWithPhraseMetadata(match));
-
-  profaneWords.value = metadata.map((data) => data.phraseMetadata!.originalWord);
 }
 </script>
 

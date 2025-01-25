@@ -1,15 +1,15 @@
 import { BlueprintAllShip } from "~/utils/blueprints";
+import { getObjectValue } from "~/utils/functions";
 import { MinifiedUserData } from "~/utils/types";
 import admin from "firebase-admin";
-import { getObjectValue } from "~/utils/functions";
 
-type Body = {
+interface Body {
   uid: string;
   accessToken: string;
   blueprints: BlueprintAllShip[] | null;
   accountIndex: number;
   accountName: string;
-};
+}
 
 export default defineEventHandler(async (event) => {
   const body = (await readBody(event)) as Body;
@@ -32,11 +32,11 @@ export default defineEventHandler(async (event) => {
       ? null
       : (body.blueprints
           .map((ship) => {
-            // @ts-expect-error
+            // @ts-expect-error Importing `BlueprintAllShip` doesnt get all parameters for some reason
             if (!ship.unlocked) return { [ship.id]: [] };
-            // @ts-expect-error
+            // @ts-expect-error Importing `BlueprintAllShip` doesnt get all parameters for some reason
             if (!("modules" in ship)) return { [ship.id]: [ship.variant, ship.techPoints] };
-            // @ts-expect-error
+            // @ts-expect-error Importing `BlueprintAllShip` doesnt get all parameters for some reason
             return { [ship.id]: [ship.variant, ship.techPoints, ship.modules.filter((mod) => mod.unlocked).map((mod) => mod.system)].flat() };
           })
           .filter((obj) => getObjectValue(obj).length > 0) as Record<number, (string | number)[]>[]);

@@ -63,14 +63,12 @@ const props = defineProps<{
   direction: number;
   scope: number;
 }>();
-const emit = defineEmits<{
-  change: ["manufacturer" | "direction" | "scope", number];
-}>();
+const emit = defineEmits<{ change: ["manufacturer" | "direction" | "scope", number] }>();
 
 const userStore = useUserStore();
 const difficulty = computed(() => userStore.shipDifficulties);
 
-const options: Record<string, (ManufacturerOption | DirectionOption | ScopeOption)[]> = {
+const options: Readonly<Record<string, (ManufacturerOption | DirectionOption | ScopeOption)[]>> = {
   manufacturer: manufacturers,
   direction: directions,
   scope: scopes

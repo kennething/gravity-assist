@@ -17,8 +17,8 @@ useSeoMeta({
   ogTitle: "404 Not Found - Gravity Assist",
   description,
   ogDescription: description,
-  ogImage: () => config.public.baseUrl + "/ships/solar_whale.png",
-  twitterImage: () => config.public.baseUrl + "/ships/solar_whale.png",
+  ogImage: () => `${config.public.baseUrl  }/ships/solar_whale.png`,
+  twitterImage: () => `${config.public.baseUrl  }/ships/solar_whale.png`,
   twitterDescription: description
 });
 </script>

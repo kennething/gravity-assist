@@ -1,10 +1,10 @@
-import admin from "firebase-admin";
 import { getObjectKey, getObjectValue } from "~/utils/functions";
+import admin from "firebase-admin";
 
-type Body = {
+interface Body {
   uid: string;
   accountIndex: number;
-};
+}
 
 export default defineEventHandler(async (event) => {
   const body = (await readBody(event)) as Body;

@@ -1,17 +1,18 @@
 <template>
   <div class="relative w-[80vw] overflow-hidden rounded-2xl bg-neutral-100 shadow md:w-[25rem] lg:w-[40rem] xl:w-[50rem]">
     <div class="flex w-full transition duration-500" :style="{ transform: `translateX(-${currentCarouselIndex * 100}%)` }">
-      <div class="relative h-full w-[80vw] shrink-0 md:w-[25rem] lg:w-[40rem] xl:w-[50rem]" v-for="showcase in carouselShowcases" :key="showcase.title">
+      <div v-for="showcase in carouselShowcases" :key="showcase.title" class="relative h-full w-[80vw] shrink-0 md:w-[25rem] lg:w-[40rem] xl:w-[50rem]">
         <img class="w-full" :src="showcase.src" aria-hidden="true" />
         <HomeCarouselCard :showcase="showcase" class="absolute hidden lg:block" />
       </div>
     </div>
     <div class="absolute bottom-4 left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-2">
       <button
-        type="button"
         v-for="(showcase, index) in carouselShowcases"
+        :key="index"
         class="h-6 w-1/6 rounded-full shadow md:h-3 md:w-16"
         :class="{ 'bg-white': currentCarouselIndex === index, 'bg-neutral-300': currentCarouselIndex !== index }"
+        type="button"
         @click="goToCarousel(index)"
       ></button>
     </div>
@@ -20,9 +21,6 @@
 </template>
 
 <script setup lang="ts">
-onMounted(startCarousel);
-onUnmounted(stopCarousel);
-
 type Showcase = {
   title: string;
   description: string;
@@ -103,6 +101,9 @@ function goToCarousel(index: number) {
   currentCarouselIndex.value = index;
   startCarousel();
 }
+
+onMounted(startCarousel);
+onBeforeUnmount(stopCarousel);
 </script>
 
 <style scoped></style>

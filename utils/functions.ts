@@ -49,21 +49,21 @@ export function formatDate(dateString: string, options: "full" | "numeric" = "fu
   return "today";
 }
 
-enum CharacterSets {
-  numeric = "0123456789",
-  alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
-  alphabetical = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-}
+const characterSets: Readonly<Record<string, string>> = {
+  numeric: "0123456789",
+  alphanumeric: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+  alphabetical: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+};
 /**
  * Returns a random string of characters from the given set with the given length.
  * @example getRandomCharacters(10, "numeric"); // Returns a random 10-digit number
  * @example getRandomCharacters(10, "alphanumeric"); // Returns a random alphanumeric string of length 10
  * @example getRandomCharacters(10, "alphabetical"); // Returns a random alphabetical string of length 10
  */
-export function getRandomCharacters(length: number, set: "numeric" | "alphanumeric" | "alphabetical" = "alphanumeric") {
+export function getRandomCharacters(length: number, set: keyof typeof characterSets = "alphanumeric") {
   let characters = "";
   for (let i = 0; i < length; i++) {
-    characters += getRandomItem(CharacterSets[set]);
+    characters += getRandomItem<string>(characterSets[set]);
   }
   return characters;
 }
@@ -79,7 +79,7 @@ export function truncateOps(ops: Op[]) {
   return ops.map((op) => {
     const newObj: Record<string, string | Record<string, string>> = {};
 
-    if (op.attributes && op.attributes.color) {
+    if (op.attributes?.color) {
       newObj.a = {};
       newObj.a.c = op.attributes.color as string;
     }
@@ -101,7 +101,7 @@ export function untruncateOps(ops: TruncatedOp[]) {
   return ops.map((op) => {
     const newObj: Op = {};
 
-    if (op.a && op.a.c) {
+    if (op.a?.c) {
       newObj.attributes = {};
       newObj.attributes.color = op.a.c;
     }

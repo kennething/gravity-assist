@@ -2,11 +2,11 @@ import { getRandomCharacters, truncateOps, untruncateOps } from "~/utils/functio
 import { SaveTemplate, TruncatedOp, UserData } from "~/utils/types";
 import admin from "firebase-admin";
 
-type Body = {
+interface Body {
   uid: string;
   accessToken: string;
   template: SaveTemplate;
-};
+}
 
 export default defineEventHandler(async (event) => {
   const body = (await readBody(event)) as Body;
@@ -41,8 +41,8 @@ export default defineEventHandler(async (event) => {
 
     const savedMailsCopy = JSON.parse(JSON.stringify(savedMails)) as SaveTemplate[];
     savedMailsCopy.forEach((mail) => (mail.ops = untruncateOps(mail.ops as TruncatedOp[])));
-    newMail = JSON.parse(JSON.stringify(template));
-    savedMailsCopy.unshift(newMail as SaveTemplate);
+    newMail = JSON.parse(JSON.stringify(template)) as SaveTemplate;
+    savedMailsCopy.unshift(newMail);
     outcomeMails = savedMailsCopy;
 
     // Condense for storage saving

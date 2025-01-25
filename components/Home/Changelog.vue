@@ -3,11 +3,11 @@
     <h2 class="text-2xl font-bold">Changelog</h2>
     <div class="h-96 w-full overflow-y-scroll p-4">
       <ol class="relative border-s border-neutral-200 dark:border-neutral-700">
-        <HomeChangelogItem class="mb-10 ms-6" v-for="change in loadedChangelog" :key="change.version" :change="change" />
+        <HomeChangelogItem v-for="change in loadedChangelog" :key="change.version" class="mb-10 ms-6" :change="change" />
       </ol>
       <button
-        type="button"
         v-if="!endOfChangelog"
+        type="button"
         class="inline-flex items-center justify-center gap-2 rounded-lg border border-neutral-200 bg-white px-4 py-2 text-sm font-medium text-neutral-900 hover:bg-neutral-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:outline-none focus:ring-4 focus:ring-neutral-100 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-white dark:focus:text-blue-300 dark:focus:ring-neutral-700"
         @click="loadChangelog().next()"
       >

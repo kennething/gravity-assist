@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full flex-col items-center justify-center" v-if="data && displayedData && displayedData.filter((ship) => ship.type === type).length > 0">
+  <div v-if="data && displayedData && displayedData.filter((ship) => ship.type === type).length > 0" class="flex w-full flex-col items-center justify-center">
     <h2 class="mt-4 text-2xl font-bold transition duration-500">{{ type }}s</h2>
     <p class="transition duration-500">{{ data.filter((ship) => ship.type === type && ship.unlocked).length }}/{{ data.filter((ship) => ship.type === type).length }} unlocked</p>
     <ClientOnly>
@@ -11,11 +11,12 @@
     <div class="flex flex-wrap items-stretch justify-center gap-3">
       <LazyBlueprintsCard
         v-for="ship in displayedData.filter((ship) => ship.type === type)"
+        :key="Symbol(ship.name + ship.variant)"
         :ship="ship"
         :mirror="ship.mirrorTechPoints"
         :layout="currentLayout"
         :variants="showVariants"
-        :allVariants="displayedData.filter((s) => ship.name === s.name)"
+        :all-variants="displayedData.filter((s) => ship.name === s.name)"
         :tp="ship.techPoints"
         :owner="isOwner"
         @tp="(tp) => handleTp(ship, tp)"
@@ -36,9 +37,7 @@ const props = defineProps<{
   data: BlueprintAllShip[] | undefined;
   displayedData: BlueprintAllShip[] | undefined;
 }>();
-const emit = defineEmits<{
-  modules: [BlueprintSuperCapitalShip];
-}>();
+const emit = defineEmits<{ modules: [BlueprintSuperCapitalShip] }>();
 
 const userStore = useUserStore();
 

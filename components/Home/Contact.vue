@@ -46,13 +46,13 @@
               class="block w-44 overflow-hidden overflow-ellipsis text-nowrap text-left no-underline transition duration-500 hover:underline sm:w-full"
               href="https://discord.com/invite/9mJ9b2Bbzx"
               target="_blank"
-              rel="noopener"
-              referrerpolicy="no-referrer"
-              >https://discord.gg/9mJ9b2Bbzx</a
+              rel="noopener noreferrer"
             >
+              https://discord.gg/9mJ9b2Bbzx
+            </a>
           </div>
           <div class="du-tooltip fo-input-group-text p-0" data-tip="Join">
-            <a class="fo-btn fo-btn-circle fo-btn-text no-underline" href="https://discord.com/invite/9mJ9b2Bbzx" target="_blank" rel="noopener" referrerpolicy="no-referrer">
+            <a class="fo-btn fo-btn-circle fo-btn-text no-underline" href="https://discord.com/invite/9mJ9b2Bbzx" target="_blank" rel="noopener noreferrer">
               <img class="size-5 transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
             </a>
           </div>
@@ -63,12 +63,12 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   isBlock?: boolean;
 }>();
 
 function copyText(text: string) {
-  navigator.clipboard.writeText(text);
+  void navigator.clipboard.writeText(text);
 }
 </script>
 

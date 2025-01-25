@@ -1,3 +1,7 @@
+import daisyUI from "daisyui";
+import flowbite from "flowbite/plugin";
+import flyonUI from "flyonui";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./app.vue", "./pages/**/*.{vue,js,ts,jsx,tsx}", "./components/**/*.{vue,js,ts,jsx,tsx}", "./layouts/**/*.{vue,js,ts,jsx,tsx}", "./node_modules/flowbite/**/*.js"],
@@ -6,7 +10,7 @@ export default {
       body: "var(--bg-color)"
     }
   },
-  plugins: [require("daisyui"), require("flowbite/plugin"), require("flyonui")],
+  plugins: [daisyUI, flowbite, flyonUI],
   daisyui: {
     prefix: "du-",
     logs: false

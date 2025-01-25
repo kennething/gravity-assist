@@ -1,13 +1,11 @@
-import { BlueprintAllShip } from "~/utils/blueprints";
 import { MinifiedUserData } from "~/utils/types";
 import admin from "firebase-admin";
-import { getObjectValue } from "~/utils/functions";
 
-type Body = {
+interface Body {
   uid: string;
   accessToken: string;
   accountIndex: number;
-};
+}
 
 export default defineEventHandler(async (event) => {
   const body = (await readBody(event)) as Body;

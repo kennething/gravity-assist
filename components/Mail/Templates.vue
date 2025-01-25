@@ -8,8 +8,8 @@
           :key="name"
           :name="name"
           :template="template"
-          @click="selectedTemplateIndex = index"
           :selected="index === selectedTemplateIndex"
+          @click="selectedTemplateIndex = index"
         />
       </ul>
     </div>
@@ -19,8 +19,8 @@
       </p>
       <button
         type="button"
-        @click="emit('template', templates[selectedTemplateIndex])"
         class="du-btn flex items-center justify-center gap-2 rounded-xl border-green-300 bg-green-100 transition duration-500 hover:scale-105 hover:border-green-400 hover:bg-green-200 dark:border-green-500 dark:bg-green-800 dark:hover:bg-green-700"
+        @click="emit('template', templates[selectedTemplateIndex])"
       >
         <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">Use this template</span>
         <img class="size-5 transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
@@ -32,9 +32,7 @@
 <script setup lang="ts">
 import type { Op } from "quill";
 
-const emit = defineEmits<{
-  template: [Op[]];
-}>();
+const emit = defineEmits<{ template: [Op[]] }>();
 
 const templateNames = Object.keys(mailTemplates);
 const templates = Object.values(mailTemplates);

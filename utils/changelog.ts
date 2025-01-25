@@ -9,7 +9,7 @@ export type Changelog = {
   notes: string[];
 };
 
-export const changelog: Readonly<Changelog[]> = [
+export const changelog: readonly Changelog[] = [
   {
     type: "release",
     version: "0.1.0",
@@ -394,7 +394,8 @@ export const changelog: Readonly<Changelog[]> = [
       "Added Shield of Plutus to Module Library",
       "Fixed RA Helper search function not properly finding optimal path",
       "Removed Equipment Encyclopedia",
-      "Improved icons in Module Library"
+      "Improved icons in Module Library",
+      "Added more information to Module Library"
     ]
   }
 ];

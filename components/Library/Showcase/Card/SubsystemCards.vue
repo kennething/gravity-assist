@@ -1,13 +1,13 @@
 <template>
   <div class="flex w-full flex-wrap items-stretch justify-center gap-5">
-    <LibraryShowcaseCardSubsystemCard v-if="mod?.type === 'known'" v-for="subsystem in mod.subsystems" :subsystem="subsystem" />
+    <LibraryShowcaseCardSubsystemCard v-for="subsystem in mod.subsystems" v-if="mod?.type === 'known'" :key="Symbol(subsystem.name)" :subsystem="subsystem" />
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  currentModule: AllModule | undefined;
-}>();
+const props = defineProps<{ currentModule: AllModule | undefined }>();
+
+const mod = ref<AllModule>();
 
 let lastModule: symbol | undefined;
 watch(
@@ -25,8 +25,6 @@ watch(
     }, 700);
   }
 );
-
-const mod = ref<AllModule>();
 
 onMounted(() => {
   if (!props.currentModule) return;

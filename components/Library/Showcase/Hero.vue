@@ -1,10 +1,11 @@
 <template>
   <div class="relative flex w-full flex-col items-center justify-center gap-2 rounded-xl bg-neutral-100/25 p-4 transition duration-500 dark:bg-neutral-900">
-    <img class="absolute left-0 top-0 size-8 rounded-br-lg rounded-tl-xl" v-if="mod" :src="mod.img" :alt="mod.system" loading="lazy" />
+    <img v-if="mod" class="absolute left-0 top-0 size-8 rounded-br-lg rounded-tl-xl" :src="mod.img" :alt="mod.system" loading="lazy" />
     <h3 class="text-xl transition duration-500">
+      <!-- eslint-disable-next-line vue/html-closing-bracket-newline -->
       <span class="text-2xl font-semibold transition duration-500">{{ mod?.system ?? "404" }}</span
-      >: <span class="transition duration-500" v-if="mod?.type === 'known'" v-for="part in italicize(mod.name)" :class="{ italic: part[1] }">{{ part[0] }}</span>
-      <span class="transition duration-500" v-else>Unknown Module</span>
+      >: <span v-for="part in italicize(mod.name)" v-if="mod?.type === 'known'" class="transition duration-500" :class="{ italic: part[1] }">{{ part[0] }}</span>
+      <span v-else class="transition duration-500">Unknown Module</span>
     </h3>
 
     <LibraryShowcaseKnownHero v-if="mod?.type === 'known'" :mod="mod" />
@@ -13,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  currentModule: AllModule | undefined;
-}>();
+const props = defineProps<{ currentModule: AllModule | undefined }>();
+
+const mod = ref<AllModule>();
 
 let lastModule: symbol | undefined;
 watch(
@@ -33,11 +34,6 @@ watch(
     }, 700);
   }
 );
-
-const route = useRoute();
-const router = useRouter();
-
-const mod = ref<AllModule>();
 
 onMounted(() => {
   if (!props.currentModule) return;

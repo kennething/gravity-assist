@@ -3,11 +3,11 @@ import { untruncateOps } from "~/utils/functions";
 import { origins } from "~/utils/general";
 import admin from "firebase-admin";
 
-type Body = {
+interface Body {
   uid: string;
   accessToken: string;
   updateOrigin: boolean;
-};
+}
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();

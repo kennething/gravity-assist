@@ -12,7 +12,6 @@
     </div>
     <div class="fo-navbar-end items-center gap-4">
       <label class="du-swap du-swap-rotate">
-        <!-- this hidden checkbox controls the state -->
         <input type="checkbox" class="theme-controller hidden" :checked="isDarkMode" @click="isDarkMode = !isDarkMode" />
         <img class="du-swap-off size-8" src="/ui/sun.svg" aria-hidden="true" />
         <img class="du-swap-on size-8 invert" src="/ui/moon.svg" aria-hidden="true" />
@@ -22,9 +21,7 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits<{
-  toggle: [void];
-}>();
+const emit = defineEmits<{ toggle: [void] }>();
 
 const userStore = useUserStore();
 const { isDarkMode } = storeToRefs(userStore);

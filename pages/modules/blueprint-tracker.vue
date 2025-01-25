@@ -20,29 +20,29 @@
     />
 
     <ClientOnly>
-      <p class="mt-8 transition duration-500" v-if="lastSaved">Last updated: {{ formatDate(lastSaved, "full", true) }}</p>
+      <p v-if="lastSaved" class="mt-8 transition duration-500">Last updated: {{ formatDate(lastSaved, "full", true) }}</p>
     </ClientOnly>
 
-    <div class="mt-4 flex w-full flex-col items-center justify-center" v-if="displayedData">
+    <div v-if="displayedData" class="mt-4 flex w-full flex-col items-center justify-center">
       <BlueprintsCategory
         v-for="type in shipTypes"
+        :key="type"
         :type="type"
         :is-owner="isOwner"
         :current-layout="currentLayout"
         :show-variants="showVariants"
         :data="data"
         :displayed-data="displayedData"
-        :key="type"
         @modules="(ship) => (currentShip = ship)"
       />
     </div>
 
-    <div class="mt-4 flex w-full flex-wrap items-stretch justify-center gap-3" v-else>
-      <div class="fo-skeleton fo-skeleton-animated h-56 w-full grow rounded-2xl bg-neutral-100 p-6 transition duration-500 dark:bg-neutral-900" v-for="i in 5"></div>
+    <div v-else class="mt-4 flex w-full flex-wrap items-stretch justify-center gap-3">
+      <div v-for="i in 5" :key="i" class="fo-skeleton fo-skeleton-animated h-56 w-full grow rounded-2xl bg-neutral-100 p-6 transition duration-500 dark:bg-neutral-900"></div>
     </div>
 
     <Transition name="menu">
-      <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="currentShip" @click="currentShip = undefined">
+      <div v-if="currentShip" class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" @click="currentShip = undefined">
         <BlueprintsModules :ship="currentShip" :owner="isOwner" @done="currentShip = undefined" @change="userStore.hasUnsavedChanges = true" />
       </div>
     </Transition>
@@ -52,6 +52,13 @@
 <script setup lang="ts">
 const lastSaved = ref("");
 const data = ref<BlueprintAllShip[]>();
+
+const route = useRoute();
+const router = useRouter();
+const userStore = useUserStore();
+
+const accountIndex = ref(0);
+
 watch(
   data,
   (val) => {
@@ -65,35 +72,21 @@ onBeforeMount(() => {
   accountIndex.value = accountQuery < 10 ? accountQuery : 0;
 });
 
-onMounted(() => {
-  data.value = userStore.blueprintsAutosave;
-});
-
-const route = useRoute();
-const router = useRouter();
-const userStore = useUserStore();
+onMounted(() => (data.value = userStore.blueprintsAutosave));
 
 const isOwner = computed(() => {
   if (!userStore.user || !userStore.shipData) return;
   if (!route.query.u) {
-    router.replace({ query: { ...route.query, u: userStore.user.uid } });
+    void router.replace({ query: { ...route.query, u: userStore.user.uid } });
     return true;
   }
   if (!route.query.a) {
-    router.replace({ query: { ...route.query, a: 0 } });
+    void router.replace({ query: { ...route.query, a: 0 } });
     return true;
   }
 
   return route.query.u === userStore.user.uid;
 });
-watch(isOwner, async (val) => {
-  if (!userStore.shipData || !userStore.user) return;
-
-  if (val) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
-  data.value = await getBlueprints(userStore.shipData);
-});
-
-const accountIndex = ref(0);
 
 useSeoMeta({
   title: "Someone's Blueprint Tracker | Gravity Assist",
@@ -106,30 +99,14 @@ useSeoMeta({
     "Easily track your blueprint collection and share it with others! View your collection, add new blueprints, and save your changes. Never open Excel ever again to share your blueprints with others!"
 });
 
-watch(
-  () => route.query,
-  async (val) => {
-    if (!userStore.shipData || !userStore.user || !val.u || !val.a) return;
-
-    const account = Number(val.a);
-    if (userStore.user.uid === val.u && accountIndex.value === account) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
-
-    accountIndex.value = account;
-    data.value = await getBlueprints(userStore.shipData);
-  }
-);
-
 const shipTypes = ["Fighter", "Corvette", "Frigate", "Destroyer", "Cruiser", "Battlecruiser", "Auxiliary Ship", "Carrier", "Battleship"];
 
 const isListLayout = ref(false);
-watch(isListLayout, (val) => {
-  localStorage.setItem("layout", val ? "list" : "grid");
-});
+watch(isListLayout, (val) => localStorage.setItem("layout", val ? "list" : "grid"));
+
 const currentLayout = computed(() => (isListLayout.value ? "list" : "grid"));
 const showVariants = ref(false);
-watch(showVariants, (val) => {
-  localStorage.setItem("variants", JSON.stringify(val));
-});
+watch(showVariants, (val) => localStorage.setItem("variants", JSON.stringify(val)));
 
 const currentShip = ref<BlueprintSuperCapitalShip>();
 
@@ -184,7 +161,7 @@ async function getBlueprints(data: AllShip[]) {
         mirrorTechPoints: ship.hasVariants
       };
 
-      if ("modules" in ship) result.modules = ship.modules.map((module) => ({ ...module, unlocked: Boolean(ownedBlueprint && ownedBlueprint.slice(3).includes(module.system)) }));
+      if ("modules" in ship) result.modules = ship.modules.map((module) => ({ ...module, unlocked: Boolean(ownedBlueprint?.slice(3).includes(module.system)) }));
 
       return result as BlueprintAllShip;
     });
@@ -205,6 +182,26 @@ async function getBlueprints(data: AllShip[]) {
     return result as BlueprintAllShip;
   });
 }
+
+watch(
+  () => route.query,
+  async (val) => {
+    if (!userStore.shipData || !userStore.user || !val.u || !val.a) return;
+
+    const account = Number(val.a);
+    if (userStore.user.uid === val.u && accountIndex.value === account) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
+
+    accountIndex.value = account;
+    data.value = await getBlueprints(userStore.shipData);
+  }
+);
+
+watch(isOwner, async (val) => {
+  if (!userStore.shipData || !userStore.user) return;
+
+  if (val) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
+  data.value = await getBlueprints(userStore.shipData);
+});
 </script>
 
 <style lang="scss" scoped>

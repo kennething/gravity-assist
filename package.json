@@ -5,6 +5,8 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "test": "vitest",
+    "lint": "eslint",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -23,11 +25,23 @@
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "@nuxt/test-utils": "^3.15.4",
     "@nuxtjs/tailwindcss": "^6.12.2",
+    "@pinia/testing": "^0.1.7",
     "@types/quill": "^2.0.14",
+    "@vue/test-utils": "^2.4.6",
     "daisyui": "^4.12.14",
+    "eslint": "^9.19.0",
+    "eslint-plugin-vue": "^9.32.0",
+    "globals": "^15.14.0",
+    "happy-dom": "^16.7.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
-    "tailwindcss": "^3.4.16"
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0",
+    "vitest": "^3.0.4",
+    "vue-eslint-parser": "^9.4.3"
   },
   "overrides": {
     "vue": "latest"

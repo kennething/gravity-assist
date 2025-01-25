@@ -5,9 +5,7 @@
 <script setup lang="ts">
 const router = useRouter();
 
-onMounted(() => {
-  router.replace("/home?v=latest");
-});
+onMounted(() => router.replace("/home?v=latest"));
 </script>
 
 <style lang="scss" scoped></style>

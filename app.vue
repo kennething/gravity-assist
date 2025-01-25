@@ -5,7 +5,7 @@
     <Transition name="sidebar">
       <HomeSideBar v-show="showSidebar" @contributors="showContributors = true" @changelog="showChangelog = true" @contact="showContact = true" @close="closeSidebarMobile" />
     </Transition>
-    <div class="fixed left-0 top-0 z-10 h-dvh w-screen md:hidden" v-if="showSidebar" @click="showSidebar = false"></div>
+    <div v-if="showSidebar" class="fixed left-0 top-0 z-10 h-dvh w-screen md:hidden" @click="showSidebar = false"></div>
 
     <div class="h-full w-0 shrink-0 transition-all duration-[0.75s]" :class="{ 'md:w-72': showSidebar }" aria-hidden="true"></div>
 
@@ -18,19 +18,19 @@
   </div>
 
   <Transition name="menu">
-    <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="showContributors" @click="showContributors = false">
+    <div v-if="showContributors" class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" @click="showContributors = false">
       <HomeContributors />
     </div>
   </Transition>
 
   <Transition name="menu">
-    <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-if="showChangelog" @click="showChangelog = false">
+    <div v-if="showChangelog" class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" @click="showChangelog = false">
       <HomeChangelog />
     </div>
   </Transition>
 
   <Transition name="menu">
-    <div class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" v-show="showContact" @click="showContact = false">
+    <div v-show="showContact" class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" @click="showContact = false">
       <HomeContact />
     </div>
   </Transition>
@@ -45,7 +45,7 @@ useSeoMeta({
   ogUrl: () => config.public.baseUrl,
   ogType: "website",
   twitterCard: "summary_large_image",
-  twitterImage: () => config.public.baseUrl + "/logo/logo.png"
+  twitterImage: () => `${config.public.baseUrl}/logo/logo.png`
 });
 
 const route = useRoute();
@@ -65,14 +65,10 @@ onMounted(() => {
   userStore.init();
 });
 
-onBeforeMount(() => {
-  if (window.innerWidth < 768) showSidebar.value = false;
-});
-
 // sidebar
-onMounted(() => {
-  handleQueries(route.query);
+const showSidebar = ref(true);
 
+onMounted(() => {
   let previousWidth = window.innerWidth;
   window.addEventListener("resize", () => {
     const newWidth = window.innerWidth;
@@ -83,31 +79,26 @@ onMounted(() => {
   });
 });
 
-// layout
+onBeforeMount(() => {
+  if (window.innerWidth < 768) showSidebar.value = false;
+});
 
-const showSidebar = ref(true);
+// layout
 const showContributors = ref(false);
 watch(showContributors, (value) => {
-  if (!value) return router.replace({ query: { ...route.query, ct: undefined } });
-  if (!route.query.ct) router.replace({ query: { ...route.query, ct: "true" } });
+  if (!value) return void router.replace({ query: { ...route.query, ct: undefined } });
+  if (!route.query.ct) void router.replace({ query: { ...route.query, ct: "true" } });
 });
 const showChangelog = ref(false);
 watch(showChangelog, (value) => {
-  if (!value) return router.replace({ query: { ...route.query, v: undefined } });
-  if (!route.query.v) router.replace({ query: { ...route.query, v: changelog[changelog.length - 1].version } });
+  if (!value) return void router.replace({ query: { ...route.query, v: undefined } });
+  if (!route.query.v) void router.replace({ query: { ...route.query, v: changelog[changelog.length - 1].version } });
 });
 const showContact = ref(false);
 watch(showContact, (value) => {
-  if (!value) return router.replace({ query: { ...route.query, c: undefined } });
-  if (!route.query.c) router.replace({ query: { ...route.query, c: "true" } });
+  if (!value) return void router.replace({ query: { ...route.query, c: undefined } });
+  if (!route.query.c) void router.replace({ query: { ...route.query, c: "true" } });
 });
-
-watch(
-  () => route.query,
-  (query) => {
-    handleQueries(query);
-  }
-);
 
 function handleQueries(query: LocationQuery) {
   const changelog = query.v;
@@ -124,6 +115,11 @@ function handleQueries(query: LocationQuery) {
   else if (changelog) showChangelog.value = true;
   else if (contributors) showContributors.value = true;
 }
+watch(
+  () => route.query,
+  (query) => handleQueries(query)
+);
+onMounted(() => handleQueries(route.query));
 
 function closeSidebarMobile() {
   if (window.innerWidth < 768) showSidebar.value = false;

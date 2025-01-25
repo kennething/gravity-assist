@@ -1,7 +1,7 @@
 import { AllShip } from "~/utils/ships";
 
-export default defineEventHandler(async (event) => {
-  const difficulty: Record<string, number> = {
+export default defineEventHandler(() => {
+  const difficulty: Readonly<Record<string, number>> = {
     "Jupiter Industry": 3.5,
     "NOMA Shipping": 3.5,
     Antonios: 4,
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     "Direct-Fire Weapon": 4
   };
 
-  const data: AllShip[] = [
+  const data: readonly AllShip[] = [
     {
       id: 0,
       name: "AT021",
@@ -7661,7 +7661,20 @@ export default defineEventHandler(async (event) => {
               name: `Fire-Control Spotter UAV Hanger`,
               hanger: "Spotter UAV",
               capacity: 3,
-              attributes: ["Ship Calibration Support"]
+              attributes: ["Ship Calibration Support"],
+              stats: {
+                duration: 30,
+                operationCount: [1, 1],
+                cooldown: 10,
+                lockOnTime: 3,
+                targetPriority: [
+                  [1, "Battleship"],
+                  [1, "Carrier"],
+                  [1, "Auxiliary Ship"],
+                  [1, "Battlecruiser"],
+                  [1, "Cruiser"]
+                ]
+              }
             }
           ]
         }

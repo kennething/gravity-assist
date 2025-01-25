@@ -1,0 +1,17 @@
+name: Remove Active Label on Closed Issues
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  remove-active-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove active label
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: "remove-labels"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          labels: "active"

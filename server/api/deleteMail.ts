@@ -1,12 +1,11 @@
-import { getRandomCharacters } from "~/utils/functions";
 import { SaveTemplate, UserData } from "~/utils/types";
 import admin from "firebase-admin";
 
-type Body = {
+interface Body {
   uid: string;
   accessToken: string;
   mailId: string;
-};
+}
 
 export default defineEventHandler(async (event) => {
   const body = (await readBody(event)) as Body;
