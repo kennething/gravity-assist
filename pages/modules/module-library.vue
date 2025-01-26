@@ -8,9 +8,8 @@
     </div>
 
     <div class="mt-4 flex w-full flex-col items-center justify-center gap-4 lg:flex-row lg:items-start xl:gap-8">
-      <div
-        class="flex w-[90vw] shrink-0 flex-col items-center justify-start gap-1 rounded-xl bg-neutral-100/25 p-2 transition duration-500 sm:w-80 lg:sticky lg:top-20 lg:w-64 xl:w-72 dark:bg-neutral-900"
-      >
+      <!-- prettier-ignore -->
+      <div class="flex w-[90vw] shrink-0 flex-col items-center justify-start gap-1 rounded-xl bg-neutral-100/25 p-2 transition duration-500 sm:w-80 lg:sticky lg:top-20 lg:w-64 xl:w-72 dark:bg-neutral-900">
         <LibrarySelection v-for="ship in data" v-if="data" :key="Symbol(ship.name + ship.variant)" :ship="ship" :current-ship="currentShip" @click="currentShip = ship" />
         <div v-for="i in 10" v-else :key="i" class="fo-skeleton fo-skeleton-animated h-12 w-full rounded-xl bg-neutral-100/50 px-2 py-1 transition duration-500 dark:bg-neutral-700"></div>
       </div>
@@ -26,17 +25,12 @@
             </div>
 
             <div class="relative flex w-1/2 flex-col items-center justify-center gap-5 px-8 transition-transform duration-700" :class="{ '-translate-x-full': currentModule }">
-              <button
-                class="absolute left-8 top-0 flex items-center justify-center gap-2 rounded-xl bg-neutral-100 p-2 px-8 transition duration-500 hover:bg-neutral-200 hover:duration-150 dark:bg-neutral-900 dark:hover:bg-neutral-800"
-                type="button"
-                @click="currentModule = undefined"
-              >
-                <img class="size-5 transition duration-500 dark:invert" src="/ui/arrowLeft.svg" alt="Go back to the module list" />
-                <p class="font-medium transition duration-500">Back</p>
-              </button>
+              <LibraryShowcaseBackButton @click="currentModule = undefined" />
 
               <LibraryShowcaseHero v-if="data && loaded" class="mt-16" :current-module="currentModule" />
               <div v-else class="fo-skeleton fo-skeleton-animated mt-16 h-72 w-full rounded-xl bg-neutral-100/25 p-4 transition duration-500 dark:bg-neutral-900"></div>
+              <LibraryShowcaseSourceBanner v-if="data && loaded" :current-module="currentModule" />
+              <div v-else class="fo-skeleton fo-skeleton-animated h-24 w-full rounded-xl bg-neutral-100/25 p-4 transition duration-500 dark:bg-neutral-900"></div>
               <LibraryShowcaseCardSubsystemCards v-if="data && loaded" :current-module="currentModule" />
               <div v-else class="fo-skeleton fo-skeleton-animated h-72 w-full rounded-xl bg-neutral-100/25 p-4 transition duration-500 dark:bg-neutral-900"></div>
             </div>
@@ -102,7 +96,8 @@ function handleQueries() {
 
 watch(() => route.query, handleQueries);
 
-onMounted(() => {
+onMounted(async () => {
+  if (!route.query.s) await router.replace({ query: { ...route.query, s: "Constantine the Great" } });
   handleQueries();
   loaded.value = true;
 });

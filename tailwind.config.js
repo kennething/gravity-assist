@@ -4,10 +4,15 @@ import flyonUI from "flyonui";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./app.vue", "./pages/**/*.{vue,js,ts,jsx,tsx}", "./components/**/*.{vue,js,ts,jsx,tsx}", "./layouts/**/*.{vue,js,ts,jsx,tsx}", "./node_modules/flowbite/**/*.js"],
+  content: ["./app.vue", "./error.vue", "./pages/**/*.{vue,js,ts,jsx,tsx}", "./components/**/*.{vue,js,ts,jsx,tsx}", "./layouts/**/*.{vue,js,ts,jsx,tsx}", "./node_modules/flowbite/**/*.js"],
   theme: {
     colors: {
       body: "var(--bg-color)"
+    },
+    extend: {
+      screens: {
+        lg: "1025px"
+      }
     }
   },
   plugins: [daisyUI, flowbite, flyonUI],

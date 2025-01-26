@@ -70,7 +70,7 @@
             </ClientOnly>
           </div>
           <div v-for="target in priorities" class="flex w-full items-center justify-center gap-1 bg-neutral-200/25 px-3 transition duration-500 last:rounded-b-xl last:pb-1 dark:bg-neutral-700/50">
-            <h5 class="select-none text-neutral-700 transition duration-500 dark:text-neutral-300">{{ String(target[0]).padStart(2, "0") }}</h5>
+            <h5 class="w-5 select-none text-neutral-700 transition duration-500 dark:text-neutral-300">{{ String(target[0]).padStart(2, "0") }}</h5>
             <img class="size-4 transition duration-500 dark:invert" :src="`/ships/classes/${target[1].toLowerCase()}.svg`" :alt="target[1]" />
             <p class="grow text-left transition duration-500">{{ target[1] }}</p>
           </div>

@@ -5,6 +5,11 @@
       <img class="h-16 transition duration-500 sm:h-20 md:h-24 lg:h-32 xl:h-40 dark:invert" src="/logo/gravityAssist.svg" aria-hidden="true" />
     </div>
 
+    <p class="text-xl">
+      By
+      <button class="fo-link font-semibold no-underline hover:underline" type="button" @click="router.replace({ query: { ...route.query, c: 'true' } })">DubNubz</button>
+    </p>
+
     <div class="mt-8 flex flex-col items-center justify-center gap-2">
       <HomeCarousel />
     </div>
@@ -81,6 +86,7 @@ useSeoMeta({
   twitterDescription: description
 });
 
+const route = useRoute();
 const router = useRouter();
 
 const latestChange = changelog[changelog.length - 1];

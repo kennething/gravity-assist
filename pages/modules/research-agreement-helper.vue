@@ -109,6 +109,25 @@ const selectedShipChance = computed(() => {
   return ((selectedShip.value?.weight ?? 0) / filteredData.value.reduce((total, ship) => total + ship.weight, 0)) * 100;
 });
 
+let isReplacing = false;
+function selectShip(ship: AllShip | undefined, setPath = false, manualData?: AllShip[]) {
+  if (!data.value && !manualData) return;
+
+  selectedShip.value = ship;
+
+  if (setPath && ship) {
+    selectedManufacturer.value = manufacturers.indexOf(ship.manufacturer);
+    selectedDirection.value = directions.indexOf(findBestDirection(data.value ?? manualData ?? [], ship));
+    selectedScope.value = scopes.indexOf(ship.scope);
+  }
+
+  localStorage.setItem("rahelper", JSON.stringify([selectedManufacturer.value, selectedDirection.value, selectedScope.value, selectedShip.value?.name, selectedShip.value?.variant]));
+
+  if (isReplacing)
+    return void router.replace({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
+  void router.push({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
+}
+
 function handleQueries() {
   const manufacturer = Number(route.query.m);
   const direction = Number(route.query.d);
@@ -116,12 +135,14 @@ function handleQueries() {
   const shipName = route.query.shn as string;
   const shipVariant = route.query.shv as string;
 
-  if (!manufacturer && !direction && !scope && !shipName && !shipVariant) return false;
+  if (Number.isNaN(manufacturer) && Number.isNaN(direction) && Number.isNaN(scope) && !shipName && !shipVariant) return false;
   if ((shipName && !shipVariant) || (!shipName && shipVariant)) return false;
 
   if (manufacturer) selectedManufacturer.value = manufacturer;
   if (direction) selectedDirection.value = direction;
   if (scope) selectedScope.value = scope;
+
+  if (Number.isNaN(manufacturer) && Number.isNaN(direction) && Number.isNaN(scope) && shipName && shipVariant) selectShip(findShip(data.value, undefined, shipName, shipVariant), true);
 
   return true;
 }
@@ -137,6 +158,7 @@ watch(
 );
 
 onMounted(() => {
+  isReplacing = true;
   if (handleQueries()) return;
   const autosave = localStorage.getItem("rahelper");
   if (autosave) {
@@ -145,6 +167,7 @@ onMounted(() => {
     if (direction >= 0 && direction < directions.length) selectedDirection.value = direction;
     if (scope >= 0 && scope < scopes.length) selectedScope.value = scope;
   }
+  isReplacing = false;
 });
 
 function handleOptionChange(type: "manufacturer" | "direction" | "scope", next: number) {
@@ -154,21 +177,6 @@ function handleOptionChange(type: "manufacturer" | "direction" | "scope", next: 
     scope: selectedScope
   };
   options[type].value = next;
-  localStorage.setItem("rahelper", JSON.stringify([selectedManufacturer.value, selectedDirection.value, selectedScope.value, selectedShip.value?.name, selectedShip.value?.variant]));
-  void router.push({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
-}
-
-function selectShip(ship: AllShip | undefined, setPath = false, manualData?: AllShip[]) {
-  if (!data.value && !manualData) return;
-
-  selectedShip.value = ship;
-
-  if (setPath && ship) {
-    selectedManufacturer.value = manufacturers.indexOf(ship.manufacturer);
-    selectedDirection.value = directions.indexOf(findBestDirection(data.value ?? manualData ?? [], ship));
-    selectedScope.value = scopes.indexOf(ship.scope);
-  }
-
   localStorage.setItem("rahelper", JSON.stringify([selectedManufacturer.value, selectedDirection.value, selectedScope.value, selectedShip.value?.name, selectedShip.value?.variant]));
   void router.push({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
 }

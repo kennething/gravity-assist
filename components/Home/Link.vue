@@ -5,7 +5,7 @@
   <form class="flex w-full flex-col items-center justify-center gap-2" @submit.prevent="link">
     <div class="mt-4 flex w-full flex-col items-start justify-center gap-1 md:flex-row md:items-center md:gap-4">
       <p class="w-40 text-nowrap text-left transition duration-500">User ID</p>
-      <div class="fo-input-group flex grow rounded-full transition duration-500 dark:border-neutral-400 dark:bg-neutral-800 dark:hover:border-neutral-400">
+      <div class="fo-input-group flex grow rounded-full bg-body transition duration-500 dark:border-neutral-400 dark:bg-neutral-800 dark:hover:border-neutral-400">
         <span class="fo-input-group-text shrink-0">
           <img class="size-5 transition duration-500 dark:invert" src="/ui/person.svg" aria-hidden="true" />
         </span>
@@ -19,7 +19,7 @@
     </div>
     <div class="flex w-full flex-col items-start justify-center gap-1 md:flex-row md:items-center md:gap-4">
       <p class="w-40 text-nowrap text-left transition duration-500">Unique Token</p>
-      <div class="fo-input-group flex grow rounded-full transition duration-500 dark:border-neutral-400 dark:bg-neutral-800 dark:hover:border-neutral-400">
+      <div class="fo-input-group flex grow rounded-full bg-body transition duration-500 dark:border-neutral-400 dark:bg-neutral-800 dark:hover:border-neutral-400">
         <span class="fo-input-group-text shrink-0">
           <img class="size-5 transition duration-500 dark:invert" src="/ui/key.svg" aria-hidden="true" />
         </span>
@@ -51,7 +51,7 @@
 
   <div class="mt-8 flex w-full flex-col items-start justify-center gap-1 md:flex-row md:items-center md:gap-4">
     <p class="w-44 text-nowrap text-left transition duration-500">Your User ID</p>
-    <div class="fo-input-group flex grow rounded-full transition duration-500 dark:border-neutral-400 dark:bg-neutral-800 dark:hover:border-neutral-400">
+    <div class="fo-input-group flex grow rounded-full bg-body transition duration-500 dark:border-neutral-400 dark:bg-neutral-800 dark:hover:border-neutral-400">
       <span class="fo-input-group-text shrink-0">
         <img class="size-5 transition duration-500 dark:invert" src="/ui/person.svg" aria-hidden="true" />
       </span>
@@ -67,7 +67,7 @@
   </div>
   <div class="flex w-full flex-col items-start justify-center gap-1 md:flex-row md:items-center md:gap-4">
     <p class="w-44 text-nowrap text-left transition duration-500">Your Unique Token</p>
-    <div class="fo-input-group flex grow rounded-full transition duration-500 dark:border-neutral-400 dark:bg-neutral-800 dark:hover:border-neutral-400">
+    <div class="fo-input-group flex grow rounded-full bg-body transition duration-500 dark:border-neutral-400 dark:bg-neutral-800 dark:hover:border-neutral-400">
       <span class="fo-input-group-text shrink-0">
         <img class="size-5 transition duration-500 dark:invert" src="/ui/key.svg" aria-hidden="true" />
       </span>

@@ -3,16 +3,11 @@
     <div class="flex h-full w-full flex-col items-center justify-between overflow-y-auto bg-neutral-50 px-3 py-4 transition duration-500 dark:bg-neutral-900">
       <ul class="w-full space-y-2 font-medium">
         <li v-for="button in navButtons" :key="button.displayName">
-          <button
-            v-if="button.disabled"
-            type="button"
-            disabled
-            class="group flex w-full cursor-not-allowed items-center rounded-lg bg-neutral-200 p-2 text-neutral-900 transition duration-500 dark:bg-neutral-700"
-          >
+          <div v-if="button.disabled" disabled class="group flex w-full select-none items-center rounded-lg bg-neutral-200 p-2 text-neutral-900 transition duration-500 dark:bg-neutral-700">
             <img class="size-6 transition duration-500 hover:duration-300 dark:invert" :src="button.src" :alt="'Go to ' + (button.altName ?? button.displayName)" />
             <span class="ms-3 transition duration-500" :class="{ 'flex-1 whitespace-nowrap text-left': button.tag }">{{ button.displayName }}</span>
             <span v-if="button.tag" class="ms-3 inline-flex items-center justify-center rounded-full px-2 text-sm font-medium text-neutral-800" :class="button.tag.color">{{ button.tag.name }}</span>
-          </button>
+          </div>
           <NuxtLink
             v-else
             :to="button.route"
@@ -155,18 +150,23 @@ const navButtons: NavButton[] = [
   {
     displayName: "Color Generator",
     src: "/ui/colorGenerator.svg",
-    route: "/modules/color-generator"
-  },
-  {
-    displayName: "Fleet Builder",
-    src: "/ui/fleetBuilder.svg",
-    route: "/",
+    route: "/modules/color-generator",
     disabled: true,
     tag: {
-      name: '"Soon"',
+      name: "Soon",
       color: "bg-neutral-100"
     }
   }
+  // {
+  //   displayName: "Fleet Builder",
+  //   src: "/ui/fleetBuilder.svg",
+  //   route: "/",
+  //   disabled: true,
+  //   tag: {
+  //     name: '"Soon"',
+  //     color: "bg-neutral-100"
+  //   }
+  // }
 ];
 </script>
 

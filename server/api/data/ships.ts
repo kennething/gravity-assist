@@ -2092,6 +2092,7 @@ export default defineEventHandler(() => {
           system: "M1",
           name: `"Gamma Storm" Ion Attack System`,
           default: true,
+          sourcedFrom: null,
           stats: {
             type: "weapon",
             antiship: 9000,
@@ -2139,6 +2140,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M2",
           name: `"Gamma Storm" Projectile Attack System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 19885,
@@ -2187,6 +2189,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A1",
           name: `"Gamma Storm" Projectile Weapon System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -2237,6 +2240,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A2",
           name: `"Gamma Storm" Projectile Weapon System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 29393,
@@ -2329,6 +2333,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B1",
           name: `Generic Battery System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 10628,
@@ -2416,6 +2421,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B2",
           name: `Pulse Anti-Aircraft System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 3465,
@@ -2493,6 +2499,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B3",
           name: `Anti-Aircraft Missile System`,
+          sourcedFrom: ["Windserpent", "The Enlightened"],
           stats: {
             type: "weapon",
             antiship: 2400,
@@ -2510,7 +2517,32 @@ export default defineEventHandler(() => {
               target: "Aircraft",
               lockonEfficiency: 60,
               alpha: 35,
-              attributes: ["Anti-Aircraft Special Ammo", "Anti-Aircraft Cycle", "Anti-Aircraft Support"]
+              attributes: ["Anti-Aircraft Special Ammo", "Anti-Aircraft Cycle", "Anti-Aircraft Support"],
+              stats: {
+                duration: 2,
+                attacksPerRound: [1, 4],
+                cooldown: 6,
+                lockOnTime: 3,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    damage: 1500,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ]
+                  },
+                  antiair: {
+                    position: 1,
+                    damage: 1080,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ]
+                  }
+                }
+              }
             },
             {
               type: "weapon",
@@ -2521,7 +2553,31 @@ export default defineEventHandler(() => {
               target: "Aircraft",
               lockonEfficiency: 60,
               alpha: 25,
-              attributes: ["Interception Capability", "Anti-Aircraft Special Ammo", "Anti-Aircraft Counterattack"]
+              attributes: ["Interception Capability", "Anti-Aircraft Special Ammo", "Anti-Aircraft Counterattack"],
+              stats: {
+                attacksPerRound: [1, 1],
+                cooldown: 2,
+                lockOnTime: 3,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    damage: 900,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ]
+                  },
+                  antiair: {
+                    position: 1,
+                    damage: 468,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ]
+                  }
+                }
+              }
             }
           ]
         },
@@ -2530,6 +2586,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "C1",
           name: `Additional Energy System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -2552,6 +2609,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C2",
           name: `Aircraft Module`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -2576,6 +2634,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C3",
           name: `Recon UAV System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -2613,6 +2672,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "D1",
           name: `Short-Range Anti-Aircraft System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -2656,6 +2716,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/armor.png",
           system: "D2",
           name: `Targeted Protection System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -2678,6 +2739,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/storage.png",
           system: "D3",
           name: `Damage Control System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -2720,6 +2782,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M1",
           name: `"Viggen" Ion Generation System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -2770,6 +2833,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M2",
           name: `Experimental Plasma Caster`,
+          sourcedFrom: ["Windserpent", "Sector"],
           stats: {
             type: "weapon",
             antiship: 23538,
@@ -2829,6 +2893,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A1",
           name: `"Eternal Polaris" Mk II Projectile Launching System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -2916,6 +2981,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A2",
           name: `"Eternal Polaris" Mk II Projectile Launching System`,
+          sourcedFrom: ["Windserpent", "Sector"],
           stats: {
             type: "weapon",
             antiship: 11900,
@@ -2965,6 +3031,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A3",
           name: `"Eternal Polaris" Mk II Projectile Launching System TEST`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 12300,
@@ -3049,6 +3116,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B1",
           name: `Generic Cannon Platform`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 6000,
@@ -3136,11 +3204,12 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B2",
           name: `Generic Close-In Weapon System`,
+          sourcedFrom: ["Windserpent", "Sector"],
           stats: {
             type: "weapon",
             antiship: 900,
             antiair: 405,
-            siege: 60,
+            siege: 90,
             hp: 18000
           },
           subsystems: [
@@ -3153,7 +3222,35 @@ export default defineEventHandler(() => {
               target: "Aircraft",
               lockonEfficiency: null,
               alpha: 25,
-              attributes: ["Anti-Aircraft Special Ammo", "Anti-Aircraft Counterattack"]
+              attributes: ["Anti-Aircraft Special Ammo", "Anti-Aircraft Counterattack"],
+              stats: {
+                attacksPerRound: [1, 1],
+                cooldown: 4,
+                lockOnTime: 3,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    damage: 900,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ]
+                  },
+                  antiair: {
+                    position: 1,
+                    damage: 405,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ]
+                  },
+                  siege: {
+                    position: 3,
+                    damage: 90
+                  }
+                }
+              }
             }
           ]
         },
@@ -3162,6 +3259,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C1",
           name: `NT UAV Anti-Aircraft System`,
+          sourcedFrom: ["Windserpent", "Sector"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -3205,6 +3303,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C2",
           name: `"Thunderstorm" UAV Shield System`,
+          sourcedFrom: null,
           stats: {
             type: "armor",
             armor: null,
@@ -3242,6 +3341,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "C3",
           name: `Energy Compensation Armor System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -3264,6 +3364,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "D1",
           name: `Ion Turret System`,
+          sourcedFrom: ["Windserpent", "Sector"],
           stats: {
             type: "weapon",
             antiship: 6857,
@@ -3311,6 +3412,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "D2",
           name: `Pulse Turret System`,
+          sourcedFrom: ["Windserpent", "Sector"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -3372,6 +3474,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M1",
           name: `Integrated Weapon System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -3469,6 +3572,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "A1",
           name: `"Fortress" Defense System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -3514,6 +3618,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "A2",
           name: `"Fortress" Area Fire-Control System A`,
+          sourcedFrom: null,
           stats: {
             type: "armor",
             armor: null,
@@ -3551,6 +3656,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "A3",
           name: `"Fortress" Area Fire-Control System B`,
+          sourcedFrom: null,
           stats: {
             type: "armor",
             armor: null,
@@ -3588,6 +3694,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B1",
           name: `Heavy Projectile Weapon System`,
+          sourcedFrom: null,
           stats: {
             type: "weapon",
             antiship: 13320,
@@ -3637,6 +3744,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/storage.png",
           system: "B2",
           name: `Comprehensive Maintenance System`,
+          sourcedFrom: null,
           stats: {
             type: "armor",
             armor: null,
@@ -3706,6 +3814,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M1",
           name: `Bow Railgun System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -3755,6 +3864,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M2",
           name: `Ion Turret System`,
+          sourcedFrom: ["Windserpent", "Sector"],
           stats: {
             type: "weapon",
             antiship: 12857,
@@ -3802,6 +3912,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A1",
           name: `"Fortress" Battery System A`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -3929,6 +4040,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A2",
           name: `"Fortress" Battery System B`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 18566,
@@ -4013,6 +4125,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A3",
           name: `"Fortress" Battery System F`,
+          sourcedFrom: ["Windserpent", "Sector"],
           stats: {
             type: "weapon",
             antiship: 17220,
@@ -4106,6 +4219,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B1",
           name: `"Minecart" Projectile Launching Array`,
+          sourcedFrom: ["Windserpent", "Sector"],
           stats: {
             type: "weapon",
             antiship: 5940,
@@ -4161,6 +4275,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "B2",
           name: `Corvette Dock`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -4185,6 +4300,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/storage.png",
           system: "B3",
           name: `Integrated Damage Control System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -4211,6 +4327,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "C1",
           name: `Distributed Weapon Control System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -4233,6 +4350,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/armor.png",
           system: "C2",
           name: `Additional Armor System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: 0,
@@ -4255,6 +4373,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "C3",
           name: `Anti-Missile System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -4317,6 +4436,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M1",
           name: "Assault Railgun System",
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -4366,6 +4486,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M2",
           name: `Bow Mounted Battery System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 11400,
@@ -4414,6 +4535,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M3",
           name: `Assault Torpedo System`,
+          sourcedFrom: ["Windserpent", "OZY"],
           stats: {
             type: "weapon",
             antiship: 11200,
@@ -4463,6 +4585,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A1",
           name: `Large Cannon Platform`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -4550,6 +4673,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A2",
           name: `Railgun Turret Array`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 9900,
@@ -4598,6 +4722,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A3",
           name: `Pulse Turret Array`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 7500,
@@ -4655,6 +4780,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B1",
           name: `Integrated Projectile Weapon Platform`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 8188,
@@ -4702,6 +4828,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "B2",
           name: `Aircraft System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -4726,6 +4853,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "B3",
           name: `Area Fire-Control System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -4763,6 +4891,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/armor.png",
           system: "C1",
           name: `Additional Armor System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: 0,
@@ -4785,6 +4914,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/armor.png",
           system: "C2",
           name: `EM Armor System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: 0,
@@ -4807,6 +4937,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/armor.png",
           system: "C3",
           name: "Heavy Defensive Armor System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: 250,
@@ -4848,6 +4979,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M1",
           name: `"Thunderbolt" Bow-Mounted Weapon System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -4898,6 +5030,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M2",
           name: `"Thunderbolt" Bow-Mounted Projectile Weapon System`,
+          sourcedFrom: ["Thalleous"],
           stats: {
             type: "weapon",
             antiship: 27168,
@@ -4915,7 +5048,30 @@ export default defineEventHandler(() => {
               target: "Large Ship",
               lockonEfficiency: null,
               alpha: 2070,
-              attributes: ["Crit"]
+              attributes: ["Crit"],
+              stats: {
+                duration: 16,
+                attacksPerRound: [1, 7],
+                cooldown: 16,
+                lockOnTime: 15,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 27168,
+                    priorities: [
+                      [1, "Battleship"],
+                      [1, "Carrier"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"],
+                      [2, "Auxiliary Ship"]
+                    ]
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 5705
+                  }
+                }
+              }
             }
           ]
         },
@@ -4924,6 +5080,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M3",
           name: `"Thunderbolt Star" Bow-Mounted High-Energy Weapon System`,
+          sourcedFrom: ["Thalleous"],
           stats: {
             type: "weapon",
             antiship: 33120,
@@ -4941,7 +5098,30 @@ export default defineEventHandler(() => {
               target: "Large Ship",
               lockonEfficiency: null,
               alpha: 2760,
-              attributes: null
+              attributes: null,
+              stats: {
+                duration: 10,
+                cooldown: 20,
+                damageFrequency: 6,
+                lockOnTime: 15,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    damage: 33120,
+                    priorities: [
+                      [1, "Battleship"],
+                      [1, "Carrier"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"],
+                      [2, "Auxiliary Ship"]
+                    ]
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 3312
+                  }
+                }
+              }
             }
           ]
         },
@@ -4950,6 +5130,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A1",
           name: `Rapid-Fire Anti-Ship Weapon System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -5005,6 +5186,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A2",
           name: `Medium Anti-Ship Weapon System`,
+          sourcedFrom: null,
           stats: {
             type: "weapon",
             antiship: 14184,
@@ -5054,6 +5236,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B1",
           name: "Active Anti-Aircraft System",
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -5106,6 +5289,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B2",
           name: "Range Interception System",
+          sourcedFrom: null,
           stats: {
             type: "weapon",
             antiship: null,
@@ -5149,6 +5333,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "C1",
           name: "Weapon Coordination Center",
+          sourcedFrom: null,
           stats: {
             type: "armor",
             armor: null,
@@ -5171,6 +5356,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "C2",
           name: "Fire-Control Calibration System",
+          sourcedFrom: null,
           stats: {
             type: "armor",
             armor: null,
@@ -5193,6 +5379,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "D1",
           name: "Accurate Projectile Weapon System",
+          sourcedFrom: null,
           stats: {
             type: "weapon",
             antiship: 9140,
@@ -5251,6 +5438,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "D2",
           name: "Large Projectile Weapon System",
+          sourcedFrom: null,
           stats: {
             type: "weapon",
             antiship: 9776,
@@ -5300,6 +5488,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "E1",
           name: "Multi-Target Weapon System",
+          sourcedFrom: ["Thalleous"],
           stats: {
             type: "weapon",
             antiship: 6990,
@@ -5354,6 +5543,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "E2",
           name: "Multi-Target Anti-Aircraft System",
+          sourcedFrom: ["Thalleous"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -5416,6 +5606,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M1",
           name: "Fortress Bow-Mounted Heavy Cannon System",
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -5509,6 +5700,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M2",
           name: `Fortress Assault Railgun System`,
+          sourcedFrom: null,
           stats: {
             type: "weapon",
             antiship: 11519,
@@ -5593,6 +5785,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "A1",
           name: "Frigates Production System",
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "armor",
@@ -5623,6 +5816,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "A2",
           name: "Corvette Production System",
+          sourcedFrom: null,
           stats: {
             type: "armor",
             armor: null,
@@ -5652,6 +5846,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "A3",
           name: "Destroyer Production System",
+          sourcedFrom: null,
           stats: {
             type: "armor",
             armor: null,
@@ -5681,6 +5876,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "B1",
           name: `"Tundra" Interceptor UAV System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -5725,6 +5921,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "B2",
           name: `"Hummingbird" Firepower Recon UAV System`,
+          sourcedFrom: ["Somnambulist"],
           stats: {
             type: "armor",
             armor: null,
@@ -5740,7 +5937,19 @@ export default defineEventHandler(() => {
               name: "Firepower Recon UAV Pod",
               hanger: "Recon UAV",
               capacity: 4,
-              attributes: ["Firepower Recon Support"]
+              attributes: ["Firepower Recon Support"],
+              stats: {
+                duration: 30,
+                operationCount: [1, 1],
+                cooldown: 1,
+                lockOnTime: 0,
+                targetPriority: [
+                  [1, "Carrier"],
+                  [1, "Auxiliary Ship"],
+                  [1, "Battlecruiser"],
+                  [1, "Cruiser"]
+                ]
+              }
             }
           ]
         },
@@ -5749,6 +5958,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B3",
           name: `"Colossus" Guard UAV System`,
+          sourcedFrom: ["Sector"],
           stats: {
             type: "weapon",
             antiship: 7340,
@@ -5797,6 +6007,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C1",
           name: `Aircraft Loading System`,
+          sourcedFrom: ["Toir"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -5821,6 +6032,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C2",
           name: `Corvette Dock`,
+          sourcedFrom: ["Spy Shark"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -5845,6 +6057,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/armor.png",
           system: "D1",
           name: `Heavy Additional Armor System`,
+          sourcedFrom: null,
           stats: {
             type: "armor",
             armor: 80,
@@ -5867,6 +6080,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/storage.png",
           system: "D2",
           name: `Nano Automated Maintenance System`,
+          sourcedFrom: ["Toir"],
           stats: {
             type: "armor",
             armor: null,
@@ -5912,6 +6126,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "A1",
           name: "Frigates Production System",
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "armor",
@@ -5935,6 +6150,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "A2",
           name: "Corvette Production System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -5957,6 +6173,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "A3",
           name: "Fighter Production System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -5979,6 +6196,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "B1",
           name: "Warning and Control System",
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "armor",
@@ -6009,6 +6227,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "B2",
           name: "Coordinate Command System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -6038,6 +6257,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "B3",
           name: "Camoflage System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -6067,6 +6287,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "C1",
           name: "Engineering Maintenance System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -6089,6 +6310,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/storage.png",
           system: "C2",
           name: "Strategic Resource Storage System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -6112,6 +6334,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "D1",
           name: "Aircraft System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -6136,6 +6359,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/storage.png",
           system: "D2",
           name: "Repair UAV System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -6162,6 +6386,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "E1",
           name: "Area-Defense System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -6205,6 +6430,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "E2",
           name: "Corvette Dock",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -6248,6 +6474,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "M1",
           name: "Integrated Aircraft Hanger",
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -6282,6 +6509,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "M2",
           name: "Integrated Aircraft System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -6340,6 +6568,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "M3",
           name: "Large Aircraft System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -6373,6 +6602,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A1",
           name: `"Dragoon" Battery System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -6461,6 +6691,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A2",
           name: `Anti-Aircraft Missile Platform`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 2700,
@@ -6512,6 +6743,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B1",
           name: `Missile Defense System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 1200,
@@ -6567,6 +6799,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "B2",
           name: `Corvette Loading System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -6591,6 +6824,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "B3",
           name: `Info UAV Support Platform`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -6606,7 +6840,20 @@ export default defineEventHandler(() => {
               name: "Field Support UAV Pod",
               hanger: "Info UAV",
               capacity: 3,
-              attributes: ["Ship Calibration Support"]
+              attributes: ["Ship Calibration Support"],
+              stats: {
+                targetPriority: [
+                  [1, "Battleship"],
+                  [1, "Carrier"],
+                  [1, "Auxiliary Ship"],
+                  [1, "Battlecruiser"],
+                  [1, "Cruiser"]
+                ],
+                duration: 30,
+                operationCount: [1, 1],
+                cooldown: 10,
+                lockOnTime: 3
+              }
             }
           ]
         }
@@ -6634,6 +6881,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "M1",
           name: "Collaborative Hanger I",
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -6701,6 +6949,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "M2",
           name: "Collaborative Hanger II",
+          sourcedFrom: null,
           stats: {
             type: "weapon",
             antiship: null,
@@ -6738,6 +6987,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "M3",
           name: "Collaborative Hanger III",
+          sourcedFrom: ["OZY"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -6791,6 +7041,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A1",
           name: `Integrated Battery System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -6880,6 +7131,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A2",
           name: `Experimental Ion Cannon System`,
+          sourcedFrom: ["LunatiCorp"],
           stats: {
             type: "weapon",
             antiship: 8857,
@@ -6966,6 +7218,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A3",
           name: `Pulse Anti-Aircraft System`,
+          sourcedFrom: ["Ultix"],
           stats: {
             type: "weapon",
             antiship: 3600,
@@ -7003,6 +7256,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B1",
           name: `Anti-Ship Projectile Launching System`,
+          sourcedFrom: ["Spy Shark"],
           stats: {
             type: "weapon",
             antiship: 5640,
@@ -7083,6 +7337,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B2",
           name: `Anti-Missile Defense System`,
+          sourcedFrom: ["Somnambulist", "Sector"],
           stats: {
             type: "weapon",
             antiship: 1104,
@@ -7160,6 +7415,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B3",
           name: `Anti-Aircraft Missile Platform`,
+          sourcedFrom: null,
           stats: {
             type: "weapon",
             antiship: 1527,
@@ -7197,6 +7453,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C1",
           name: "Auxiliary Aircraft Hanger",
+          sourcedFrom: ["Spy Shark"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -7221,6 +7478,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C2",
           name: "Auxiliary Corvette Dockyard",
+          sourcedFrom: ["Spy Shark"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -7245,6 +7503,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/storage.png",
           system: "C3",
           name: "Support Repair UAV System",
+          sourcedFrom: null,
           stats: {
             type: "armor",
             armor: null,
@@ -7290,6 +7549,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M1",
           name: `"White Flashing" Integrated Armory`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -7382,6 +7642,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M2",
           name: `"White Flashing" Integrated Armory`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 13628,
@@ -7470,6 +7731,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "A1",
           name: `Integrated Aircraft Hanger`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -7495,6 +7757,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "A2",
           name: `Corvette Dock`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -7519,6 +7782,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "B1",
           name: `Additional Energy System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "armor",
@@ -7542,6 +7806,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "B2",
           name: `Fire-Control Auxiliary Calibration System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "armor",
             armor: null,
@@ -7564,6 +7829,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C1",
           name: `Additional Aircraft System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -7588,6 +7854,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "C2",
           name: `Missile Defense System`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 5200,
@@ -7646,6 +7913,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C3",
           name: `Recon UAV System`,
+          sourcedFrom: ["kitty7hell", "Draconia19"],
           stats: {
             type: "armor",
             armor: null,
@@ -7702,6 +7970,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "M1",
           name: "Corvette Dock",
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -7727,6 +7996,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "M2",
           name: "Large Aircraft System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -7751,6 +8021,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A1",
           name: `Integrated Armory`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -7843,6 +8114,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A2",
           name: `Projectile Weapon Platform`,
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: 8749,
@@ -7932,6 +8204,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A3",
           name: `Integrated Cannon Platform`,
+          sourcedFrom: ["Windserpent", "Sector"],
           stats: {
             type: "weapon",
             antiship: 8888,
@@ -8029,6 +8302,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "B1",
           name: "Ship Maintenance System",
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "armor",
@@ -8052,6 +8326,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "B2",
           name: "Corvette Loading Platform",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -8076,6 +8351,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C1",
           name: "Aircraft Hanger",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -8100,6 +8376,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "C2",
           name: "Siege UAV System",
+          sourcedFrom: ["Windserpent"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -8140,6 +8417,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "C3",
           name: "Anti-Aircraft Missile Platform",
+          sourcedFrom: ["Windserpent", "The Enlightened"],
           stats: {
             type: "weapon",
             antiship: 2618,
@@ -8157,7 +8435,32 @@ export default defineEventHandler(() => {
               target: "Aircraft",
               lockonEfficiency: 60,
               alpha: 50,
-              attributes: ["Interception Capability", "Anti-Aircraft Special Ammo", "Anti-Aircraft Support"]
+              attributes: ["Interception Capability", "Anti-Aircraft Special Ammo", "Anti-Aircraft Support"],
+              stats: {
+                duration: 6,
+                attacksPerRound: [1, 12],
+                cooldown: 5,
+                lockOnTime: 3,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    damage: 2618,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ]
+                  },
+                  antiair: {
+                    position: 1,
+                    damage: 1178,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ]
+                  }
+                }
+              }
             }
           ]
         }
@@ -8185,6 +8488,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M1",
           name: `Bow-Mounted Ion Cannon System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -8235,6 +8539,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "M2",
           name: `Bow-Mounted High-Energy Bombardment System`,
+          sourcedFrom: ["WarpPrime"],
           stats: {
             type: "weapon",
             antiship: 21272,
@@ -8261,6 +8566,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A1",
           name: `Anti-Ship Torpedo System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -8311,6 +8617,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "A2",
           name: `Projectile Weapon System`,
+          sourcedFrom: ["WarpPrime"],
           stats: {
             type: "weapon",
             antiship: 10000,
@@ -8337,6 +8644,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "B1",
           name: `Siege Armed System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -8386,6 +8694,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/aircraft.png",
           system: "B2",
           name: "Siege UAV System",
+          sourcedFrom: ["WarpPrime"],
           stats: {
             type: "weapon",
             antiship: null,
@@ -8414,6 +8723,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "C1",
           name: `Experimental Ion Cannon System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -8464,6 +8774,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "C2",
           name: `Ion Turret System`,
+          sourcedFrom: ["WarpPrime"],
           stats: {
             type: "weapon",
             antiship: 10400,
@@ -8490,6 +8801,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "D1",
           name: `Medium Anti-Ship Missile`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "weapon",
@@ -8549,6 +8861,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "D2",
           name: `Large Anti-Ship Missile`,
+          sourcedFrom: ["WarpPrime"],
           stats: {
             type: "weapon",
             antiship: 11100,
@@ -8575,6 +8888,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/armor.png",
           system: "E1",
           name: `Standard Sacrum Chu Imperium Armor System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "armor",
@@ -8605,6 +8919,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/armor.png",
           system: "E2",
           name: `Armor System`,
+          sourcedFrom: ["WarpPrime"],
           stats: {
             type: "armor",
             extraHP: 284970,
@@ -8634,6 +8949,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/speed.png",
           system: "F1",
           name: `Standard Sacrum Chu Imperium Propulsion System`,
+          sourcedFrom: null,
           default: true,
           stats: {
             type: "propulsion",
@@ -8663,6 +8979,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/speed.png",
           system: "F2",
           name: `Propulsion System`,
+          sourcedFrom: ["WarpPrime"],
           stats: {
             type: "propulsion",
             cruise: 250,
@@ -8691,6 +9008,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/jamming.png",
           system: "G1",
           name: `Ion Enhancement Device`,
+          sourcedFrom: ["WarpPrime"],
           stats: {
             type: "armor",
             armor: null,
@@ -8719,6 +9037,7 @@ export default defineEventHandler(() => {
           img: "/weapons/icons/cannon.png",
           system: "H1",
           name: `Short-Range Anti-Aircraft System`,
+          sourcedFrom: ["WarpPrime"],
           stats: {
             type: "weapon",
             antiship: null,

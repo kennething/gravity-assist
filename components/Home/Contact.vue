@@ -5,7 +5,7 @@
     <div class="mt-4 flex flex-col items-center justify-center gap-2" :class="isBlock ? 'w-full md:w-[25rem] lg:w-[35rem] xl:w-full' : 'w-full'">
       <div class="flex w-full flex-col items-start justify-center gap-1 md:flex-row md:items-center md:gap-4">
         <p class="w-40 text-nowrap text-left transition duration-500">Infinite Lagrange</p>
-        <div class="fo-input-group flex grow rounded-full transition duration-500 dark:border-neutral-400 dark:bg-neutral-600 dark:hover:border-neutral-400">
+        <div class="fo-input-group flex grow rounded-full bg-body transition duration-500 dark:border-neutral-400 dark:bg-neutral-600 dark:hover:border-neutral-400">
           <span class="fo-input-group-text">
             <img class="size-5 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
           </span>
@@ -21,7 +21,7 @@
       </div>
       <div class="flex w-full flex-col items-start justify-center gap-1 md:flex-row md:items-center md:gap-4">
         <p class="w-40 text-nowrap text-left transition duration-500">Discord</p>
-        <div class="fo-input-group flex grow rounded-full transition duration-500 dark:border-neutral-400 dark:bg-neutral-600 dark:hover:border-neutral-400">
+        <div class="fo-input-group flex grow rounded-full bg-body transition duration-500 dark:border-neutral-400 dark:bg-neutral-600 dark:hover:border-neutral-400">
           <span class="fo-input-group-text">
             <img class="size-5 transition duration-500 dark:invert" src="/logo/discord.svg" aria-hidden="true" />
           </span>
@@ -37,7 +37,7 @@
       </div>
       <div class="flex w-full flex-col items-start justify-center gap-1 md:flex-row md:items-center md:gap-4">
         <p class="w-40 text-nowrap text-left transition duration-500">Server</p>
-        <div class="fo-input-group flex grow rounded-full transition duration-500 dark:border-neutral-400 dark:bg-neutral-600 dark:hover:border-neutral-400">
+        <div class="fo-input-group flex grow rounded-full bg-body transition duration-500 dark:border-neutral-400 dark:bg-neutral-600 dark:hover:border-neutral-400">
           <span class="fo-input-group-text">
             <img class="size-5 transition duration-500 dark:invert" src="/logo/discord.svg" aria-hidden="true" />
           </span>

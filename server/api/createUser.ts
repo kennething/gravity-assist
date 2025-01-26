@@ -3,6 +3,7 @@ import { origins } from "~/utils/general";
 import { UserData } from "~/utils/types";
 import admin from "firebase-admin";
 
+// probably dont need crypto or hashing for uid and access token, whos tryna hack someones blueprints 💀💀
 async function generateUid() {
   const db = admin.firestore();
   const uid = getRandomCharacters(12, "numeric");

@@ -259,6 +259,8 @@ interface Module {
 
 interface KnownModule extends Module {
   type: "known";
+  /** Array of names of people this module's stats were sourced from */
+  sourcedFrom: string[] | null;
 }
 
 export interface UnknownModule extends Module {

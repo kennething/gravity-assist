@@ -23,23 +23,18 @@ export const credits: readonly Credit[] = [
   },
   {
     name: "WarpPrime",
-    specific: ["Most Warspite modules", "Feature additions", "Bug fixes", "Maintenance"],
+    specific: ["Warspite M2, A2, B2, C2, D2, E2, F2", "Feature additions", "Bug fixes", "Maintenance"],
     dateAdded: "2024-09-19"
   },
   {
-    name: "Toir",
-    specific: ["Ediacaran D2", "Ediacaran C1", "Module Library redesign feedback", "Bug reporting"],
-    dateAdded: "2024-04-24"
-  },
-  {
-    name: "Somnambulist",
-    specific: ["Eternal Heavens B2", "Ediacaran B2"],
-    dateAdded: "2024-06-25"
-  },
-  {
     name: "Sector",
-    specific: ["Ediacaran B3"],
+    specific: ["Ediacaran B3", "Eternal Storm M2, A2, B2, C1, D1, D2", "Spear of Uranus M2, A3, B1", "Eternal Heavens B2", "Solar Whale A3"],
     dateAdded: "2025-01-24"
+  },
+  {
+    name: "Toir",
+    specific: ["Ediacaran D2, C1", "Module Library redesign feedback", "Bug reporting"],
+    dateAdded: "2024-04-24"
   },
   {
     name: "Bullet",
@@ -52,8 +47,28 @@ export const credits: readonly Credit[] = [
     dateAdded: "2024-02-16"
   },
   {
+    name: "Somnambulist",
+    specific: ["Eternal Heavens B2", "Ediacaran B2"],
+    dateAdded: "2024-06-25"
+  },
+  {
+    name: "OZY",
+    specific: ["ST59 M3", "Eternal Heavens M3"],
+    dateAdded: "2025-01-24"
+  },
+  {
+    name: "The Enlightened",
+    specific: ["Constantine the Great B3", "Solar Whale C3"],
+    dateAdded: "2025-01-25"
+  },
+  {
+    name: "Thalleous",
+    specific: ["Thunderbolt Star M2, M3, E1, E2"],
+    dateAdded: "2023-11-30"
+  },
+  {
     name: "Spy Shark",
-    specific: ["Eternal Heavens B1", "Eternal Heavens C1", "Eternal Heavens C2"],
+    specific: ["Eternal Heavens B1, C1, C2"],
     dateAdded: "2024-03-13"
   },
   {
@@ -70,6 +85,11 @@ export const credits: readonly Credit[] = [
     name: "Ultix",
     specific: ["Eternal Heavens A3"],
     dateAdded: "2024-06-03"
+  },
+  {
+    name: "Draconia19",
+    specific: ["Marshal Crux C3"],
+    dateAdded: "2025-01-25"
   },
   {
     name: "NullPointer",
