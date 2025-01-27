@@ -54,14 +54,14 @@ const currentModule = ref<AllModule>();
 watch(currentModule, () => router.push({ query: { ...route.query, m: currentModule.value?.system } }));
 
 useSeoMeta({
-  title: () => `${currentModule.value?.system ? `${currentModule.value?.system} ` : ""}${currentShip.value?.name ?? "Constantine the Great"} - RA Helper | Gravity Assist`,
-  ogTitle: () => `Module Library - Gravity Assist | ${route.query.m ? `${route.query.m} / ` : ""}${route.query.s ?? "Constantine the Great"}`,
+  title: () => `${currentModule.value?.system ? `${currentModule.value?.system} / ` : ""}${currentShip.value?.name ?? "Constantine the Great"} - Module Library | Gravity Assist`,
+  ogTitle: () => `Module Library -  ${route.query.m ? `${route.query.m} / ` : ""}${route.query.s ?? "Constantine the Great"}`,
   description:
-    "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so feel free to reach out of you have a missing module :)",
+    "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so do your patriotic duty and share your modules!",
   ogDescription:
-    "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so feel free to reach out of you have a missing module :)",
+    "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so do your patriotic duty and share your modules!",
   twitterDescription:
-    "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so feel free to reach out of you have a missing module :)",
+    "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so do your patriotic duty and share your modules!",
   twitterImage: () =>
     config.public.baseUrl +
     (route.query.s ? `/ships/${(route.query.s as string).toLowerCase().replaceAll("-", "").replaceAll("'", "").replaceAll(".", "").split(" ").join("_")}.png` : "/ships/constantine_the_great.png")

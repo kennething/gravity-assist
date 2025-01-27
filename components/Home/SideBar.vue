@@ -102,7 +102,7 @@ type NavButton = {
   tag?: {
     name: string;
     /** Provided as a Tailwind class.
-     * @example bg-blue-100
+     * @example "bg-blue-100"
      */
     color: string;
   };

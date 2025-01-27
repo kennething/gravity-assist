@@ -31,7 +31,7 @@
       <span v-else class="fo-loading fo-loading-spinner fo-loading-sm"></span>
     </button>
     <p
-      class="absolute -bottom-7 rounded-full bg-body px-3 py-1 opacity-0 transition duration-500"
+      class="absolute -bottom-7 text-nowrap rounded-full bg-body px-3 py-1 opacity-0 transition duration-500"
       :class="{ 'opacity-100': userStore.hasUnsavedChanges || !isOwner, 'shadow dark:border dark:border-neutral-700 dark:shadow-none': isSticky }"
     >
       {{ !isOwner ? "You are viewing someone else's blueprints" : "You have unsaved changes" }}

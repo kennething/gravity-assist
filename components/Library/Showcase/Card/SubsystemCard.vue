@@ -45,7 +45,7 @@
         <h4 class="text-lg font-medium transition duration-500">Attributes</h4>
         <div v-for="attribute in subsystem.attributes" class="tooltip-container flex items-start justify-center gap-1">
           <p class="transition duration-500">{{ attribute }}</p>
-          <span class="tooltip-block text-left text-xs text-neutral-800 transition duration-500 dark:text-neutral-300">{{ attributes[attribute] }}</span>
+          <span class="tooltip-nohover text-left text-xs text-neutral-800 transition duration-500 dark:text-neutral-300">{{ attributes[attribute] }}</span>
           <div class="tooltip du-tooltip cursor-help" :data-tip="attributes[attribute]">
             <img class="size-4 transition duration-500 dark:invert" src="/ui/info.svg" alt="Hover for attribute description" />
           </div>
@@ -58,8 +58,8 @@
     <div v-if="priority" class="flex w-full flex-col items-start justify-start xl:w-[45%] xl:items-end">
       <h5 class="text-lg font-medium transition duration-500">{{ priority[0][0] ? "Attack" : "System" }} Priority</h5>
 
-      <div class="mt-3 flex w-full flex-col items-center justify-center gap-2">
-        <div v-for="[name, priorities, damage] in priority" class="flex w-full flex-col items-center justify-center">
+      <div class="mt-3 flex w-full flex-col items-center justify-center gap-3">
+        <div v-for="[name, priorities, damage] in priority" class="flex w-full flex-col items-center justify-center rounded-xl shadow">
           <div v-if="name" class="flex w-full items-center justify-between rounded-t-xl bg-neutral-200 px-3 py-1 transition duration-500 last:rounded-xl dark:bg-neutral-700">
             <h6 class="inline-flex items-center justify-center gap-1 transition duration-500">
               <img class="size-4 transition duration-500 dark:invert" :src="`/weapons/stats/${name}.svg`" aria-hidden="true" />
@@ -131,7 +131,7 @@ const priority = computed<[string | null, [number, string][], number | null][] |
   if (Array.isArray(targetPriority)) return [[null, targetPriority, null]];
 
   return Object.entries(targetPriority)
-    .toSorted((a, b) => a[1].position - b[1].position)
+    .sort((a, b) => a[1].position - b[1].position)
     .map(([name, data]) => [name, "priorities" in data ? data.priorities : [], data.damage]);
 });
 </script>
@@ -141,7 +141,7 @@ const priority = computed<[string | null, [number, string][], number | null][] |
   @apply inline-block;
 }
 
-.tooltip-block {
+.tooltip-nohover {
   @apply hidden;
 }
 
@@ -152,7 +152,7 @@ const priority = computed<[string | null, [number, string][], number | null][] |
   .tooltip {
     @apply hidden;
   }
-  .tooltip-block {
+  .tooltip-nohover {
     @apply block;
   }
 }

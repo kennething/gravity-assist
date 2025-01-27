@@ -1,7 +1,7 @@
 <template>
   <div class="group flex w-full items-center justify-center gap-3 xl:gap-6">
     <div
-      class="hidden h-40 w-12 shrink-0 select-none items-center justify-center rounded-xl bg-neutral-100 text-4xl transition duration-500 group-hover:bg-neutral-200 group-hover:duration-150 lg:flex dark:bg-neutral-900 dark:group-hover:bg-neutral-800"
+      class="hidden h-40 w-12 shrink-0 select-none items-center justify-center rounded-xl bg-neutral-100 text-4xl transition duration-500 group-hover:bg-neutral-200 group-hover:duration-150 lg:flex xl:h-36 dark:bg-neutral-900 dark:group-hover:bg-neutral-800"
     >
       {{ category }}
     </div>

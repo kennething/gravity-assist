@@ -17,7 +17,7 @@
       ></button>
     </div>
   </div>
-  <HomeCarouselCard :showcase="carouselShowcases[currentCarouselIndex]" class="mt-4 block transition duration-500 lg:hidden dark:bg-neutral-900 dark:hover:bg-neutral-800" />
+  <HomeCarouselCard :showcase="carouselShowcases[currentCarouselIndex]" class="relative mt-4 transition duration-500 lg:hidden dark:bg-neutral-900 dark:hover:bg-neutral-800" />
 </template>
 
 <script setup lang="ts">
@@ -60,7 +60,7 @@ const carouselShowcases: Showcase[] = [
   },
   {
     title: "Encyclopedia",
-    description: "Browse through a collection of Super Capital modules, equipments, technical blueprints, and more",
+    description: "Browse through a collection of Super Capital modules and stats",
     route: "/modules/encyclopedia",
     src: "/carousel/encyclopedia.png",
     tag: {
@@ -70,7 +70,7 @@ const carouselShowcases: Showcase[] = [
   },
   {
     title: "RA Helper",
-    description: "Plan out your research agreements in advance and track your progress to blueprint completion",
+    description: "Plan out your research agreements in advance",
     route: "/modules/research-agreement-helper",
     src: "/carousel/researchAgreement.png"
   },

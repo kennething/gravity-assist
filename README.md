@@ -28,6 +28,12 @@
   </a>
 </h2>
 
+## Ship Data
+
+Feel free to use my data, which can be found in the `/server/api/data/ships.ts` [file](https://github.com/DubNubz/gravity-assist/blob/main/server/api/data/ships.ts).
+
+Each ship follows the data structures in their [type declarations](https://github.com/DubNubz/gravity-assist/blob/main/utils/ships.ts) in `/utils/ships.ts`.
+
 ## Project Setup
 
 1. Create a `.env` file in the root of the project

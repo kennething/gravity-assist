@@ -77,13 +77,12 @@
 </template>
 
 <script setup lang="ts">
-const description = "Create colored text, search modules and research paths, track your progress, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange.";
 useSeoMeta({
   title: "Home | Gravity Assist",
   ogTitle: "Gravity Assist",
-  description,
-  ogDescription: description,
-  twitterDescription: description
+  description: "Create colored text, search modules and research paths, track your progress, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange.",
+  ogDescription: "Create colored text, search modules and research paths, track your progress, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange.",
+  twitterDescription: "Create colored text, search modules and research paths, track your progress, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange."
 });
 
 const route = useRoute();

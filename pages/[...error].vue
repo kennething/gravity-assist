@@ -11,15 +11,14 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 
-const description = "Uh oh! A v14 whale is blocking your path! We'll stay here and hold him off, but you'll have to find your page somewhere else!";
 useSeoMeta({
   title: "404 Not Found | Gravity Assist",
   ogTitle: "404 Not Found - Gravity Assist",
-  description,
-  ogDescription: description,
-  ogImage: () => `${config.public.baseUrl  }/ships/solar_whale.png`,
-  twitterImage: () => `${config.public.baseUrl  }/ships/solar_whale.png`,
-  twitterDescription: description
+  description: "Uh oh! A v14 whale is blocking your path! We'll stay here and hold him off, but you'll have to find your page somewhere else!",
+  ogDescription: "Uh oh! A v14 whale is blocking your path! We'll stay here and hold him off, but you'll have to find your page somewhere else!",
+  ogImage: () => `${config.public.baseUrl}/ships/solar_whale.png`,
+  twitterImage: () => `${config.public.baseUrl}/ships/solar_whale.png`,
+  twitterDescription: "Uh oh! A v14 whale is blocking your path! We'll stay here and hold him off, but you'll have to find your page somewhere else!"
 });
 </script>
 

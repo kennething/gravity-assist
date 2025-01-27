@@ -89,12 +89,12 @@ const isOwner = computed(() => {
 });
 
 useSeoMeta({
-  title: "Someone's Blueprint Tracker | Gravity Assist",
-  ogTitle: "Blueprint Tracker - Gravity Assist",
-  description: () =>
-    `${route.query.u ? "Someone saved their blueprint collection and shared it with you! You, too, can e" : "E"}asily track your blueprint collection and share it with others! View your collection, add new blueprints, and save your changes. Never open Excel ever again to share your blueprints with others!`,
-  ogDescription: () =>
-    `${route.query.u ? "Someone saved their blueprint collection and shared it with you! You, too, can e" : "E"}asily track your blueprint collection and share it with others! View your collection, add new blueprints, and save your changes. Never open Excel ever again to share your blueprints with others!`,
+  title: () => `${isOwner.value ? "Your" : "Someone's"} Blueprint Tracker | Gravity Assist`,
+  ogTitle: "Blueprint Tracker",
+  description:
+    "Easily track your blueprint collection and share it with others! View your collection, add new blueprints, and save your changes. Never open Excel ever again to share your blueprints with others!",
+  ogDescription:
+    "Easily track your blueprint collection and share it with others! View your collection, add new blueprints, and save your changes. Never open Excel ever again to share your blueprints with others!",
   twitterDescription:
     "Easily track your blueprint collection and share it with others! View your collection, add new blueprints, and save your changes. Never open Excel ever again to share your blueprints with others!"
 });
