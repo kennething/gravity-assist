@@ -146,17 +146,17 @@ const navButtons: NavButton[] = [
     altName: "Research Agreement Helper",
     src: "/ui/researchAgreement.svg",
     route: "/modules/research-agreement-helper"
-  },
-  {
-    displayName: "Color Generator",
-    src: "/ui/colorGenerator.svg",
-    route: "/modules/color-generator",
-    disabled: true,
-    tag: {
-      name: "Soon",
-      color: "bg-neutral-100"
-    }
   }
+  // {
+  //   displayName: "Color Generator",
+  //   src: "/ui/colorGenerator.svg",
+  //   route: "/modules/color-generator",
+  //   disabled: true,
+  //   tag: {
+  //     name: "Soon",
+  //     color: "bg-neutral-100"
+  //   }
+  // }
   // {
   //   displayName: "Fleet Builder",
   //   src: "/ui/fleetBuilder.svg",
