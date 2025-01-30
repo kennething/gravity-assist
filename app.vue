@@ -62,7 +62,19 @@ watch(isDarkMode, () => {
 onMounted(() => {
   if (localStorage.getItem("theme") === "dark") isDarkMode.value = true;
   document.body.style.display = "block";
-  userStore.init();
+
+  const isTemporaryUser = (!localStorage.getItem("uid") || !localStorage.getItem("token")) && Object.keys(route.query).length !== 0;
+  userStore.init(!isTemporaryUser);
+
+  if (!isTemporaryUser) return;
+  const stop = watch(
+    () => route.query,
+    (queries) => {
+      if (Object.keys(queries).length !== 0) return;
+      stop();
+      void userStore.getUser(true);
+    }
+  );
 });
 
 // sidebar

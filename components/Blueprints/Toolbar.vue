@@ -193,7 +193,7 @@ async function saveBlueprints() {
       accessToken: userStore.user.accessToken,
       blueprints: props.data,
       accountIndex: props.accountIndex,
-      accountName: getObjectKey(userStore.user.blueprints[props.accountIndex])
+      accountName: getObjectKey(userStore.user.blueprints[props.accountIndex]) ?? "Unnamed"
     }
   });
 

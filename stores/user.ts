@@ -9,7 +9,7 @@ export const useUserStore = defineStore("userStore", () => {
   const blueprintsAutosave = ref<BlueprintAllShip[]>();
   const hasUnsavedChanges = ref(false);
 
-  async function getUser() {
+  async function getUser(createUserIfFail = true) {
     const uid = localStorage.getItem("uid");
     const accessToken = localStorage.getItem("token");
 
@@ -23,6 +23,8 @@ export const useUserStore = defineStore("userStore", () => {
         return;
       }
     }
+
+    if (!createUserIfFail) return;
 
     const { success, error, content } = await $fetch("/api/createUser");
     if (!success && error) return console.error(error);
@@ -52,11 +54,11 @@ export const useUserStore = defineStore("userStore", () => {
     }
   }
 
-  function init() {
-    void getUser();
+  function init(createUserIfFail = true) {
+    void getUser(createUserIfFail);
     void fetchLatestAlert();
     void fetchShipData();
   }
 
-  return { isDarkMode, alert, user, shipData, shipDifficulties, blueprintsAutosave, hasUnsavedChanges, init };
+  return { isDarkMode, alert, user, shipData, shipDifficulties, blueprintsAutosave, hasUnsavedChanges, getUser, init };
 });

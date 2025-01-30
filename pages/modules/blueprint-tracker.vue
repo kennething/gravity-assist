@@ -76,8 +76,8 @@ onBeforeMount(() => {
 onMounted(() => (data.value = userStore.blueprintsAutosave));
 
 const isOwner = computed(() => {
-  if (!userStore.user || !userStore.shipData) return;
-  if (!route.query.u) {
+  if (!userStore.shipData) return;
+  if (!route.query.u && userStore.user) {
     void router.replace({ query: { ...route.query, u: userStore.user.uid } });
     return true;
   }
@@ -86,7 +86,7 @@ const isOwner = computed(() => {
     return true;
   }
 
-  return route.query.u === userStore.user.uid;
+  return route.query.u === userStore.user?.uid;
 });
 
 useSeoMeta({
@@ -198,7 +198,7 @@ watch(
 );
 
 watch(isOwner, async (val) => {
-  if (!userStore.shipData || !userStore.user) return;
+  if (!userStore.shipData) return;
 
   if (val) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
   data.value = await getBlueprints(userStore.shipData);
