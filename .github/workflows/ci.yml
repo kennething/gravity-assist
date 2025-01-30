@@ -60,7 +60,7 @@ jobs:
     if: needs.files.outputs.should_skip != 'true'
 
     timeout-minutes: 20
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     name: Build & Test
 
     steps:
@@ -80,6 +80,3 @@ jobs:
 
       - name: Test
         run: npm run test
-        env:
-          NUXT_BASE64_SERVICE_ACCOUNT: ""
-          NUXT_PUBLIC_BASE_URL: ""
