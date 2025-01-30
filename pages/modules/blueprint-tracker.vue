@@ -3,7 +3,7 @@
     <div class="flex w-full flex-col items-center justify-center md:w-[25rem] lg:w-[30rem]">
       <h1 class="text-3xl font-bold transition duration-500">Blueprint Tracker</h1>
       <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
-        <span class="flex items-center justify-center"><img class="size-12 transition duration-500 dark:invert" src="/ui/bpTracker.svg" aria-hidden="true" /></span>
+        <span class="flex items-center justify-center"><img class="size-12 select-none transition duration-500 dark:invert" src="/ui/bpTracker.svg" aria-hidden="true" /></span>
       </div>
     </div>
 
@@ -21,18 +21,19 @@
 
     <ClientOnly>
       <p v-if="lastSaved" class="mt-8 transition duration-500">Last updated: {{ formatDate(lastSaved, "full", true) }}</p>
+      <p v-if="data" class="text-sm transition duration-500">{{ getTotalTP(data).toLocaleString() }} total Tech Points</p>
     </ClientOnly>
 
     <div v-if="displayedData" class="mt-4 flex w-full flex-col items-center justify-center">
       <BlueprintsCategory
         v-for="type in shipTypes"
         :key="type"
-        :type="type"
+        :ship-type="type"
         :is-owner="isOwner"
         :current-layout="currentLayout"
         :show-variants="showVariants"
         :data="data"
-        :displayed-data="displayedData"
+        :displayed-data="displayedData.filter((ship) => ship.type === type)"
         @modules="(ship) => (currentShip = ship)"
       />
     </div>
@@ -202,6 +203,18 @@ watch(isOwner, async (val) => {
   if (val) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
   data.value = await getBlueprints(userStore.shipData);
 });
+
+function getTotalTP(ships: BlueprintAllShip[]) {
+  const usedShips: string[] = [];
+
+  return ships.reduce((total, ship) => {
+    if (ship.hasVariants) {
+      if (usedShips.includes(ship.name)) return total;
+      usedShips.push(ship.name);
+    }
+    return total + ship.techPoints;
+  }, 0);
+}
 </script>
 
 <style lang="scss" scoped>

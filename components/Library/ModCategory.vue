@@ -5,7 +5,7 @@
     >
       {{ category }}
     </div>
-    <div class="flex w-full grid-cols-3 grid-rows-1 flex-col items-center justify-center gap-2 sm:grid">
+    <div v-auto-animate class="flex w-full grid-cols-3 grid-rows-1 flex-col items-center justify-center gap-2 sm:grid">
       <LibraryModCard v-for="mod in modules" :key="mod.system" :mod="mod" @click="emit('select', mod)" />
     </div>
   </div>

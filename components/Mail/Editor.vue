@@ -11,7 +11,7 @@
                 class="cursor-pointer rounded p-1 text-neutral-400 transition hover:bg-neutral-600 hover:text-white"
                 @click="underline = !underline"
               >
-                <img class="size-6 invert" src="/ui/underline.svg" aria-hidden="true" />
+                <img class="size-6 select-none invert" src="/ui/underline.svg" aria-hidden="true" />
               </button>
             </div>
             <div class="du-tooltip" data-tip="Text Color">
@@ -21,7 +21,7 @@
                 class="cursor-pointer rounded p-1 text-neutral-400 transition hover:bg-neutral-600 hover:text-white"
                 @click.stop="openColorMenu = !openColorMenu"
               >
-                <img class="size-6 invert" src="/ui/colorGenerator.svg" aria-hidden="true" />
+                <img class="size-6 select-none invert" src="/ui/colorGenerator.svg" aria-hidden="true" />
               </button>
               <div class="absolute bottom-0 h-[3px] w-8 rounded-full" :style="{ backgroundColor: currentColor }"></div>
               <Transition name="fade">
@@ -67,7 +67,7 @@
                 ><span class="inline text-white lg:hidden"> detections</span>
               </p>
               <div class="group relative">
-                <img class="size-5 cursor-help invert" src="/ui/question.svg" alt="Profanity filter information" />
+                <img class="size-5 cursor-help select-none invert" src="/ui/question.svg" alt="Profanity filter information" />
                 <div
                   class="profanity-tooltip fo-tooltip-content pointer-events-none visible top-5 group-hover:opacity-100 max-lg:-right-4 lg:left-1/2 lg:max-xl:-translate-x-1/2 xl:-left-4"
                   role="popover"

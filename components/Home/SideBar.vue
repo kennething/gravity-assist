@@ -4,10 +4,11 @@
       <ul class="w-full space-y-2 font-medium">
         <li v-for="button in navButtons" :key="button.displayName">
           <div v-if="button.disabled" disabled class="group flex w-full select-none items-center rounded-lg bg-neutral-200 p-2 text-neutral-900 transition duration-500 dark:bg-neutral-700">
-            <img class="size-6 transition duration-500 hover:duration-300 dark:invert" :src="button.src" :alt="'Go to ' + (button.altName ?? button.displayName)" />
+            <img class="size-6 select-none transition duration-500 hover:duration-300 dark:invert" :src="button.src" :alt="'Go to ' + (button.altName ?? button.displayName)" />
             <span class="ms-3 transition duration-500" :class="{ 'flex-1 whitespace-nowrap text-left': button.tag }">{{ button.displayName }}</span>
             <span v-if="button.tag" class="ms-3 inline-flex items-center justify-center rounded-full px-2 text-sm font-medium text-neutral-800" :class="button.tag.color">{{ button.tag.name }}</span>
           </div>
+
           <NuxtLink
             v-else
             :to="button.route"
@@ -16,7 +17,7 @@
             @click="emit('close')"
           >
             <img
-              class="size-6 transition duration-500 hover:duration-300 group-hover:scale-110 dark:invert"
+              class="size-6 select-none transition duration-500 hover:duration-300 group-hover:scale-110 dark:invert"
               :class="{ 'scale-110': route.path.includes(button.route) }"
               :src="button.src"
               :alt="'Go to ' + (button.altName ?? button.displayName)"
@@ -36,7 +37,7 @@
                 aria-label="Close"
                 @click="closeAlert"
               >
-                <img class="size-6 transition duration-500 dark:invert" src="/ui/close.svg" aria-hidden="true" />
+                <img class="size-6 select-none transition duration-500 dark:invert" src="/ui/close.svg" aria-hidden="true" />
               </button>
             </div>
             <p class="mb-3 text-left text-sm text-blue-800 transition duration-500 dark:text-blue-200">{{ alert.description }}</p>
@@ -51,7 +52,7 @@
       <div class="flex w-full items-center justify-center font-medium">
         <div class="du-tooltip" data-tip="Contributors">
           <button type="button" class="fo-btn fo-btn-circle fo-btn-text" @click="emit('contributors')">
-            <img class="size-7 transition duration-500 dark:invert" src="/ui/contributors.svg" alt="Toggle side menu" />
+            <img class="size-7 select-none transition duration-500 dark:invert" src="/ui/contributors.svg" alt="Toggle side menu" />
           </button>
         </div>
 
@@ -59,7 +60,7 @@
 
         <div class="du-tooltip" data-tip="Info">
           <button type="button" class="fo-btn fo-btn-circle fo-btn-text" @click="emit('changelog')">
-            <img class="size-7 transition duration-500 dark:invert" src="/ui/info.svg" alt="Toggle side menu" />
+            <img class="size-7 select-none transition duration-500 dark:invert" src="/ui/info.svg" alt="Toggle side menu" />
           </button>
         </div>
 
@@ -67,7 +68,7 @@
 
         <div class="du-tooltip" data-tip="Contact">
           <button type="button" class="fo-btn fo-btn-circle fo-btn-text" @click="emit('contact')">
-            <img class="size-6 transition duration-500 dark:invert" src="/ui/contact.svg" alt="Toggle side menu" />
+            <img class="size-6 select-none transition duration-500 dark:invert" src="/ui/contact.svg" alt="Toggle side menu" />
           </button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex flex-col items-start justify-start rounded-xl">
     <button
-      class="flex h-9 w-9 items-center justify-center rounded-full border bg-white p-0 transition duration-500 lg:w-32 lg:justify-start lg:p-2 lg:px-4 dark:bg-neutral-800"
+      class="flex h-9 w-9 select-none items-center justify-center rounded-full border bg-white p-0 transition duration-500 lg:w-32 lg:justify-start lg:p-2 lg:px-4 dark:bg-neutral-800"
       :class="
         showSettings
           ? 'border-2 border-[#794dff] shadow-sm shadow-[#794dff38] ring-0 ring-[#794dff]'
@@ -54,7 +54,11 @@
           <li v-for="(account, index) in blueprints" class="w-full">
             <button
               class="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-1 transition duration-500 hover:duration-300"
-              :class="route.query.a === index.toString() ? 'bg-neutral-200 hover:bg-neutral-300/75' : 'bg-neutral-100/25 hover:bg-neutral-200'"
+              :class="
+                route.query.a === index.toString()
+                  ? 'bg-neutral-200 hover:bg-neutral-300/75 dark:bg-neutral-700 dark:hover:bg-neutral-600'
+                  : 'bg-neutral-100/25 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700'
+              "
               type="button"
               @click="goToAccount(index)"
             >
@@ -62,12 +66,12 @@
                 {{ getObjectKey(account) }}
                 <span class="du-tooltip ms-2" data-tip="Edit Name">
                   <button class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6" type="button" @click.stop="emit('editName', accountIndex)">
-                    <img class="size-4" src="/ui/pencil.svg" alt="Edit account name" />
+                    <img class="size-4 select-none transition duration-500 dark:invert" src="/ui/pencil.svg" alt="Edit account name" />
                   </button>
                 </span>
                 <span class="du-tooltip" data-tip="Delete">
                   <button class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6" type="button" @click.stop="emit('delete', accountIndex)">
-                    <img class="size-4" src="/ui/trash.svg" alt="Delete account" />
+                    <img class="size-4 select-none transition duration-500 dark:invert" src="/ui/trash.svg" alt="Delete account" />
                   </button>
                 </span>
               </h5>
@@ -80,11 +84,13 @@
         </ol>
         <button
           v-if="blueprints.length < 10"
-          class="mt-1 flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-2 transition hover:bg-neutral-100"
+          class="mt-1 flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-2 transition hover:bg-neutral-100 dark:hover:bg-neutral-700"
           type="button"
           @click="emit('createNew')"
         >
-          <h5 class="inline-flex items-center justify-center gap-2 font-medium transition duration-500"><img class="size-6" src="/ui/plusCircle.svg" aria-hidden="true" /> Create New</h5>
+          <h5 class="inline-flex items-center justify-center gap-2 font-medium transition duration-500">
+            <img class="size-6 select-none transition duration-500 dark:invert" src="/ui/plusCircle.svg" aria-hidden="true" /> Create New
+          </h5>
         </button>
       </div>
     </div>

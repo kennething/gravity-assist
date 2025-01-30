@@ -3,7 +3,7 @@
     <div class="flex w-full flex-col items-center justify-center md:w-[25rem] lg:w-[30rem]">
       <h1 class="text-3xl font-bold transition duration-500">Research Agreement Helper</h1>
       <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
-        <span class="flex items-center justify-center"><img class="size-12 transition duration-500 dark:invert" src="/ui/researchAgreement.svg" aria-hidden="true" /></span>
+        <span class="flex items-center justify-center"><img class="size-12 select-none transition duration-500 dark:invert" src="/ui/researchAgreement.svg" aria-hidden="true" /></span>
       </div>
     </div>
 

@@ -32,7 +32,7 @@
             <ClientOnly>
               <h5 class="inline-flex items-center justify-center gap-1 font-semibold transition duration-500">
                 {{ ((stat as string)?.toLocaleString() ?? 0) + (name === "energyShield" ? "%" : "") }}
-                <img class="size-4 transition duration-500 dark:invert" :src="`/weapons/stats/${name}.svg`" aria-hidden="true" />
+                <img class="size-4 select-none transition duration-500 dark:invert" :src="`/weapons/stats/${name}.svg`" aria-hidden="true" />
               </h5>
             </ClientOnly>
           </div>

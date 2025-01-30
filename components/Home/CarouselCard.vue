@@ -4,7 +4,7 @@
     <span v-if="showcase.tag" class="me-2 rounded px-2.5 py-0.5 text-left text-sm font-semibold text-black" :class="showcase.tag.color">{{ showcase.tag.name }}</span>
     <p class="mt-2 text-left text-black">{{ showcase.description }}</p>
     <NuxtLink :to="showcase.route" class="fo-btn absolute bottom-4 w-52 border-neutral-100 bg-neutral-100 hover:border-neutral-300 hover:bg-neutral-300">
-      Go <img class="size-5" src="/ui/arrowRight.svg" aria-hidden="true" />
+      Go <img class="size-5 select-none" src="/ui/arrowRight.svg" aria-hidden="true" />
     </NuxtLink>
   </div>
 </template>

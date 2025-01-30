@@ -2,7 +2,7 @@
   <li :key="change.version">
     <span class="absolute -start-3 flex size-7 items-center justify-center rounded-full bg-blue-100 transition duration-500 dark:bg-blue-900">
       <img
-        class="size-5 transition duration-500 dark:invert"
+        class="size-5 select-none transition duration-500 dark:invert"
         :src="change.type === 'bugfix' ? '/ui/bugFix.svg' : change.type === 'release' ? '/ui/majorRelease.svg' : '/ui/minorRelease.svg'"
         aria-hidden="true"
       />

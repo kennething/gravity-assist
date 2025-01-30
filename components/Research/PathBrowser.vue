@@ -5,13 +5,13 @@
     <div class="flex w-full items-center justify-between gap-3">
       <div class="du-tooltip" data-tip="Previous">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('manufacturer', 'previous')">
-          <img class="size-5 transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous manufacturer" />
+          <img class="size-5 select-none transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous manufacturer" />
         </button>
       </div>
       <h3 class="grow rounded-xl border border-neutral-300 bg-white py-2 text-lg font-medium transition duration-500 dark:border-neutral-700 dark:bg-neutral-800">{{ manufacturers[manufacturer] }}</h3>
       <div class="du-tooltip" data-tip="Next">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('manufacturer', 'next')">
-          <img class="size-5 transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next manufacturer" />
+          <img class="size-5 select-none transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next manufacturer" />
         </button>
       </div>
     </div>
@@ -19,13 +19,13 @@
     <div class="flex w-full items-center justify-between gap-3">
       <div class="du-tooltip" data-tip="Previous">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('direction', 'previous')">
-          <img class="size-5 transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous direction" />
+          <img class="size-5 select-none transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous direction" />
         </button>
       </div>
       <h3 class="grow rounded-xl border border-neutral-300 bg-white py-2 text-lg font-medium transition duration-500 dark:border-neutral-700 dark:bg-neutral-800">{{ directions[direction] }}</h3>
       <div class="du-tooltip" data-tip="Next">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('direction', 'next')">
-          <img class="size-5 transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next direction" />
+          <img class="size-5 select-none transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next direction" />
         </button>
       </div>
     </div>
@@ -33,13 +33,13 @@
     <div class="flex w-full items-center justify-between gap-3">
       <div class="du-tooltip" data-tip="Previous">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('scope', 'previous')">
-          <img class="size-5 transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous scope" />
+          <img class="size-5 select-none transition duration-500 group-hover:-translate-x-1 dark:invert" src="/ui/arrowLeft.svg" alt="Move to the previous scope" />
         </button>
       </div>
       <h3 class="grow rounded-xl border border-neutral-300 bg-white py-2 text-lg font-medium transition duration-500 dark:border-neutral-700 dark:bg-neutral-800">{{ scopes[scope] }}</h3>
       <div class="du-tooltip" data-tip="Next">
         <button type="button" class="group fo-btn fo-btn-circle fo-btn-text" @click="changeOption('scope', 'next')">
-          <img class="size-5 transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next scope" />
+          <img class="size-5 select-none transition duration-500 group-hover:translate-x-1 dark:invert" src="/ui/arrowRight.svg" alt="Move to the next scope" />
         </button>
       </div>
     </div>

@@ -384,7 +384,7 @@ export const changelog: readonly Changelog[] = [
   {
     type: "release",
     version: "2.0.0",
-    release: "2025-01-27",
+    release: "2025-01-29",
     notes: [
       "Redesigned entire site",
       "Heavily optimized site networking",

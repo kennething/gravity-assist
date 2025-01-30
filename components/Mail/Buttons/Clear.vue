@@ -2,7 +2,7 @@
   <div class="relative">
     <button
       type="button"
-      class="du-btn flex items-center justify-center gap-2 rounded-xl border-red-300 bg-red-100 transition duration-500 hover:scale-105 hover:border-red-400 hover:bg-red-200 dark:border-red-500 dark:hover:bg-red-700"
+      class="du-btn flex select-none items-center justify-center gap-2 rounded-xl border-red-300 bg-red-100 transition duration-500 hover:scale-105 hover:border-red-400 hover:bg-red-200 dark:border-red-500 dark:hover:bg-red-700"
       :class="{ 'scale-105 border-red-400 bg-red-200 dark:bg-red-700': showDialog, 'dark:bg-red-800': !showDialog }"
       @click="emit('toggleDialog', !showDialog)"
     >

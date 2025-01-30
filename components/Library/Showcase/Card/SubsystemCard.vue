@@ -8,7 +8,7 @@
       </h5>
 
       <h4 v-if="priority && priority[0][0]" class="mt-2 inline-flex items-center justify-center gap-1">
-        <img class="size-4 transition duration-500 dark:invert" :src="`/weapons/stats/${priority[0][0]}.svg`" aria-hidden="true" />
+        <img class="size-4 select-none transition duration-500 dark:invert" :src="`/weapons/stats/${priority[0][0]}.svg`" aria-hidden="true" />
         <ClientOnly>
           <span>
             <span class="text-lg font-medium text-yellow-600 transition duration-500 dark:text-yellow-400">{{ priority[0][2]?.toLocaleString() }}</span>
@@ -21,7 +21,7 @@
       <div class="mt-3 flex w-full flex-col items-center justify-center gap-1">
         <div v-for="(property, name) in properties" class="flex w-full items-center justify-between">
           <h5 class="inline-flex items-center justify-center gap-1 text-left font-medium transition duration-500">
-            <img class="size-6 transition duration-500 dark:invert" :src="`/weapons/types/${propertyNames[name][1]}.svg`" aria-hidden="true" />
+            <img class="size-6 select-none transition duration-500 dark:invert" :src="`/weapons/types/${propertyNames[name][1]}.svg`" aria-hidden="true" />
             {{ propertyNames[name][0] }}
           </h5>
           <ClientOnly>
@@ -33,7 +33,7 @@
       <div v-if="stats" class="mt-3 flex w-full flex-col items-center justify-center gap-1">
         <div v-for="(property, name) in stats" class="flex w-full items-center justify-between">
           <h5 class="inline-flex items-center justify-center gap-1 text-left font-medium transition duration-500">
-            <img class="size-6 transition duration-500 dark:invert" :src="`/weapons/types/${propertyNames[name][1]}.svg`" aria-hidden="true" />
+            <img class="size-6 select-none transition duration-500 dark:invert" :src="`/weapons/types/${propertyNames[name][1]}.svg`" aria-hidden="true" />
             {{ propertyNames[name][0] }}
           </h5>
           <p v-if="Array.isArray(property)" class="text-right transition duration-500">{{ property[0] }} x {{ property[1] }}</p>
@@ -43,10 +43,11 @@
 
       <div v-if="subsystem.attributes" class="mt-4 flex w-full flex-col items-start justify-center gap-1">
         <h4 class="text-lg font-medium transition duration-500">Attributes</h4>
-        <div v-for="attribute in subsystem.attributes" class="tooltip-container flex items-start justify-center gap-1">
-          <p class="transition duration-500">{{ attribute }}</p>
+        <div v-for="(attribute, index) in subsystem.attributes" class="tooltip-container flex items-start justify-center gap-0.5">
+          <span class="select-none rounded-lg bg-neutral-200 px-2 py-px transition duration-500 dark:bg-neutral-700">{{ String(index + 1).padStart(2, "0") }}</span>
+          <p class="ml-0.5 text-nowrap text-left transition duration-500">{{ attribute }}</p>
           <span class="tooltip-nohover text-left text-xs text-neutral-800 transition duration-500 dark:text-neutral-300">{{ attributes[attribute] }}</span>
-          <div class="tooltip du-tooltip cursor-help" :data-tip="attributes[attribute]">
+          <div class="tooltip du-tooltip shrink-0 cursor-help select-none" :data-tip="attributes[attribute]">
             <img class="size-4 transition duration-500 dark:invert" src="/ui/info.svg" alt="Hover for attribute description" />
           </div>
         </div>
@@ -62,7 +63,7 @@
         <div v-for="[name, priorities, damage] in priority" class="flex w-full flex-col items-center justify-center rounded-xl shadow">
           <div v-if="name" class="flex w-full items-center justify-between rounded-t-xl bg-neutral-200 px-3 py-1 transition duration-500 last:rounded-xl dark:bg-neutral-700">
             <h6 class="inline-flex items-center justify-center gap-1 transition duration-500">
-              <img class="size-4 transition duration-500 dark:invert" :src="`/weapons/stats/${name}.svg`" aria-hidden="true" />
+              <img class="size-4 select-none transition duration-500 dark:invert" :src="`/weapons/stats/${name}.svg`" aria-hidden="true" />
               {{ categoryNames[name] }}
             </h6>
             <ClientOnly>
@@ -71,7 +72,7 @@
           </div>
           <div v-for="target in priorities" class="flex w-full items-center justify-center gap-1 bg-neutral-200/25 px-3 transition duration-500 last:rounded-b-xl last:pb-1 dark:bg-neutral-700/50">
             <h5 class="w-5 select-none text-neutral-700 transition duration-500 dark:text-neutral-300">{{ String(target[0]).padStart(2, "0") }}</h5>
-            <img class="size-4 transition duration-500 dark:invert" :src="`/ships/classes/${target[1].toLowerCase()}.svg`" :alt="target[1]" />
+            <img class="size-4 select-none transition duration-500 dark:invert" :src="`/ships/classes/${target[1].toLowerCase()}.svg`" :alt="target[1]" />
             <p class="grow text-left transition duration-500">{{ target[1] }}</p>
           </div>
         </div>

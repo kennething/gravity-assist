@@ -15,7 +15,7 @@
     <div v-if="ships" class="group relative flex w-full flex-col items-start justify-start rounded-xl" @click="isSearching = true">
       <div class="fo-input-group relative z-[2] flex grow rounded-xl border-neutral-300 bg-white transition duration-500 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600">
         <span class="fo-input-group-text">
-          <img class="size-5 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
+          <img class="size-5 select-none transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
         </span>
         <div class="fake-search-input fo-input grow content-center rounded-e-xl transition duration-500">
           <p class="text-left text-neutral-700/50 transition duration-500 dark:text-neutral-300">Search</p>
@@ -29,7 +29,7 @@
         />
         <div class="du-tooltip fo-input-group-text p-0" data-tip="Clear" :class="search ? 'visible' : 'invisible'">
           <button tabindex="-1" class="fo-btn fo-btn-circle fo-btn-text rounded-xl" type="button" @click="search = ''">
-            <img class="size-5 dark:invert" src="/ui/close.svg" aria-hidden="true" />
+            <img class="size-5 select-none dark:invert" src="/ui/close.svg" aria-hidden="true" />
           </button>
         </div>
       </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="relative flex w-full flex-col items-center justify-center gap-2 rounded-xl bg-neutral-100/25 p-4 transition duration-500 dark:bg-neutral-900">
-    <img v-if="mod" class="absolute left-0 top-0 size-8 rounded-br-lg rounded-tl-xl" :src="mod.img" :alt="mod.system" loading="lazy" />
+    <img v-if="mod" class="absolute left-0 top-0 size-8 select-none rounded-br-lg rounded-tl-xl" :src="mod.img" :alt="mod.system" loading="lazy" />
     <h3 class="text-xl transition duration-500">
       <!-- eslint-disable-next-line vue/html-closing-bracket-newline -->
       <span class="text-2xl font-semibold transition duration-500">{{ mod?.system ?? "404" }}</span

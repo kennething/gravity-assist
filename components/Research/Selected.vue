@@ -8,7 +8,7 @@
       <p class="transition duration-500">
         {{ ship.variantName }} <span v-if="ship.hasVariants" class="transition duration-500">({{ ship.variant }})</span>
       </p>
-      <img class="my-2.5 h-32" :src="ship.img" :alt="ship.name" />
+      <img class="my-2.5 h-32 select-none" :src="ship.img" :alt="ship.name" />
       <p class="text-xl font-medium transition duration-500" :class="{ 'text-red-600': chance === -1 }">{{ chance === -1 ? "Not found in this path" : chance.toFixed(2) + "%" }}</p>
 
       <div class="mt-3 flex w-full flex-col items-center justify-center gap-2">

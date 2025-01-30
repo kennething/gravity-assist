@@ -23,7 +23,7 @@
         @click="emit('template', templates[selectedTemplateIndex])"
       >
         <span class="hidden transition duration-500 sm:inline-flex md:hidden lg:inline-flex">Use this template</span>
-        <img class="size-5 transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
+        <img class="size-5 select-none transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
       </button>
     </div>
   </div>

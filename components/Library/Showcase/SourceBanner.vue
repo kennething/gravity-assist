@@ -1,6 +1,6 @@
 <template>
   <div v-if="mod?.type === 'known' && mod.sourcedFrom" class="flex w-full items-center justify-center gap-4 rounded-xl bg-neutral-100/25 p-4 transition duration-500 dark:bg-neutral-900">
-    <img class="size-12 transition duration-500 dark:invert" src="/ui/info.svg" aria-hidden="true" />
+    <img class="size-12 select-none transition duration-500 dark:invert" src="/ui/info.svg" aria-hidden="true" />
 
     <div class="flex flex-col items-center justify-center gap-3 xl:gap-1">
       <h5 class="text-lg">

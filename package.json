@@ -12,6 +12,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.2",
     "@pinia/nuxt": "^0.7.0",
     "firebase-admin": "^13.0.1",
     "flowbite": "^2.5.2",

@@ -1,16 +1,16 @@
 <template>
-  <div v-if="data && displayedData && displayedData.filter((ship) => ship.type === type).length > 0" class="flex w-full flex-col items-center justify-center">
-    <h2 class="mt-4 text-2xl font-bold transition duration-500">{{ type }}s</h2>
-    <p class="transition duration-500">{{ data.filter((ship) => ship.type === type && ship.unlocked).length }}/{{ data.filter((ship) => ship.type === type).length }} unlocked</p>
+  <div v-if="data && displayedData && displayedData.length > 0" class="flex w-full flex-col items-center justify-center">
+    <h2 class="mt-4 text-2xl font-bold transition duration-500">{{ shipType }}s</h2>
+    <p class="transition duration-500">{{ data.filter((ship) => ship.type === shipType && ship.unlocked).length }}/{{ data.filter((ship) => ship.type === shipType).length }} unlocked</p>
     <ClientOnly>
       <p class="mb-4 transition duration-500">
-        {{ getTotalTP(displayedData.filter((ship) => ship.type === type)).toLocaleString() }}
+        {{ getTotalTP(displayedData).toLocaleString() }}
         total Tech Points
       </p>
     </ClientOnly>
     <div class="flex flex-wrap items-stretch justify-center gap-3">
       <LazyBlueprintsCard
-        v-for="ship in displayedData.filter((ship) => ship.type === type)"
+        v-for="ship in displayedData"
         :key="Symbol(ship.name + ship.variant)"
         :ship="ship"
         :mirror="ship.mirrorTechPoints"
@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  type: string;
+  shipType: string;
   isOwner: boolean | undefined;
   currentLayout: "list" | "grid";
   showVariants: boolean;

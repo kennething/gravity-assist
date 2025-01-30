@@ -6,7 +6,7 @@
       </p>
       <div class="du-tooltip fo-input-group-text p-0" data-tip="View templates">
         <button type="button" class="fo-btn fo-btn-circle fo-btn-text" @click="showMailTemplates = true">
-          <img class="size-5 transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
+          <img class="size-5 select-none transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
         </button>
       </div>
     </div>
@@ -38,7 +38,7 @@
       class="profanity-tooltip-mobile mt-4 hidden items-center justify-center gap-1 rounded-lg bg-neutral-50 p-4 text-sm text-neutral-800 transition duration-500 dark:bg-neutral-800 dark:text-neutral-200"
       role="alert"
     >
-      <img class="mr-1 size-9 transition duration-500 dark:invert" src="/ui/question.svg" aria-hidden="true" />
+      <img class="mr-1 size-9 select-none transition duration-500 dark:invert" src="/ui/question.svg" aria-hidden="true" />
       <div class="flex flex-col items-start justify-center">
         <p class="transition duration-500">
           <span class="font-medium transition duration-500">Profanity filter:</span> The editor uses a basic profanity filter that does not reflect Infinite Lagrange's actual profanity filter.

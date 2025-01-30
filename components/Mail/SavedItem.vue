@@ -8,12 +8,12 @@
       </ClientOnly>
       <div v-if="!readOnly" class="mt-3 flex items-center justify-center gap-2">
         <div v-if="link === baseUrl" class="fo-btn grow-[3] border-neutral-100 bg-neutral-100">Edit <img class="size-5" src="/ui/pencil.svg" aria-hidden="true" /></div>
-        <NuxtLink v-else :to="link" class="fo-btn grow-[3] border-neutral-100 bg-neutral-100 hover:border-neutral-300 hover:bg-neutral-300">
+        <NuxtLink v-else :to="link" class="fo-btn grow-[3] select-none border-neutral-100 bg-neutral-100 hover:border-neutral-300 hover:bg-neutral-300">
           Edit <img class="size-5" src="/ui/pencil.svg" aria-hidden="true" />
         </NuxtLink>
         <button
           :disabled="!userStore.user"
-          class="fo-btn border-red-400 bg-red-400 px-3 hover:border-red-300 hover:bg-red-300 dark:hover:border-red-500 dark:hover:bg-red-500"
+          class="fo-btn select-none border-red-400 bg-red-400 px-3 hover:border-red-300 hover:bg-red-300 dark:hover:border-red-500 dark:hover:bg-red-500"
           type="button"
           @click="emit('delete', mail)"
         >
@@ -21,7 +21,7 @@
         </button>
         <button
           :disabled="!userStore.user"
-          class="fo-btn border-blue-400 bg-blue-400 px-3 hover:border-blue-300 hover:bg-blue-300 dark:hover:border-blue-500 dark:hover:bg-blue-500"
+          class="fo-btn select-none border-blue-400 bg-blue-400 px-3 hover:border-blue-300 hover:bg-blue-300 dark:hover:border-blue-500 dark:hover:bg-blue-500"
           type="button"
           @click="share"
         >
@@ -29,7 +29,7 @@
         </button>
       </div>
     </div>
-    <div class="editor-bg h-44 w-full rounded-2xl border border-transparent transition duration-500 dark:border-neutral-700">
+    <div class="editor-bg h-44 w-full select-none rounded-2xl border border-transparent transition duration-500 dark:border-neutral-700">
       <LazyMailQuill :underline="false" :clear-text="false" color="#ffffff" read-only :start-text="mail.ops" />
     </div>
   </div>

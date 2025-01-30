@@ -21,7 +21,7 @@
       >
         <div class="message flex w-full items-center justify-center gap-3 transition group-hover:brightness-110" :class="{ 'flex-col': !isListLayout, 'flex-col lg:flex-row': isListLayout }">
           <p class="font-medium text-white">{{ owner ? "Click to mark as unlocked" : "Not unlocked" }}</p>
-          <img class="size-12" src="/ui/lock.svg" aria-hidden="true" />
+          <img class="size-12 select-none" src="/ui/lock.svg" aria-hidden="true" />
         </div>
       </button>
     </Transition>
@@ -88,7 +88,7 @@
               type="button"
               @click.stop="unlockVariant(variant)"
             >
-              <img class="message size-8 transition group-hover:brightness-110" src="/ui/lock.svg" aria-hidden="true" />
+              <img class="message size-8 select-none transition group-hover:brightness-110" src="/ui/lock.svg" aria-hidden="true" />
             </button>
           </Transition>
           {{ variant.variant }}
@@ -138,7 +138,7 @@
               class="overlay group absolute left-1/2 top-1/2 z-[1] flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-start bg-black/50 transition duration-200 hover:bg-black/60"
               :class="{ 'dark:border dark:border-neutral-600': !variant.unlocked, 'cursor-auto': !owner }"
             >
-              <img class="message size-8 transition group-hover:brightness-110" src="/ui/lock.svg" aria-hidden="true" />
+              <img class="message size-8 select-none transition group-hover:brightness-110" src="/ui/lock.svg" aria-hidden="true" />
             </div>
           </Transition>
           {{ variant.variant }}

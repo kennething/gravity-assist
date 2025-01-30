@@ -2,7 +2,7 @@
   <div class="relative">
     <button
       type="button"
-      class="du-btn flex items-center justify-center gap-2 rounded-xl border-green-300 bg-green-100 transition duration-500 hover:scale-105 hover:border-green-400 hover:bg-green-200 dark:border-green-500 dark:hover:bg-green-700"
+      class="du-btn flex select-none items-center justify-center gap-2 rounded-xl border-green-300 bg-green-100 transition duration-500 hover:scale-105 hover:border-green-400 hover:bg-green-200 dark:border-green-500 dark:hover:bg-green-700"
       :class="{ 'scale-105 border-green-400 bg-green-200 dark:bg-green-700': showDialog, 'dark:bg-green-800': !showDialog }"
       @click="copyText"
     >

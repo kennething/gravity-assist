@@ -4,7 +4,7 @@
       <h2 class="text-2xl font-bold">Search</h2>
       <div class="fo-input-group relative z-[2] flex grow rounded-xl border-neutral-300 bg-white transition duration-500 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600">
         <span class="fo-input-group-text">
-          <img class="size-5 transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
+          <img class="size-5 select-none transition duration-500 dark:invert" src="/ui/search.svg" aria-hidden="true" />
         </span>
         <input
           v-model="search"
@@ -14,7 +14,7 @@
         />
         <div class="du-tooltip fo-input-group-text p-0" data-tip="Clear" :class="search ? 'visible' : 'invisible'">
           <button tabindex="-1" class="fo-btn fo-btn-circle fo-btn-text rounded-xl" type="button" @click="search = ''">
-            <img class="size-5 dark:invert" src="/ui/close.svg" aria-hidden="true" />
+            <img class="size-5 select-none dark:invert" src="/ui/close.svg" aria-hidden="true" />
           </button>
         </div>
       </div>

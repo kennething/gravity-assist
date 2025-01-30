@@ -5,7 +5,7 @@
       <p class="transition duration-500">{{ currentShip.type }}</p>
     </aside>
 
-    <img class="h-32 sm:h-40" :src="currentShip.img" :alt="currentShip.name" />
+    <img class="h-32 select-none sm:h-40" :src="currentShip.img" :alt="currentShip.name" />
 
     <aside class="absolute bottom-0 right-0 rounded-br-2xl rounded-tl-2xl px-10 py-4">
       <p class="transition duration-500">{{ currentShip.modules.length }} Modules</p>

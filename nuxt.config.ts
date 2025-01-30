@@ -12,7 +12,7 @@ export default defineNuxtConfig({
       }
     }
   },
-  modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss", "@nuxt/test-utils/module"],
+  modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss", "@nuxt/test-utils/module", "@formkit/auto-animate/nuxt"],
   postcss: {
     plugins: {
       tailwindcss: {},
