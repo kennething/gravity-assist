@@ -49,9 +49,19 @@ const carouselShowcases: Showcase[] = [
     }
   },
   {
+    title: "Module Library",
+    description: "Browse through a collection of Super Capital modules and stats",
+    route: "/modules/module-library",
+    src: "/carousel/moduleLibrary.png",
+    tag: {
+      name: "Updated",
+      color: "bg-green-300"
+    }
+  },
+  {
     title: "Mail Editor",
     description: "Easily write, edit, save, and share mails for your community",
-    route: "/modules/mail-editor",
+    route: "/modules/mail-editor/edit",
     src: "/carousel/mailEditor.png",
     tag: {
       name: "New",
@@ -59,30 +69,10 @@ const carouselShowcases: Showcase[] = [
     }
   },
   {
-    title: "Encyclopedia",
-    description: "Browse through a collection of Super Capital modules and stats",
-    route: "/modules/encyclopedia",
-    src: "/carousel/encyclopedia.png",
-    tag: {
-      name: "Updated",
-      color: "bg-green-300"
-    }
-  },
-  {
     title: "RA Helper",
     description: "Plan out your research agreements in advance",
     route: "/modules/research-agreement-helper",
     src: "/carousel/researchAgreement.png"
-  },
-  {
-    title: "Color Generator",
-    description: "Easily create and copy colored text to flex on the haters",
-    route: "/modules/color-generator",
-    src: "/carousel/color.png",
-    tag: {
-      name: "Updated",
-      color: "bg-yellow-200"
-    }
   }
 ];
 
