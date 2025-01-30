@@ -27,10 +27,11 @@
 </template>
 
 <script setup lang="ts">
+const route = useRoute();
 const router = useRouter();
 
 function footerOpenChangelog() {
-  void router.push({ query: { v: changelog[changelog.length - 1].version } });
+  void router.replace({ query: { ...route.query, v: changelog[changelog.length - 1].version } });
 }
 </script>
 
