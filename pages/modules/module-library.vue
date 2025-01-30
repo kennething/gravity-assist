@@ -62,9 +62,7 @@ useSeoMeta({
     "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so do your patriotic duty and share your modules!",
   twitterDescription:
     "Looking for a module? We've got it! (probably) Dig through stats, stats, and more stats for any module you can imagine. All information is crowdsourced, so do your patriotic duty and share your modules!",
-  twitterImage: () =>
-    config.public.baseUrl +
-    (route.query.s ? `/ships/${(route.query.s as string).toLowerCase().replaceAll("-", "").replaceAll("'", "").replaceAll(".", "").split(" ").join("_")}.png` : "/ships/constantine_the_great.png")
+  twitterImage: () => config.public.baseUrl + (route.query.s ? `/ships/${shipNameToImage(route.query.s as string)}_a.png` : "/ships/constantine_the_great_a.png")
 });
 
 const userStore = useUserStore();

@@ -51,4 +51,18 @@ describe("Ship Data Tests", async () => {
 
     expect(missingCredits).toMatchObject([]);
   });
+
+  test("Ship image paths should follow naming scehema", async () => {
+    const response = await $fetch("/api/data/ships");
+    const data = response.data;
+
+    const wrongImages: [string, string, string, string][] = [];
+    for (const ship of data) {
+      const expectedPath = `/ships/${shipNameToImage(ship.name)}_${ship.variant.toLowerCase()}.png`;
+      const actualPath = ship.img;
+      if (actualPath !== expectedPath) wrongImages.push([ship.name, ship.variant, actualPath, expectedPath]);
+    }
+
+    expect(wrongImages).toMatchObject([]);
+  });
 });

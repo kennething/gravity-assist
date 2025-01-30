@@ -52,7 +52,7 @@ useSeoMeta({
   title: () =>
     `${manufacturers[selectedManufacturer.value].split(" ")[0]}/${directions[selectedDirection.value].split(" ")[0]}/${scopes[selectedScope.value].split(" ")[0]} - RA Helper | Gravity Assist`,
   ogTitle: () =>
-    `Research Agreement Helper - ${route.query.shn && route.query.shv ? `${route.query.shn} (${route.query.shv})` : `${manufacturers[Number(route.query.m)].split(" ")[0]}/${directions[Number(route.query.d)].split(" ")[0]}/${scopes[Number(route.query.s)].split(" ")[0]}`}`,
+    `Research Agreement Helper - ${route.query.shn && route.query.shv ? `${route.query.shn} (${route.query.shv})` : `${manufacturers[Number(route.query.m) || 0].split(" ")[0]}/${directions[Number(route.query.d) || 0].split(" ")[0]}/${scopes[Number(route.query.s) || 0].split(" ")[0]}`}`,
 
   description:
     "The best Research Agreement tool on the market! Browse through any category and find the ship that best fits your needs. Or, search for a specific ship by name and we'll find the path that gives you the best chance to find it!",
@@ -61,10 +61,7 @@ useSeoMeta({
   twitterDescription:
     "The best Research Agreement tool on the market! Browse through any category and find the ship that best fits your needs. Or, search for a specific ship by name and we'll find the path that gives you the best chance to find it!",
   twitterImage: () =>
-    config.public.baseUrl +
-    (route.query.shn && route.query.shv
-      ? `/ships/${(route.query.shn as string).toLowerCase().replaceAll("-", "").replaceAll("'", "").replaceAll(".", "").split(" ").join("_")}_${(route.query.shv as string).toLowerCase()}.png`
-      : "/ships/solar_whale.png")
+    config.public.baseUrl + (route.query.shn && route.query.shv ? `/ships/${shipNameToImage(route.query.shn as string)}_${(route.query.shv as string).toLowerCase()}.png` : "/ships/solar_whale_a.png")
 });
 
 const selectedShip = ref<AllShip>();

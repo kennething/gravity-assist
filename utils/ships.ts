@@ -344,3 +344,7 @@ export function findBestDirection(data: AllShip[], ship: AllShip) {
   bestDirection = ship.direction[allChances.indexOf(Math.max(...allChances))];
   return bestDirection;
 }
+
+export function shipNameToImage(name: string) {
+  return name.toLowerCase().replaceAll("-", "").replaceAll("'", "").replaceAll(".", "").split(" ").join("_");
+}

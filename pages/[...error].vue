@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-full min-h-[calc(100dvh-8rem)] w-full flex-col items-center justify-start p-8">
-    <img class="w-[40rem]" src="/ships/solar_whale.png" alt="Solar Whale" />
+    <img class="w-[40rem]" src="/ships/solar_whale_a.png" alt="Solar Whale" />
     <h1 class="text-5xl font-bold transition duration-500">Uh oh!</h1>
     <p class="mt-1 text-2xl transition duration-500">A v14 whale is blocking your path!</p>
     <p class="mt-5 text-xl transition duration-500">You'll have to find your page somewhere else.</p>
