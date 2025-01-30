@@ -1,75 +1,133 @@
+import type { Op } from "quill";
 
-export function delay (ms: number) {
-  return new Promise((executor: any) => setTimeout(executor, ms));
+/**
+ * @warning Be sure to await this function in order to actually use the delay.
+ * @param ms - Number of milliseconds to delay.
+ * @example await delay(1000); // Wait for 1 second
+ */
+export function delay(ms: number): Promise<void> {
+  return new Promise((executor: () => void) => setTimeout(executor, ms));
 }
 
-export function getRandomIntInclusive (min: number, max: number) {
-  const minCeiled: number = Math.ceil(min);
-  const maxFloored: number = Math.floor(max);
+/** Returns a random integer between `min` and `max`, inclusive. */
+export function getRandomInt(min: number, max: number) {
+  const minCeiled = Math.ceil(min);
+  const maxFloored = Math.floor(max);
   return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
 }
 
-export function getRandomItemFromArray <T> (arr: T[]) {
-  return arr[getRandomIntInclusive(0, arr.length - 1)];
+/** Returns a random item from an array. */
+export function getRandomItem<T>(array: T[] | string) {
+  return array[getRandomInt(0, array.length - 1)];
 }
 
-export function findObjectInArray <T extends Record<any, any>> (array: T[], target: T) {
-  const find = array.find((obj) => Object.keys(obj).every((key) => target.hasOwnProperty(key) && obj[key] === target[key]));
-  if (find) return find;
-  else return false;
+const dateOptions: Readonly<Record<string, Record<string, string>>> = {
+  full: { dateStyle: "long", timeZone: "UTC" },
+  numeric: { dateStyle: "short", timeZone: "UTC" }
+};
+/** Returns a date string as a localized date string
+ *
+ * If `timeDiff` is true, returns "today," "yesterday," "{n}d ago," or a localized date string
+ * @param date YYYY-MM-DD
+ * @param options "full" | "numeric" = "full"
+ * @param timeDiff boolean = false
+ */
+export function formatDate(dateString: string, options: "full" | "numeric" = "full", timeDiff = false) {
+  const formatter = new Intl.DateTimeFormat(undefined, dateOptions[options]);
+  const date = new Date(dateString);
+
+  const formattedDate = formatter.format(date);
+  if (!timeDiff) return formattedDate;
+
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+
+  if (days > 7) return formattedDate;
+  if (days > 1) return `${days}d ago`;
+  if (days > 0) return "yesterday";
+  return "today";
 }
 
-export function compareObjectsSingle <T extends Record<any, any>> (obj1: T | undefined, obj2: T | undefined) {
-  if (!obj1 || !obj2) return;
-
-  if (obj1 === obj2) {
-    return true;
+const characterSets: Readonly<Record<string, string>> = {
+  numeric: "0123456789",
+  alphanumeric: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+  alphabetical: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+};
+/**
+ * Returns a random string of characters from the given set with the given length.
+ * @example getRandomCharacters(10, "numeric"); // Returns a random 10-digit number
+ * @example getRandomCharacters(10, "alphanumeric"); // Returns a random alphanumeric string of length 10
+ * @example getRandomCharacters(10, "alphabetical"); // Returns a random alphabetical string of length 10
+ */
+export function getRandomCharacters(length: number, set: keyof typeof characterSets = "alphanumeric") {
+  let characters = "";
+  for (let i = 0; i < length; i++) {
+    characters += getRandomItem<string>(characterSets[set]);
   }
+  return characters;
+}
 
-  if (obj1 == null || obj2 == null || typeof obj1 !== 'object' || typeof obj2 !== 'object') {
-    return false;
-  }
+/**
+ * Transforms an array of `Op` objects into a minified format.
+ *
+ * Each `Op` object is mapped to a new object containing:
+ * - `a.c`: the `color` attribute if it exists.
+ * - `i`: the `insert` value.
+ */
+export function truncateOps(ops: Op[]) {
+  return ops.map((op) => {
+    const newObj: Record<string, string | Record<string, string>> = {};
 
-  let keys1 = Object.keys(obj1);
-  let keys2 = Object.keys(obj2);
-
-  if (keys1.length !== keys2.length) {
-    return false;
-  }
-
-  for (let key of keys1) {
-    if (!keys2.includes(key) || !compareObjectsSingle(obj1[key], obj2[key])) {
-      return false;
+    if (op.attributes?.color) {
+      newObj.a = {};
+      newObj.a.c = op.attributes.color as string;
     }
-  }
 
-  return true;
+    newObj.i = op.insert as string;
+
+    return newObj;
+  });
 }
 
-export function objectToArray <T extends Record<string, any>> (obj: T) {
-  const entries: [keyof T, T[keyof T]][] = [];
+/**
+ * Restores an array of `TruncatedOp` objects to their original `Op` format.
+ *
+ * Each `TruncatedOp` object is mapped to a new `Op` object containing:
+ * - `attributes.color`: the `a.c` value if it exists.
+ * - `insert`: the `i` value.
+ */
+export function untruncateOps(ops: TruncatedOp[]) {
+  return ops.map((op) => {
+    const newObj: Op = {};
 
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      entries.push([key, obj[key]]);
+    if (op.a?.c) {
+      newObj.attributes = {};
+      newObj.attributes.color = op.a.c;
     }
-  }
 
-  return entries;
+    newObj.insert = op.i;
+
+    return newObj;
+  });
 }
 
-export async function loopUntil <T> (stopCondition: boolean, returnValue: T) {
-  let done = false;
-  let failsafe = 0;
-  while (!done || failsafe < 20) {
-    if (stopCondition) {
-      done = true;
-      console.log(returnValue)
-      return returnValue;
-    } else {
-      await delay(5);
-      failsafe++;
-    }
-  }
-  return returnValue;
+/**
+ * Returns the key of the first entry in the given object.
+ *
+ * @param object the object to get the key from
+ * @param index the index of the key to return, defaults to 0
+ */
+export function getObjectKey<T extends object>(object: T, index = 0) {
+  return Object.keys(object)[index];
+}
+
+/**
+ * Returns the value of the first entry in the given object.
+ *
+ * @param object the object to get the value from
+ * @param index the index of the value to return, defaults to 0
+ */
+export function getObjectValue<T extends object>(object: T, index = 0) {
+  return Object.values(object)[index];
 }

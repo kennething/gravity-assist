@@ -1,348 +1,169 @@
 <template>
-  <img style="width: 0; height: 0; position: absolute;" v-for="image in images" :src="image" aria-hidden="true">
-  <div class="holder">
-    <header>
-      <div class="menuBurger">
-        <button @click="showSideMenu = !showSideMenu">
-          <img src="/ui/burger.svg" alt="Click to open the navigation menu">
-        </button>
-      </div>
+  <HomeHeader @toggle="showSidebar = !showSidebar" />
 
-      <SideMenu class="hideMobile" />
-      <div style="width: 0; height: 0;" class="hideMobile"></div>
-  
-      <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
-        <div class="title">
-          <img src="/ui/radiant.svg" alt="Gravity Assist Icon">
-          <h1>Gravity Assist</h1>
-        </div>
-      </div>
-    </header>
-
-    <Transition name="sideMenuTransition">
-      <button v-if="showSideMenu" @click="showSideMenu = false" class="sideMenuBackground">
-        <SideMenu @click="stopPropagation($event)" @clicked="showSideMenu = false" />
-      </button>
+  <div class="flex h-full min-h-[calc(100dvh-4rem)] w-full items-start justify-between">
+    <Transition name="sidebar">
+      <HomeSideBar v-show="showSidebar" @contributors="showContributors = true" @changelog="showChangelog = true" @contact="showContact = true" @close="closeSidebarMobile" />
     </Transition>
-  
-    <div class="pageHolder">
-      <div style="width: 0; height: 0;" class="hideMobile"></div>
-      <NuxtPage />
+    <div v-if="showSidebar" class="fixed left-0 top-0 z-10 h-dvh w-screen md:hidden" @click="showSidebar = false"></div>
+
+    <div class="h-full w-0 shrink-0 transition-all duration-[0.75s]" :class="{ 'md:w-72': showSidebar }" aria-hidden="true"></div>
+
+    <div class="flex w-full flex-col items-center justify-center">
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+      <HomeFooter />
     </div>
-  
-    <footer>
-      <div style="width: 0; height: 0;" class="hideMobile"></div>
-      <div class="footer">
-        <h3>Gravity Assist v{{ changelog[changelog.length - 1].version }} by DubNubz</h3>
-        <a href="https://discord.com/invite/9mJ9b2Bbzx" target="_blank">
-          <img src="/ui/discord_icon.png" alt="Link to the Radiant Gravity Discord server">
-        </a>
-      </div>
-    </footer>
   </div>
+
+  <Transition name="menu">
+    <div v-if="showContributors" class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" @click="showContributors = false">
+      <HomeContributors />
+    </div>
+  </Transition>
+
+  <Transition name="menu">
+    <div v-if="showChangelog" class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" @click="showChangelog = false">
+      <HomeChangelog />
+    </div>
+  </Transition>
+
+  <Transition name="menu">
+    <div v-show="showContact" class="fixed left-0 top-0 z-20 flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]" @click="showContact = false">
+      <HomeContact />
+    </div>
+  </Transition>
 </template>
 
 <script setup lang="ts">
+import type { LocationQuery } from "vue-router";
 
-import imagePaths from '~/imagePaths.json';
-
-const store = shipDataStore();
-const showSideMenu = ref(false);
-const images = ref<string[]> (imagePaths);
-
-onMounted(async () => {
-  images.value.length = 0;
-  const data = await $fetch('/api/ships');
-  const equipments = await $fetch("/api/equipment");
-  store.shipData = data;
-  store.equipmentData = equipments;
-})
+const config = useRuntimeConfig();
 
 useSeoMeta({
-    colorScheme: "dark",
-    ogImage: "/ui/radiant.svg"
+  ogUrl: () => config.public.baseUrl,
+  ogType: "website",
+  twitterCard: "summary_large_image",
+  twitterImage: () => `${config.public.baseUrl}/logo/logo.png`
 });
 
-useHead({
-  link: imagePaths.map((image) => ({
-    rel: "preload",
-    as: "image",
-    href: image
-  }))
+const route = useRoute();
+const router = useRouter();
+
+const userStore = useUserStore();
+const { isDarkMode } = storeToRefs(userStore);
+watch(isDarkMode, () => {
+  document.body.classList.toggle("dark", isDarkMode.value);
+  localStorage.setItem("theme", isDarkMode.value ? "dark" : "light");
 });
 
-function stopPropagation(event: Event) {
-  event.stopPropagation();
+// app init
+onMounted(() => {
+  if (localStorage.getItem("theme") === "dark") isDarkMode.value = true;
+  document.body.style.display = "block";
+
+  const isTemporaryUser = (!localStorage.getItem("uid") || !localStorage.getItem("token")) && Object.keys(route.query).length !== 0;
+  userStore.init(!isTemporaryUser);
+
+  if (!isTemporaryUser) return;
+  const stop = watch(
+    () => route.query,
+    (queries) => {
+      if (Object.keys(queries).length !== 0) return;
+      stop();
+      void userStore.getUser(true);
+    }
+  );
+});
+
+// sidebar
+const showSidebar = ref(true);
+
+onMounted(() => {
+  let previousWidth = window.innerWidth;
+  window.addEventListener("resize", () => {
+    const newWidth = window.innerWidth;
+    if (previousWidth === newWidth) return;
+
+    showSidebar.value = window.innerWidth >= 768;
+    previousWidth = newWidth;
+  });
+});
+
+onBeforeMount(() => {
+  if (window.innerWidth < 768) showSidebar.value = false;
+});
+
+// layout
+const showContributors = ref(false);
+watch(showContributors, (value) => {
+  if (!value) return void router.replace({ query: { ...route.query, ct: undefined } });
+  if (!route.query.ct) void router.replace({ query: { ...route.query, ct: "true" } });
+});
+const showChangelog = ref(false);
+watch(showChangelog, (value) => {
+  if (!value) return void router.replace({ query: { ...route.query, v: undefined } });
+  if (!route.query.v) void router.replace({ query: { ...route.query, v: changelog[changelog.length - 1].version } });
+});
+const showContact = ref(false);
+watch(showContact, (value) => {
+  if (!value) return void router.replace({ query: { ...route.query, c: undefined } });
+  if (!route.query.c) void router.replace({ query: { ...route.query, c: "true" } });
+});
+
+function handleQueries(query: LocationQuery) {
+  const changelog = query.v;
+  const contributors = query.ct;
+  const contact = query.c;
+
+  if (changelog || contributors || contact) {
+    showContact.value = false;
+    showChangelog.value = false;
+    showContributors.value = false;
+  }
+
+  if (contact) showContact.value = true;
+  else if (changelog) showChangelog.value = true;
+  else if (contributors) showContributors.value = true;
 }
+watch(
+  () => route.query,
+  (query) => handleQueries(query)
+);
+onMounted(() => handleQueries(route.query));
 
+function closeSidebarMobile() {
+  if (window.innerWidth < 768) showSidebar.value = false;
+}
 </script>
 
 <style lang="scss" scoped>
-
-.pageHolder {
-  height: 100%;
-  width: 100vw;
-  display: grid;
-  grid-template-columns: 32em calc(100svw - 32em);
+.sidebar-enter-active,
+.sidebar-leave-active {
+  transition: all 0.5s ease-in-out;
 }
 
-.holder {
-  min-height: 100vh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.sidebar-enter-from,
+.sidebar-leave-to {
+  transform: translateX(-20rem);
 }
 
-footer {
-  background-color: rgb(36, 36, 36);
-  text-align: center;
-  position: relative;
-  display: grid;
-  grid-template-columns: 32em calc(100vw - 32em);
-  bottom: 0;
-  width: 100vw;
-  height: 10em;
-  margin-top: 5em;
+.menu-enter-active,
+.menu-leave-active {
+  transition: all 0.5s ease-in-out;
 
-  .footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2em;
-  }
-  
-  img {
-    width: 5em;
-    margin-bottom: 0;
-    background-color: transparent;
-  }
-
-  .footerButtons {
-    width: 75em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5%;
-  }
-  
-  .linkButton {
-    width: 45%;
-    font-size: var(--p);
-    height: 6em;
-    border-radius: 1.5em;
-    transition: all 0.25s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10%;
-    background-color: rgb(220, 220, 220);
-  
-    h3 {
-      margin: 0;
-      text-align: center;
-      width: fit-content;
-      height: fit-content;
-      font-size: var(--h3);
-    }
-  
-    img {
-      width: 4.5em;
-      height: 4.5em;
-      background-color: transparent;
-    }
+  #menu {
+    transition: all 0.35s ease-in-out;
   }
 }
 
-header {
-  display: grid;
-  grid-template-columns: 32em calc(100svw - 32em);
-  text-align: center;
-  position: relative;
-  top: 0;
-  width: 100vw;
-  height: fit-content;
-  margin-bottom: 2em;
-  align-items: center;
-  flex-direction: column;
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
 
-  .title {
-    background: linear-gradient(to bottom right, rgb(65, 9, 40), rgb(47, 11, 65));
-    border-radius: 5em;
-    padding-left: 3em;
-    padding-right: 3em;
-    margin-top: 2em;
-    gap: 1.5em;
-    height: 12em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    h1 {
-      margin-bottom: 0;
-      margin-top: 0;
-    }
-  
-    img {
-      width: 10em;
-    }
-  
-    h1, img {
-      background-color: transparent;
-      display: inline-block;
-      vertical-align: middle;
-    }
+  #menu {
+    transform: scale(0);
   }
 }
-
-.menuBurger {
-  position: fixed;
-  top: 0;
-  left: 0;
-  transition: all 0.35s ease-in-out;
-  z-index: 51000;
-
-  button {
-    background-color: transparent;
-    border: 0;
-  }
-
-  img {
-    width: 7em;
-  }
-}
-
-.sideMenuBackground {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgb(0, 0, 0, 0.5);
-  border: 0;
-  z-index: 50000;
-}
-
-.sideMenuTransition-enter-active, .sideMenuTransition-leave-active {
-    transition: all 0.5s ease-in-out;
-    
-    .sideMenu {
-        transition: all 0.25s ease-in-out;
-    }
-}
-
-.sideMenuTransition-enter-from, .sideMenuTransition-leave-to {
-    opacity: 0;
-
-    .sideMenu {
-        transform: translate(-30px);
-        opacity: 0.001;
-    }
-}
-
-@media screen and (min-width: 801px) {
-  .menuBurger {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 1000px) {
-  .pageHolder {
-    grid-template-columns: 27em calc(100svw - 27em);
-  }
-
-  header {
-    grid-template-columns: 27em calc(100svw - 27em);
-  }
-
-  footer {
-    grid-template-columns: 27em calc(100svw - 27em);
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .pageHolder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hideMobile {
-    display: none;
-  }
-
-  header {
-    display: flex;
-
-    .title {
-      padding-left: 0;
-      padding-right: 0;
-      border-radius: 5svw;
-      gap: 0;
-      height: 8svh;
-      padding: 3svw;
-
-      h1 {
-        display: none;
-        font-size: 0;
-      }
-
-      img {
-        width: 10svh;
-      }
-    }
-  }
-
-  .sideMenu {
-    width: 100svw;
-    border-top-right-radius: 0;
-
-    .sideMenuButton {
-      gap: 3svw;
-
-      img {
-        width: 6svh;
-      }
-
-      h3 {
-        margin-top: 2.5svh;
-        margin-bottoM: 2.5svh;
-      }
-    }
-  }
-
-  footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .footerButtons {
-      width: 90svw;
-    }
-
-    .linkButton {
-      width: 40%;
-
-      h3 {
-        display: none;
-        font-size: 0;
-      }
-    }
-  } 
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .linkButton:hover {
-    background-color: rgb(255, 255, 255);
-  }
-
-  .sideMenuButton:hover {
-    background-color: rgba(100, 100, 100, 0.35);
-  }
-
-  .menuBurger:hover {
-    transform: scale(1.2);
-  }
-}
-
 </style>

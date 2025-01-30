@@ -3,29 +3,48 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate-image-paths": "npx tsx getImagePaths.ts",
-    "build": "npm run generate-image-paths && nuxt build",
-    "dev": "npm run generate-image-paths && nuxt dev",
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "test": "vitest",
+    "lint": "eslint",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@ckpack/vue-color": "^1.5.0",
-    "@nuxtjs/meta": "^3.0.0-beta.16",
-    "@pinia/nuxt": "^0.5.1",
-    "lodash": "^4.17.21",
-    "nuxt": "^3.11.2",
-    "pinia": "^2.1.7",
-    "sass": "^1.77.2",
-    "tinycolor": "^0.0.1",
-    "tinycolor2": "^1.6.0",
-    "vue": "^3.4.27",
-    "vue-router": "^4.3.2"
+    "@formkit/auto-animate": "^0.8.2",
+    "@pinia/nuxt": "^0.7.0",
+    "firebase-admin": "^13.0.1",
+    "flowbite": "^2.5.2",
+    "flyonui": "^1.1.0",
+    "nuxt": "^3.13.0",
+    "obscenity": "^0.4.1",
+    "pinia": "^2.2.6",
+    "quill": "^2.0.3",
+    "sass": "^1.82.0",
+    "vue": "latest",
+    "vue-router": "latest"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.7",
-    "@types/tinycolor2": "^1.4.6",
-    "typescript": "^5.6.2"
+    "@eslint/js": "^9.19.0",
+    "@nuxt/test-utils": "^3.15.4",
+    "@nuxtjs/tailwindcss": "^6.12.2",
+    "@pinia/testing": "^0.1.7",
+    "@types/quill": "^2.0.14",
+    "@vue/test-utils": "^2.4.6",
+    "daisyui": "^4.12.14",
+    "eslint": "^9.19.0",
+    "eslint-plugin-vue": "^9.32.0",
+    "globals": "^15.14.0",
+    "happy-dom": "^16.7.2",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0",
+    "vitest": "^3.0.4",
+    "vue-eslint-parser": "^9.4.3"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }

@@ -1,189 +1,94 @@
 <template>
-    <div class="holder">
-        <div class="description">
-            <h3>by <a href="https://discord.com/invite/9mJ9b2Bbzx">DubNubz</a></h3>
-            <h3>Did you know: <span>{{ fact }}</span></h3>
-        </div>
-
-        <div class="cardHolder">
-            <div class="card">
-                <h2 style="color: white;">Gravity Assist v2 Beta</h2>
-                <p style="color: white;">Gravity Assist is changing soon! Stay ahead of the curve (and help me out with bug testing and feedback) by <a style="color: var(--gold);" href="https://beta.gravityassist.xyz">checking out the beta build!</a></p>
-                <p style="color: white;">If you encounter any bugs or have any suggestions, reach out to me!</p>
-            </div>
-            <LatestChange />
-            <div class="card" id="contact">
-                <h2>Contact Me!</h2>
-                <h3 class="contact"><span>DubNubz</span> (ingame)</h3>
-                <h3 class="contact"><span>@micromidget</span> (Discord)</h3>
-                <p class="message">All module information is crowdsourced.</p>
-                <p class="message">If you'd like to contribute, PM/DM me!</p>
-                <p class="message">All contributions, suggestions, and feedback are appreciated!</p>
-            </div>
-        </div>
+  <div class="flex h-full min-h-[calc(100dvh-8rem)] w-full flex-col items-center justify-start p-8">
+    <div class="flex items-center justify-center gap-2" aria-label="Gravity Assist">
+      <img class="size-16 select-none sm:size-20 md:size-24 lg:size-32 xl:size-40" src="/logo/logo.svg" aria-hidden="true" />
+      <img class="h-16 select-none transition duration-500 sm:h-20 md:h-24 lg:h-32 xl:h-40 dark:invert" src="/logo/gravityAssist.svg" aria-hidden="true" />
     </div>
+
+    <p class="text-xl transition duration-500">
+      By
+      <button class="fo-link font-semibold no-underline transition duration-500 hover:underline" type="button" @click="router.replace({ query: { ...route.query, c: 'true' } })">DubNubz</button>
+    </p>
+
+    <div class="mt-8 flex flex-col items-center justify-center gap-2">
+      <HomeCarousel />
+    </div>
+
+    <div class="mt-16 flex w-[80vw] flex-col items-center justify-center gap-2 md:w-[25rem] lg:w-[40rem]">
+      <h2 id="whats-new" class="text-3xl font-bold"><NuxtLink to="/home#whats-new" class="transition duration-500">What's New?</NuxtLink></h2>
+      <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
+        <span class="flex items-center justify-center"><img class="size-12 select-none transition duration-500 dark:invert" src="/ui/hourglass.svg" aria-hidden="true" /></span>
+      </div>
+      <div class="min-w-[20rem] rounded-2xl bg-neutral-100/50 p-4 transition duration-500 dark:bg-neutral-900">
+        <div class="w-full p-4">
+          <ol class="relative border-s border-neutral-200 transition duration-500 dark:border-neutral-700">
+            <HomeChangelogItem class="ms-6" :change="latestChange" />
+          </ol>
+        </div>
+      </div>
+      <button type="button" class="flex w-full items-center justify-end gap-2" @click="router.push({ query: { v: 'latest' } })">
+        <p class="transition duration-500 hover:underline">View full changelog</p>
+        <div class="du-tooltip" data-tip="View">
+          <div class="fo-btn fo-btn-circle fo-btn-text">
+            <img class="size-4 select-none transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div class="mt-16 flex w-[80vw] flex-col items-center justify-center gap-2 md:w-[25rem] lg:w-[40rem]">
+      <h2 id="top-contributors" class="text-3xl font-bold"><NuxtLink to="/home#top-contributors" class="transition duration-500">Top Contributors</NuxtLink></h2>
+      <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
+        <span class="flex items-center justify-center"><img class="size-12 select-none transition duration-500 dark:invert" src="/ui/trophy.svg" aria-hidden="true" /></span>
+      </div>
+      <div class="flex w-[80vw] flex-col gap-2 md:w-[25rem] lg:w-[35rem] xl:w-[40rem]">
+        <HomeContributorsItem v-for="(contributor, index) in credits.slice(0, 5)" :key="contributor.name" :contributor="contributor" :index="index" />
+        <button type="button" class="flex w-full items-center justify-end gap-2" @click="router.push({ query: { ct: 'true' } })">
+          <p class="transition duration-500 hover:underline">View all contributors</p>
+          <div class="du-tooltip" data-tip="View">
+            <div class="fo-btn fo-btn-circle fo-btn-text">
+              <img class="size-4 select-none transition duration-500 dark:invert" src="/ui/arrowRight.svg" aria-hidden="true" />
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-16 flex w-[80vw] flex-col items-center justify-center gap-2 md:w-[25rem] lg:w-[40rem]">
+      <h2 id="link-a-device" class="text-3xl font-bold"><NuxtLink to="/home#link-a-device" class="transition duration-500">Link A Device</NuxtLink></h2>
+      <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
+        <span class="flex items-center justify-center"><img class="size-12 select-none transition duration-500 dark:invert" src="/ui/link.svg" aria-hidden="true" /></span>
+      </div>
+      <div class="flex w-[80vw] flex-col gap-2 md:w-[25rem] lg:w-[35rem] xl:w-[40rem]">
+        <HomeLink />
+      </div>
+    </div>
+
+    <div class="mt-16 flex w-[80vw] flex-col items-center justify-center gap-2 md:w-[25rem] lg:w-[40rem]">
+      <h2 id="contact-me" class="text-3xl font-bold"><NuxtLink to="/home#contact-me" class="transition duration-500">Contact Me</NuxtLink></h2>
+      <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
+        <span class="flex items-center justify-center"><img class="size-12 select-none transition duration-500 dark:invert" src="/ui/contact.svg" aria-hidden="true" /></span>
+      </div>
+      <div class="flex w-[80vw] flex-col gap-2 md:w-[25rem] lg:w-[35rem] xl:w-[40rem]">
+        <HomeContact is-block />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-
 useSeoMeta({
-    title: "Gravity Assist"
+  title: "Home | Gravity Assist",
+  ogTitle: "Gravity Assist",
+  description: "Create colored text, search modules and research paths, track your progress, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange.",
+  ogDescription: "Create colored text, search modules and research paths, track your progress, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange.",
+  twitterDescription: "Create colored text, search modules and research paths, track your progress, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange."
 });
 
-const fact = ref("");
+const route = useRoute();
+const router = useRouter();
 
-onMounted(() => {
-    fact.value = facts[getRandomIntInclusive(0, facts.length - 1)];
-});
-
+const latestChange = changelog[changelog.length - 1];
 </script>
 
-<style lang="scss" scoped>
-
-.holder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.description {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-
-    h3 {
-        color: white;
-        text-align: center;
-        margin: 0.25em;
-        width: 70%;
-
-        a {
-            color: var(--deepGreen);
-            text-decoration: underline;
-        }
-
-        span {
-            color: var(--gold);
-            font-size: 0.9em;
-        }
-    }
-}
-
-.linkButton {
-    margin-top: 3em;
-    width: 35em;
-    font-size: var(--p);
-    height: 6em;
-    border-radius: 1.5em;
-    transition: all 0.25s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10%;
-    filter: grayscale(0.33);
-    background-color: var(--deepGreen);
-  
-    h3 {
-      margin: 0;
-      text-align: center;
-      width: fit-content;
-      height: fit-content;
-      font-size: var(--h3);
-    }
-  
-    img {
-      width: 4.5em;
-      height: 4.5em;
-      background-color: transparent;
-    }
-}
-
-.cardHolder {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 100%;
-    margin-top: 5em;
-    gap: 1em;
-    flex-wrap: wrap;
-}
-
-.card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: rgb(45, 45, 45);
-    border-radius: 2.4em;
-    padding: 2.4em;
-    width: 45em;
-    min-height: 35em;
-
-    h2 {
-        margin-bottom: 0;
-        color: var(--gold);
-    }
-
-    .contact {
-        margin-top: 0.25em;
-        margin-bottom: 0;
-
-        span {
-            color: var(--cyan);
-        }
-    }
-
-    .message {
-        margin-bottom: 0;
-    }
-}
-
-#contact {
-    padding-bottom: 4em;
-}
-
-@media screen and (max-width: 1200px) {
-    .cardHolder {
-        flex-direction: column;
-
-        .card {
-            min-height: unset;
-            margin-bottom: 2em;
-        }
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    .cardHolder {
-        .card {
-            padding: 1em;
-            width: 35em;
-        }
-    }
-}
-
-@media screen and (max-width: 800px) {
-    .description {
-        width: 90svw;
-    }
-
-    .cardHolder {
-        width: 95svw;
-
-        .card {
-            width: 85svw;
-            padding: 2svw;
-            border-radius: 2svh;
-        }
-    }
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .linkButton:hover {
-        filter: grayscale(0);
-    }
-}
-
-</style>
+<style scoped></style>

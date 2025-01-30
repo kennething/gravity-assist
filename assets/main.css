@@ -1,108 +1,42 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --gold: rgb(255, 215, 0);
+  --bg-color: #ffffff;
+}
 
-  --pastelRed: #ffaaaa;
-  --pastelOrange: #ffddaa;
-  --deepOrange: #ff9756;
-  --pastelYellow: #fbffaa;
-  --deepYellow: #ffe561;
-  --pastelGreen: #aaffaa;
-  --deepGreen: #56ff93;
-  --lightBlue: #6af1fd;
-  --cyan: #56ddff;
-  --pastelBlue: #aac8ff;
-  --normalText: #ccc9c6;
-  --darkGray: #878787;
+.dark {
+  --bg-color: #0a0a0a;
+}
 
-  --h1: 4.5em;
-  --h2: 3em;
-  --h3: 1.95em;
-  --h4: 1.75em;
-  --p: 1.5em;
-  --standard: 0.7em;
-
-  --godly: linear-gradient(to bottom right, #ff0000, #ffbb00, #bbff00, #00ff4c, #00c3ff, #ff00ff);
-  --godlyText: linear-gradient(to right, #ff0000, #ffbb00, #bbff00, #00ff4c, #00c3ff, #ff00ff);
+* {
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  @apply text-center text-black dark:text-white;
 }
 
 body {
-  font-family: 'Kanit', sans-serif;
-  min-height: 100vh;
-  font-size: var(--standard);
-  background-color: rgb(25, 25, 25);
-  margin: 0;
-  width: 100vw;
-  max-width: 100vw;
-  overflow-x: hidden;
-  display: flex;
-  justify-content: center;
-  color: white;
-  transition: all 0.5s;
+  background-color: var(--bg-color);
+  @apply m-0 hidden overflow-x-hidden p-0 transition duration-500;
 }
 
-h1 {font-size: var(--h1)}
-h2 {font-size: var(--h2)}
-h3 {font-size: var(--h3)}
-h4 {font-size: var(--h4)}
-p {font-size: var(--p)}
-#text {font-size: var(--standard)}
-
-::-webkit-scrollbar {
-  width: 0.75em;
-}
-::-webkit-scrollbar-track {
-  background-color: #17171c;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #48005e;
-  border-radius: 1em;
-}
-
-button, a, input, textarea {
-  font-family: 'Kanit', sans-serif;
-  color: black;
-  border-color: black;
+button {
   touch-action: manipulation;
-  text-decoration: none;
+  @apply text-center text-black dark:text-white;
 }
 
-@media screen and (max-width: 1000px) {
-  h1 {font-size: 3.5em}
-  h2 {font-size: 2.5em}
-  h3 {font-size: 1.5em}
-  h4 {font-size: 1.35em}
-  p {font-size: 1.25em}
-  #text {font-size: 0.5em}
+a {
+  @apply text-center text-black dark:text-white;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  body:has(.contributorCard[color="red"]:hover) {
-    background-color: rgb(94, 39, 39);
-  }
-  body:has(.contributorCard[color="yellow"]:hover) {
-    background-color: rgb(60, 54, 25);
-  }
-  body:has(.contributorCard[color="green"]:hover) {
-    background-color: rgb(25, 60, 38);
-  }
-  body:has(.contributorCard[color="cyan"]:hover) {
-    background-color: rgb(25, 55, 60);
-  }
-  body:has(.contributorCard[color="pink"]:hover) {
-    background-color: rgb(75, 32, 75);
-  }
+.editor-bg {
+  background: radial-gradient(#1e232a, #080a0c);
 }
 
-@media (pointer: coarse) {
-  body {
-    font-family: "Rubik", sans-serif;
-  }
-  button, a, input, textarea {
-    font-family: "Rubik", sans-serif;
-  }
+.fo-btn.fo-btn-circle.fo-btn-text {
+  @apply dark:hover:bg-neutral-700;
+}
+
+.fo-skeleton {
+  @apply dark:bg-neutral-800;
 }
