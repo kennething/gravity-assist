@@ -4,7 +4,7 @@
     <p class="transition duration-500">{{ data.filter((ship) => ship.type === shipType && ship.unlocked).length }}/{{ data.filter((ship) => ship.type === shipType).length }} unlocked</p>
     <ClientOnly>
       <p class="mb-4 transition duration-500">
-        {{ getTotalTP(displayedData).toLocaleString() }}
+        {{ getTotalTP(displayedData.filter((ship) => ship.type === shipType)).toLocaleString() }}
         total Tech Points
       </p>
     </ClientOnly>
