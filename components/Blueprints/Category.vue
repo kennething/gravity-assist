@@ -1,22 +1,22 @@
 <template>
-  <div v-if="data && filteredData && filteredData.length > 0" class="flex w-full flex-col items-center justify-center">
+  <div v-if="data && displayedData && displayedData.filter((ship) => ship.type === shipType).length > 0" class="flex w-full flex-col items-center justify-center">
     <h2 class="mt-4 text-2xl font-bold transition duration-500">{{ shipType }}s</h2>
     <p class="transition duration-500">{{ data.filter((ship) => ship.type === shipType && ship.unlocked).length }}/{{ data.filter((ship) => ship.type === shipType).length }} unlocked</p>
     <ClientOnly>
       <p class="mb-4 transition duration-500">
-        {{ getTotalTP(filteredData).toLocaleString() }}
+        {{ getTotalTP(displayedData).toLocaleString() }}
         total Tech Points
       </p>
     </ClientOnly>
     <div class="flex flex-wrap items-stretch justify-center gap-3">
       <LazyBlueprintsCard
-        v-for="ship in filteredData"
-        :key="Symbol(ship.name + ship.variant)"
+        v-for="ship in displayedData.filter((ship) => ship.type === shipType)"
+        :key="ship.name + ship.variant"
         :ship="ship"
         :mirror="ship.mirrorTechPoints"
         :layout="currentLayout"
         :variants="showVariants"
-        :all-variants="filteredData.filter((s) => ship.name === s.name)"
+        :all-variants="displayedData.filter((s) => ship.name === s.name)"
         :tp="ship.techPoints"
         :owner="isOwner"
         @tp="(tp) => handleTp(ship, tp)"
@@ -40,7 +40,6 @@ const props = defineProps<{
 const emit = defineEmits<{ modules: [BlueprintSuperCapitalShip] }>();
 
 const userStore = useUserStore();
-const filteredData = computed(() => props.displayedData?.filter((ship) => ship.type === props.shipType));
 
 function handleTp(targetShip: BlueprintAllShip, tp: number) {
   if (!props.data) return;
