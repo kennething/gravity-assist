@@ -33,7 +33,7 @@
         :current-layout="currentLayout"
         :show-variants="showVariants"
         :data="data"
-        :displayed-data="displayedData.filter((ship) => ship.type === type)"
+        :displayed-data="displayedData"
         @modules="(ship) => (currentShip = ship)"
       />
     </div>
