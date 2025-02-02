@@ -63,7 +63,7 @@ const accountIndex = ref(0);
 watch(
   data,
   (val) => {
-    if (userStore.user?.uid === route.query.u && val) userStore.blueprintsAutosave = val;
+    if (val && userStore.user?.uid === route.query.u) userStore.blueprintsAutosave = val;
   },
   { deep: true }
 );
@@ -140,7 +140,14 @@ onMounted(() => {
   showVariants.value = localStorage.getItem("variants") === "true";
 });
 
-async function getBlueprints(data: AllShip[]) {
+async function getBlueprints(data: AllShip[]): Promise<BlueprintAllShip[]> {
+  if (!route.query.u && !userStore.user)
+    return await waitUntil(
+      () => Boolean(route.query.u ?? userStore.user),
+      () => getBlueprints(data),
+      new Promise((resolve) => resolve([]))
+    );
+
   const {
     success,
     error,
