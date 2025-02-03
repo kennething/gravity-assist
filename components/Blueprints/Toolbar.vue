@@ -175,7 +175,10 @@ onMounted(() => window.addEventListener("scroll", detectSticky));
 onBeforeUnmount(() => window.removeEventListener("scroll", detectSticky));
 
 function createNewAccount() {
-  void router.push({ query: { ...route.query, a: props.accountIndex + 1 } });
+  if (!userStore.user) return;
+
+  userStore.createNewAccount = true;
+  void router.push({ query: { ...route.query, a: userStore.user.blueprints.length } });
 }
 
 async function saveBlueprints() {
@@ -202,6 +205,7 @@ async function saveBlueprints() {
 
   if (fetchSuccess) {
     success.value = true;
+    userStore.isUnsavedAccount = false;
     setTimeout(() => {
       userStore.hasUnsavedChanges = false;
       if (newBlueprints && userStore.user) userStore.user.blueprints = newBlueprints;
@@ -254,6 +258,7 @@ async function deleteAccount() {
   if (!fetchSuccess && error) return console.error(error);
 
   deleteSuccess.value = true;
+  void router.replace({ query: { ...route.query, a: userStore.user.blueprints.length - 2 } });
 
   setTimeout(() => {
     deleteModal.value = undefined;

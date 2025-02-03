@@ -140,22 +140,18 @@ onMounted(() => {
   showVariants.value = localStorage.getItem("variants") === "true";
 });
 
-async function getBlueprints(data: AllShip[]): Promise<BlueprintAllShip[]> {
-  if (!route.query.u && !userStore.user)
-    return await waitUntil(
-      () => Boolean(route.query.u ?? userStore.user),
-      () => getBlueprints(data),
-      new Promise((resolve) => resolve([]))
-    );
+async function getAccount(data: AllShip[]): Promise<BlueprintAllShip[] | undefined> {
+  // prettier-ignore
+  const { success, error, content, lastSaved: bpLastSaved } = 
+  await $fetch("/api/getBlueprints", { method: "POST", body: { uid: route.query.u ?? userStore.user?.uid, accountIndex: accountIndex.value } });
 
-  const {
-    success,
-    error,
-    content,
-    lastSaved: bpLastSaved
-  } = await $fetch("/api/getBlueprints", { method: "POST", body: { uid: route.query.u ?? userStore.user?.uid, accountIndex: accountIndex.value } });
-
-  if (!success && error) console.error(error);
+  if (!success && error) {
+    console.error(error);
+    if (route.query.a !== "0") {
+      await router.replace({ query: { ...route.query, a: 0 } });
+      return getAccount(data);
+    }
+  }
 
   if (success && content && bpLastSaved) {
     lastSaved.value = bpLastSaved;
@@ -174,9 +170,17 @@ async function getBlueprints(data: AllShip[]): Promise<BlueprintAllShip[]> {
       return result as BlueprintAllShip;
     });
   }
+}
+
+function createAccount(data: AllShip[]): BlueprintAllShip[] {
+  if (!userStore.user || userStore.user.blueprints.some((account) => getObjectKey(account) === "Unnamed" && getObjectValue(account).length === 0))
+    throw new Error("Cannot have more than 1 unsaved account.");
+
+  userStore.user.blueprints.push({ Unnamed: [] });
 
   lastSaved.value = new Date().toISOString().slice(0, 10);
-  if (userStore.user) userStore.user.blueprints.push({ Unnamed: [] });
+  userStore.createNewAccount = false;
+  userStore.isUnsavedAccount = true;
   return data.map((ship) => {
     const result: Record<any, any> = {
       ...ship,
@@ -189,6 +193,23 @@ async function getBlueprints(data: AllShip[]): Promise<BlueprintAllShip[]> {
 
     return result as BlueprintAllShip;
   });
+}
+
+async function getBlueprints(data: AllShip[]): Promise<BlueprintAllShip[]> {
+  if (route.query.u === undefined && !userStore.user)
+    return await waitUntil(
+      () => Boolean(route.query.u ?? userStore.user),
+      () => getBlueprints(data),
+      new Promise((resolve) => resolve([])),
+      2000
+    );
+
+  if (!userStore.createNewAccount) {
+    const account = await getAccount(data);
+    if (account) return account;
+  }
+
+  return createAccount(data);
 }
 
 watch(

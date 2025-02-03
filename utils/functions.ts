@@ -32,6 +32,15 @@ export function getRandomItem<T>(array: T[] | string) {
  * @returns The result of the callback function.
  */
 export async function waitUntil<T>(condition: () => boolean, callback: () => T, defaultValue: T, timeout?: number, interval?: number): Promise<T>;
+/**
+ * Waits until a condition is fulfilled before executing a callback.
+ *
+ * @param condition - Function that returns a boolean indicating whether the condition is fulfilled.
+ * @param callback - Function to execute once the condition is fulfilled.
+ * @param timeout - Maximum time, in milliseconds, to wait for the condition to be fulfilled. Defaults to 1000ms.
+ * @param interval - Time, in milliseconds, between checks of the condition. Defaults to 100ms.
+ * @returns The result of the callback function.
+ */
 export async function waitUntil<T>(condition: () => boolean, callback: () => T, timeout?: number, interval?: number): Promise<T | undefined>;
 export async function waitUntil<T>(condition: () => boolean, callback: () => T, defaultValue?: T, timeout = 1000, interval = 100): Promise<T | undefined> {
   return new Promise((resolve) => {
