@@ -149,7 +149,9 @@ async function getAccount(data: AllShip[]): Promise<BlueprintAllShip[] | undefin
     console.error(error);
     if (route.query.a !== "0") {
       await router.replace({ query: { ...route.query, a: 0 } });
-      return getAccount(data);
+      userStore.hasUnsavedChanges = false;
+      window.location.reload();
+      return;
     }
   }
 
@@ -173,10 +175,7 @@ async function getAccount(data: AllShip[]): Promise<BlueprintAllShip[] | undefin
 }
 
 function createAccount(data: AllShip[]): BlueprintAllShip[] {
-  if (!userStore.user || userStore.user.blueprints.some((account) => getObjectKey(account) === "Unnamed" && getObjectValue(account).length === 0))
-    throw new Error("Cannot have more than 1 unsaved account.");
-
-  userStore.user.blueprints.push({ Unnamed: [] });
+  if (userStore.user && !userStore.user.blueprints.some((account) => getObjectKey(account) === "Unnamed" && getObjectValue(account).length === 0)) userStore.user.blueprints.push({ Unnamed: [] });
 
   lastSaved.value = new Date().toISOString().slice(0, 10);
   userStore.createNewAccount = false;
@@ -199,9 +198,8 @@ async function getBlueprints(data: AllShip[]): Promise<BlueprintAllShip[]> {
   if (route.query.u === undefined && !userStore.user)
     return await waitUntil(
       () => Boolean(route.query.u ?? userStore.user),
-      () => getBlueprints(data),
-      new Promise((resolve) => resolve([])),
-      2000
+      async () => await getBlueprints(data),
+      new Promise((resolve) => resolve([]))
     );
 
   if (!userStore.createNewAccount) {
@@ -225,11 +223,17 @@ watch(
   }
 );
 
-watch(isOwner, async (val) => {
-  if (!userStore.shipData) return;
+onMounted(() => {
+  const stop = watch(isOwner, async (val) => {
+    if (!userStore.shipData) return;
 
-  if (val) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
-  data.value = await getBlueprints(userStore.shipData);
+    if (val) {
+      data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData));
+      return stop();
+    }
+    data.value = await getBlueprints(userStore.shipData);
+    stop();
+  });
 });
 
 function getTotalTP(ships: BlueprintAllShip[]) {
