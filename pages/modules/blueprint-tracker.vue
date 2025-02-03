@@ -63,7 +63,7 @@ const accountIndex = ref(0);
 watch(
   data,
   (val) => {
-    if (userStore.user?.uid === route.query.u && val) userStore.blueprintsAutosave = val;
+    if (val && userStore.user?.uid === route.query.u) userStore.blueprintsAutosave = val;
   },
   { deep: true }
 );
@@ -140,15 +140,20 @@ onMounted(() => {
   showVariants.value = localStorage.getItem("variants") === "true";
 });
 
-async function getBlueprints(data: AllShip[]) {
-  const {
-    success,
-    error,
-    content,
-    lastSaved: bpLastSaved
-  } = await $fetch("/api/getBlueprints", { method: "POST", body: { uid: route.query.u ?? userStore.user?.uid, accountIndex: accountIndex.value } });
+async function getAccount(data: AllShip[]): Promise<BlueprintAllShip[] | undefined> {
+  // prettier-ignore
+  const { success, error, content, lastSaved: bpLastSaved } = 
+  await $fetch("/api/getBlueprints", { method: "POST", body: { uid: route.query.u ?? userStore.user?.uid, accountIndex: accountIndex.value } });
 
-  if (!success && error) console.error(error);
+  if (!success && error) {
+    console.error(error);
+    if (route.query.a !== "0") {
+      await router.replace({ query: { ...route.query, a: 0 } });
+      userStore.hasUnsavedChanges = false;
+      window.location.reload();
+      return;
+    }
+  }
 
   if (success && content && bpLastSaved) {
     lastSaved.value = bpLastSaved;
@@ -167,9 +172,14 @@ async function getBlueprints(data: AllShip[]) {
       return result as BlueprintAllShip;
     });
   }
+}
+
+function createAccount(data: AllShip[]): BlueprintAllShip[] {
+  if (userStore.user && !userStore.user.blueprints.some((account) => getObjectKey(account) === "Unnamed" && getObjectValue(account).length === 0)) userStore.user.blueprints.push({ Unnamed: [] });
 
   lastSaved.value = new Date().toISOString().slice(0, 10);
-  if (userStore.user) userStore.user.blueprints.push({ Unnamed: [] });
+  userStore.createNewAccount = false;
+  userStore.isUnsavedAccount = true;
   return data.map((ship) => {
     const result: Record<any, any> = {
       ...ship,
@@ -182,6 +192,22 @@ async function getBlueprints(data: AllShip[]) {
 
     return result as BlueprintAllShip;
   });
+}
+
+async function getBlueprints(data: AllShip[]): Promise<BlueprintAllShip[]> {
+  if (route.query.u === undefined && !userStore.user)
+    return await waitUntil(
+      () => Boolean(route.query.u ?? userStore.user),
+      async () => await getBlueprints(data),
+      new Promise((resolve) => resolve([]))
+    );
+
+  if (!userStore.createNewAccount) {
+    const account = await getAccount(data);
+    if (account) return account;
+  }
+
+  return createAccount(data);
 }
 
 watch(
@@ -197,11 +223,17 @@ watch(
   }
 );
 
-watch(isOwner, async (val) => {
-  if (!userStore.shipData) return;
+onMounted(() => {
+  const stop = watch(isOwner, async (val) => {
+    if (!userStore.shipData) return;
 
-  if (val) return (data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData)));
-  data.value = await getBlueprints(userStore.shipData);
+    if (val) {
+      data.value = userStore.blueprintsAutosave ?? (await getBlueprints(userStore.shipData));
+      return stop();
+    }
+    data.value = await getBlueprints(userStore.shipData);
+    stop();
+  });
 });
 
 function getTotalTP(ships: BlueprintAllShip[]) {

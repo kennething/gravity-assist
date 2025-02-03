@@ -8,6 +8,8 @@ export const useUserStore = defineStore("userStore", () => {
   // blueprint tracker
   const blueprintsAutosave = ref<BlueprintAllShip[]>();
   const hasUnsavedChanges = ref(false);
+  const createNewAccount = ref(false);
+  const isUnsavedAccount = ref(false);
 
   async function getUser(createUserIfFail = true) {
     const uid = localStorage.getItem("uid");
@@ -60,5 +62,5 @@ export const useUserStore = defineStore("userStore", () => {
     void fetchShipData();
   }
 
-  return { isDarkMode, alert, user, shipData, shipDifficulties, blueprintsAutosave, hasUnsavedChanges, getUser, init };
+  return { isDarkMode, alert, user, shipData, shipDifficulties, blueprintsAutosave, hasUnsavedChanges, createNewAccount, isUnsavedAccount, getUser, init };
 });

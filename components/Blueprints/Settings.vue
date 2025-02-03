@@ -51,26 +51,32 @@
         <p class="mb-2 text-sm transition duration-500">{{ blueprints.length ?? 0 }}/10 accounts</p>
 
         <ol class="flex w-full flex-col items-center justify-start gap-1">
-          <li v-for="(account, index) in blueprints" class="w-full">
+          <li
+            v-for="(account, index) in blueprints"
+            class="w-full"
+            :class="{ 'du-tooltip': userStore.isUnsavedAccount && Number(route.query.a) !== index }"
+            data-tip="Save your current account first!"
+          >
             <button
               class="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-1 transition duration-500 hover:duration-300"
-              :class="
+              :class="[
                 route.query.a === index.toString()
                   ? 'bg-neutral-200 hover:bg-neutral-300/75 dark:bg-neutral-700 dark:hover:bg-neutral-600'
-                  : 'bg-neutral-100/25 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700'
-              "
+                  : 'bg-neutral-100/25 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700',
+                { 'pointer-events-none opacity-50': userStore.isUnsavedAccount && Number(route.query.a) !== index }
+              ]"
               type="button"
               @click="goToAccount(index)"
             >
-              <h5 class="justfiy-center inline-flex items-center font-medium transition duration-500">
+              <h5 v-if="userStore.user" class="justfiy-center inline-flex items-center font-medium transition duration-500">
                 {{ getObjectKey(account) }}
                 <span class="du-tooltip ms-2" data-tip="Edit Name">
-                  <button class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6" type="button" @click.stop="emit('editName', accountIndex)">
+                  <button class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6" type="button" @click.stop="emit('editName', index)">
                     <img class="size-4 select-none transition duration-500 dark:invert" src="/ui/pencil.svg" alt="Edit account name" />
                   </button>
                 </span>
-                <span class="du-tooltip" data-tip="Delete">
-                  <button class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6" type="button" @click.stop="emit('delete', accountIndex)">
+                <span v-if="userStore.user.blueprints.length > 1" class="du-tooltip" data-tip="Delete">
+                  <button class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6" type="button" @click.stop="emit('delete', index)">
                     <img class="size-4 select-none transition duration-500 dark:invert" src="/ui/trash.svg" alt="Delete account" />
                   </button>
                 </span>
@@ -83,7 +89,7 @@
           </li>
         </ol>
         <button
-          v-if="blueprints.length < 10"
+          v-if="!userStore.isUnsavedAccount && blueprints.length < 10"
           class="mt-1 flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-2 transition hover:bg-neutral-100 dark:hover:bg-neutral-700"
           type="button"
           @click="emit('createNew')"
@@ -100,7 +106,6 @@
 <script setup lang="ts">
 const props = defineProps<{
   close: boolean;
-  accountIndex: number;
   data: BlueprintAllShip[] | undefined;
   isOwner: boolean | undefined;
 }>();
@@ -154,6 +159,7 @@ function getTotalTP(ships: Record<string, (string | number)[]>[]) {
 }
 
 function goToAccount(index: number) {
+  if (userStore.isUnsavedAccount) return;
   void router.push(`/modules/blueprint-tracker?a=${index}`);
 }
 </script>
