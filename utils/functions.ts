@@ -1,7 +1,7 @@
 import type { Op } from "quill";
 
 /**
- * @warning Be sure to await this function in order to actually use the delay.
+ * @warning - Be sure to await this function in order to actually use the delay.
  * @param ms - Number of milliseconds to delay.
  * @example await delay(1000); // Wait for 1 second
  */
@@ -29,7 +29,7 @@ export function getRandomItem<T>(array: T[] | string) {
  * @param defaultValue - Default value to return if the condition is not fulfilled within the specified timeout. Defaults to `undefined`.
  * @param timeout - Maximum time, in milliseconds, to wait for the condition to be fulfilled. Defaults to `1000ms`.
  * @param interval - Time, in milliseconds, between checks of the condition. Defaults to `100ms`.
- * @returns The result of the callback function.
+ * @returns - The result of the callback function.
  */
 export async function waitUntil<T>(condition: () => boolean, callback: () => T, defaultValue: T, timeout?: number, interval?: number): Promise<T>;
 /**
@@ -39,7 +39,7 @@ export async function waitUntil<T>(condition: () => boolean, callback: () => T, 
  * @param callback - Function to execute once the condition is fulfilled.
  * @param timeout - Maximum time, in milliseconds, to wait for the condition to be fulfilled. Defaults to `1000ms`.
  * @param interval - Time, in milliseconds, between checks of the condition. Defaults to `100ms`.
- * @returns The result of the callback function.
+ * @returns - The result of the callback function.
  */
 export async function waitUntil<T>(condition: () => boolean, callback: () => T, timeout?: number, interval?: number): Promise<T | undefined>;
 export async function waitUntil<T>(condition: () => boolean, callback: () => T, defaultValue?: T, timeout = 1000, interval = 100): Promise<T | undefined> {
@@ -61,10 +61,11 @@ export async function waitUntil<T>(condition: () => boolean, callback: () => T, 
 }
 
 /**
- * Modifies the current route's query parameters.
+ * Modifies the current route's query parameters while keeping other existing query parameters.
  *
  * @param query - An object representing the query parameters to add or update.
  * @param replace - Whether to use `router.push` or `router.replace` to change the route. Defaults to `replace`.
+ * @example changeRouteQuery({ u: 0 }) -> router.replace({ query: { ...route.query, u: 0 } })
  */
 export async function changeRouteQuery(query: Record<string, string | number | undefined>, method: "replace" | "push" = "replace"): Promise<void> {
   const route = useRoute();
