@@ -8,7 +8,7 @@
       </h5>
       <span class="inline-flex flex-col items-center justify-center text-sm xl:flex-row xl:gap-1">
         Want to contribute? Check out
-        <button class="flex items-center justify-center gap-1 font-medium hover:underline" type="button" @click="router.push({ query: { ...route.query, c: 'true' } })">
+        <button class="flex items-center justify-center gap-1 font-medium hover:underline" type="button" @click="changeRouteQuery({ c: 'true' }, 'push')">
           how to contribute
           <span class="du-tooltip" data-tip="Contact">
             <span class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6">
@@ -24,11 +24,7 @@
 <script setup lang="ts">
 const props = defineProps<{ currentModule: AllModule | undefined }>();
 
-const route = useRoute();
-const router = useRouter();
-
 const mod = ref<AllModule>();
-
 let lastModule: symbol | undefined;
 watch(
   () => props.currentModule,

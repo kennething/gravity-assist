@@ -129,7 +129,6 @@ watch(
 );
 
 const route = useRoute();
-const router = useRouter();
 const userStore = useUserStore();
 
 const toolbar = useTemplateRef("toolbar");
@@ -177,7 +176,7 @@ function createNewAccount() {
   if (!userStore.user) return;
 
   userStore.createNewAccount = true;
-  void router.push({ query: { ...route.query, a: userStore.user.blueprints.length } });
+  void changeRouteQuery({ a: userStore.user.blueprints.length }, "push");
 }
 
 async function saveBlueprints() {
@@ -257,7 +256,7 @@ async function deleteAccount() {
   if (!fetchSuccess && error) return console.error(error);
 
   deleteSuccess.value = true;
-  void router.replace({ query: { ...route.query, a: userStore.user.blueprints.length - 2 } });
+  void changeRouteQuery({ a: userStore.user.blueprints.length - 2 });
 
   setTimeout(() => {
     deleteModal.value = undefined;

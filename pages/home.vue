@@ -7,7 +7,7 @@
 
     <p class="text-xl transition duration-500">
       By
-      <button class="fo-link font-semibold no-underline transition duration-500 hover:underline" type="button" @click="router.replace({ query: { ...route.query, c: 'true' } })">DubNubz</button>
+      <button class="fo-link font-semibold no-underline transition duration-500 hover:underline" type="button" @click="changeRouteQuery({ c: 'true' })">DubNubz</button>
     </p>
 
     <div class="mt-8 flex flex-col items-center justify-center gap-2">
@@ -22,11 +22,11 @@
       <div class="min-w-[20rem] rounded-2xl bg-neutral-100/50 p-4 transition duration-500 dark:bg-neutral-900">
         <div class="w-full p-4">
           <ol class="relative border-s border-neutral-200 transition duration-500 dark:border-neutral-700">
-            <HomeChangelogItem class="ms-6" :change="latestChange" />
+            <HomeChangelogItem class="ms-6" :change="changelog[changelog.length - 1]" />
           </ol>
         </div>
       </div>
-      <button type="button" class="flex w-full items-center justify-end gap-2" @click="router.push({ query: { v: 'latest' } })">
+      <button type="button" class="flex w-full items-center justify-end gap-2" @click="changeRouteQuery({ v: 'latest' }, 'push')">
         <p class="transition duration-500 hover:underline">View full changelog</p>
         <div class="du-tooltip" data-tip="View">
           <div class="fo-btn fo-btn-circle fo-btn-text">
@@ -43,7 +43,7 @@
       </div>
       <div class="flex w-[80vw] flex-col gap-2 md:w-[25rem] lg:w-[35rem] xl:w-[40rem]">
         <HomeContributorsItem v-for="(contributor, index) in credits.slice(0, 5)" :key="contributor.name" :contributor="contributor" :index="index" />
-        <button type="button" class="flex w-full items-center justify-end gap-2" @click="router.push({ query: { ct: 'true' } })">
+        <button type="button" class="flex w-full items-center justify-end gap-2" @click="changeRouteQuery({ ct: 'true' }, 'push')">
           <p class="transition duration-500 hover:underline">View all contributors</p>
           <div class="du-tooltip" data-tip="View">
             <div class="fo-btn fo-btn-circle fo-btn-text">
@@ -84,11 +84,6 @@ useSeoMeta({
   ogDescription: "Create colored text, search modules and research paths, track your progress, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange.",
   twitterDescription: "Create colored text, search modules and research paths, track your progress, and more. Gravity Assist is an all-in-one tool for anything you may need in Infinite Lagrange."
 });
-
-const route = useRoute();
-const router = useRouter();
-
-const latestChange = changelog[changelog.length - 1];
 </script>
 
 <style scoped></style>

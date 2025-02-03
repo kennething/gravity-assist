@@ -397,5 +397,16 @@ export const changelog: readonly Changelog[] = [
       "Improved icons in Module Library",
       "Added more information to Module Library"
     ]
+  },
+  {
+    type: "bugfix",
+    version: "2.0.0.1",
+    release: "2025-02-02",
+    notes: [
+      "Fixed a bug where creating a new BP Tracker account before saving would cause problems",
+      "Fixed a bug where accessing nonexistent BP Tracker accounts in the route query would cause problems",
+      "Fixed a bug where not passing a BP Tracker account in the route query would not update the cards",
+      "Fixed a bug where changing BP Tracker account names and deleting accounts would delete the current selected account"
+    ]
   }
 ];

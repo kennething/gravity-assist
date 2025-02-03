@@ -8,7 +8,11 @@
       <aside class="flex w-4/6 items-center justify-center sm:w-1/2 md:w-1/3 lg:w-1/2">
         <p class="text-center transition duration-500">
           Gravity Assist
-          <button type="button" class="text-lg font-semibold no-underline transition duration-500 hover:underline hover:duration-150 dark:hover:text-white" @click="footerOpenChangelog">
+          <button
+            type="button"
+            class="text-lg font-semibold no-underline transition duration-500 hover:underline hover:duration-150 dark:hover:text-white"
+            @click="changeRouteQuery({ v: changelog[changelog.length - 1].version })"
+          >
             v{{ changelog[changelog.length - 1].version }}
           </button>
           by DubNubz
@@ -26,14 +30,7 @@
   </footer>
 </template>
 
-<script setup lang="ts">
-const route = useRoute();
-const router = useRouter();
-
-function footerOpenChangelog() {
-  void router.replace({ query: { ...route.query, v: changelog[changelog.length - 1].version } });
-}
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 footer {

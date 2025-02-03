@@ -74,7 +74,6 @@
 import type { Op } from "quill";
 
 const route = useRoute();
-const router = useRouter();
 
 const userStore = useUserStore();
 const userQuery = route.query.u;
@@ -143,11 +142,13 @@ async function saveText() {
     success.value = true;
     (template as SaveTemplate) = content;
     userStore.user.savedMails = outcomeMails;
+
     setTimeout(() => {
       success.value = false;
       emit("toggleDialog", false);
     }, 1000);
-    void router.push({ query: { u: userStore.user.uid, id: content.id } });
+
+    void changeRouteQuery({ u: userStore.user.uid, id: content.id });
     emit("newQuery", userStore.user.uid, content.id);
   }
 }

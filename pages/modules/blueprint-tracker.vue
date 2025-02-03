@@ -55,7 +55,6 @@ const lastSaved = ref("");
 const data = ref<BlueprintAllShip[]>();
 
 const route = useRoute();
-const router = useRouter();
 const userStore = useUserStore();
 
 const accountIndex = ref(0);
@@ -78,11 +77,11 @@ onMounted(() => (data.value = userStore.blueprintsAutosave));
 const isOwner = computed(() => {
   if (!userStore.shipData) return;
   if (!route.query.u && userStore.user) {
-    void router.replace({ query: { ...route.query, u: userStore.user.uid } });
+    void changeRouteQuery({ u: userStore.user.uid });
     return true;
   }
   if (!route.query.a) {
-    void router.replace({ query: { ...route.query, a: 0 } });
+    void changeRouteQuery({ a: 0 });
     return true;
   }
 
@@ -142,13 +141,13 @@ onMounted(() => {
 
 async function getAccount(data: AllShip[]): Promise<BlueprintAllShip[] | undefined> {
   // prettier-ignore
-  const { success, error, content, lastSaved: bpLastSaved } = 
+  const { success, error, content, lastSaved: bpLastSaved } =
   await $fetch("/api/getBlueprints", { method: "POST", body: { uid: route.query.u ?? userStore.user?.uid, accountIndex: accountIndex.value } });
 
   if (!success && error) {
     console.error(error);
     if (route.query.a !== "0") {
-      await router.replace({ query: { ...route.query, a: 0 } });
+      await changeRouteQuery({ a: 0 });
       userStore.hasUnsavedChanges = false;
       window.location.reload();
       return;
@@ -177,7 +176,6 @@ async function getAccount(data: AllShip[]): Promise<BlueprintAllShip[] | undefin
 function createAccount(data: AllShip[]): BlueprintAllShip[] {
   if (userStore.user && !userStore.user.blueprints.some((account) => getObjectKey(account) === "Unnamed" && getObjectValue(account).length === 0)) userStore.user.blueprints.push({ Unnamed: [] });
 
-  lastSaved.value = new Date().toISOString().slice(0, 10);
   userStore.createNewAccount = false;
   userStore.isUnsavedAccount = true;
   return data.map((ship) => {

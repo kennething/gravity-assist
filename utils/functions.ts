@@ -26,9 +26,9 @@ export function getRandomItem<T>(array: T[] | string) {
  *
  * @param condition - Function that returns a boolean indicating whether the condition is fulfilled.
  * @param callback - Function to execute once the condition is fulfilled.
- * @param defaultValue - Default value to return if the condition is not fulfilled within the specified timeout. Defaults to undefined.
- * @param timeout - Maximum time, in milliseconds, to wait for the condition to be fulfilled. Defaults to 1000ms.
- * @param interval - Time, in milliseconds, between checks of the condition. Defaults to 100ms.
+ * @param defaultValue - Default value to return if the condition is not fulfilled within the specified timeout. Defaults to `undefined`.
+ * @param timeout - Maximum time, in milliseconds, to wait for the condition to be fulfilled. Defaults to `1000ms`.
+ * @param interval - Time, in milliseconds, between checks of the condition. Defaults to `100ms`.
  * @returns The result of the callback function.
  */
 export async function waitUntil<T>(condition: () => boolean, callback: () => T, defaultValue: T, timeout?: number, interval?: number): Promise<T>;
@@ -37,8 +37,8 @@ export async function waitUntil<T>(condition: () => boolean, callback: () => T, 
  *
  * @param condition - Function that returns a boolean indicating whether the condition is fulfilled.
  * @param callback - Function to execute once the condition is fulfilled.
- * @param timeout - Maximum time, in milliseconds, to wait for the condition to be fulfilled. Defaults to 1000ms.
- * @param interval - Time, in milliseconds, between checks of the condition. Defaults to 100ms.
+ * @param timeout - Maximum time, in milliseconds, to wait for the condition to be fulfilled. Defaults to `1000ms`.
+ * @param interval - Time, in milliseconds, between checks of the condition. Defaults to `100ms`.
  * @returns The result of the callback function.
  */
 export async function waitUntil<T>(condition: () => boolean, callback: () => T, timeout?: number, interval?: number): Promise<T | undefined>;
@@ -58,6 +58,20 @@ export async function waitUntil<T>(condition: () => boolean, callback: () => T, 
       }
     }, interval);
   });
+}
+
+/**
+ * Modifies the current route's query parameters.
+ *
+ * @param query - An object representing the query parameters to add or update.
+ * @param replace - Whether to use `router.push` or `router.replace` to change the route. Defaults to `replace`.
+ */
+export async function changeRouteQuery(query: Record<string, string | number | undefined>, method: "replace" | "push" = "replace"): Promise<void> {
+  const route = useRoute();
+  const router = useRouter();
+
+  if (method === "replace") return void (await router.replace({ query: { ...route.query, ...query } }));
+  await router.push({ query: { ...route.query, ...query } });
 }
 
 const dateOptions: Readonly<Record<string, Record<string, string>>> = {
