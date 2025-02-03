@@ -5,12 +5,10 @@
     <div class="flex h-96 w-full flex-col gap-2 overflow-y-scroll p-4">
       <HomeContributorsItem v-for="(contributor, index) in credits" :key="contributor.name" :contributor="contributor" :index="index" />
     </div>
-    <p>Got something to share? <button class="font-medium hover:underline" type="button" @click="router.push({ query: { c: 'true' } })">Reach out!</button></p>
+    <p>Got something to share? <button class="font-medium hover:underline" type="button" @click="changeRouteQuery({ c: 'true' })">Reach out!</button></p>
   </div>
 </template>
 
-<script setup lang="ts">
-const router = useRouter();
-</script>
+<script setup lang="ts"></script>
 
 <style scoped></style>

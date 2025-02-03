@@ -55,7 +55,6 @@ const lastSaved = ref("");
 const data = ref<BlueprintAllShip[]>();
 
 const route = useRoute();
-const router = useRouter();
 const userStore = useUserStore();
 
 const accountIndex = ref(0);
@@ -78,11 +77,11 @@ onMounted(() => (data.value = userStore.blueprintsAutosave));
 const isOwner = computed(() => {
   if (!userStore.shipData) return;
   if (!route.query.u && userStore.user) {
-    void router.replace({ query: { ...route.query, u: userStore.user.uid } });
+    void changeRouteQuery({ u: userStore.user.uid });
     return true;
   }
   if (!route.query.a) {
-    void router.replace({ query: { ...route.query, a: 0 } });
+    void changeRouteQuery({ a: 0 });
     return true;
   }
 
@@ -148,7 +147,7 @@ async function getAccount(data: AllShip[]): Promise<BlueprintAllShip[] | undefin
   if (!success && error) {
     console.error(error);
     if (route.query.a !== "0") {
-      await router.replace({ query: { ...route.query, a: 0 } });
+      await changeRouteQuery({ a: 0 });
       userStore.hasUnsavedChanges = false;
       window.location.reload();
       return;

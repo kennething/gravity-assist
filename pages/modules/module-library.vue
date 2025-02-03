@@ -51,7 +51,7 @@ const currentShip = ref<SuperCapitalShip>();
 watch(currentShip, () => router.push({ query: { s: currentShip.value?.name } }));
 
 const currentModule = ref<AllModule>();
-watch(currentModule, () => router.push({ query: { ...route.query, m: currentModule.value?.system } }));
+watch(currentModule, () => changeRouteQuery({ m: currentModule.value?.system }, "push"));
 
 useSeoMeta({
   title: () => `${currentModule.value?.system ? `${currentModule.value?.system} / ` : ""}${currentShip.value?.name ?? "Constantine the Great"} - Module Library | Gravity Assist`,
@@ -95,7 +95,7 @@ function handleQueries() {
 watch(() => route.query, handleQueries);
 
 onMounted(async () => {
-  if (!route.query.s) await router.replace({ query: { ...route.query, s: "Constantine the Great" } });
+  if (!route.query.s) await changeRouteQuery({ s: "Constantine the Great" });
   handleQueries();
   loaded.value = true;
 });

@@ -49,7 +49,6 @@ useSeoMeta({
 });
 
 const route = useRoute();
-const router = useRouter();
 
 const userStore = useUserStore();
 const { isDarkMode } = storeToRefs(userStore);
@@ -98,18 +97,18 @@ onBeforeMount(() => {
 // layout
 const showContributors = ref(false);
 watch(showContributors, (value) => {
-  if (!value) return void router.replace({ query: { ...route.query, ct: undefined } });
-  if (!route.query.ct) void router.replace({ query: { ...route.query, ct: "true" } });
+  if (!value) return void changeRouteQuery({ ct: undefined });
+  if (!route.query.ct) void changeRouteQuery({ ct: "true" });
 });
 const showChangelog = ref(false);
 watch(showChangelog, (value) => {
-  if (!value) return void router.replace({ query: { ...route.query, v: undefined } });
-  if (!route.query.v) void router.replace({ query: { ...route.query, v: changelog[changelog.length - 1].version } });
+  if (!value) return void changeRouteQuery({ v: undefined });
+  if (!route.query.v) void changeRouteQuery({ v: changelog[changelog.length - 1].version });
 });
 const showContact = ref(false);
 watch(showContact, (value) => {
-  if (!value) return void router.replace({ query: { ...route.query, c: undefined } });
-  if (!route.query.c) void router.replace({ query: { ...route.query, c: "true" } });
+  if (!value) return void changeRouteQuery({ c: undefined });
+  if (!route.query.c) void changeRouteQuery({ c: "true" });
 });
 
 function handleQueries(query: LocationQuery) {

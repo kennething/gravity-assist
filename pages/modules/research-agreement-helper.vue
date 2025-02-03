@@ -45,7 +45,6 @@ const selectedScope = ref(0);
 const selectedScopeValue = computed(() => scopes[selectedScope.value]);
 
 const route = useRoute();
-const router = useRouter();
 const config = useRuntimeConfig();
 
 useSeoMeta({
@@ -120,9 +119,10 @@ function selectShip(ship: AllShip | undefined, setPath = false, manualData?: All
 
   localStorage.setItem("rahelper", JSON.stringify([selectedManufacturer.value, selectedDirection.value, selectedScope.value, selectedShip.value?.name, selectedShip.value?.variant]));
 
-  if (isReplacing)
-    return void router.replace({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
-  void router.push({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
+  return void changeRouteQuery(
+    { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant },
+    isReplacing ? "replace" : "push"
+  );
 }
 
 function handleQueries() {
@@ -175,7 +175,7 @@ function handleOptionChange(type: "manufacturer" | "direction" | "scope", next: 
   };
   options[type].value = next;
   localStorage.setItem("rahelper", JSON.stringify([selectedManufacturer.value, selectedDirection.value, selectedScope.value, selectedShip.value?.name, selectedShip.value?.variant]));
-  void router.push({ query: { m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant } });
+  void changeRouteQuery({ m: selectedManufacturer.value, d: selectedDirection.value, s: selectedScope.value, shn: selectedShip.value?.name, shv: selectedShip.value?.variant }, "push");
 }
 </script>
 
