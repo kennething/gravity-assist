@@ -71,12 +71,12 @@
               <h5 v-if="userStore.user" class="justfiy-center inline-flex items-center font-medium transition duration-500">
                 {{ getObjectKey(account) }}
                 <span class="du-tooltip ms-2" data-tip="Edit Name">
-                  <button class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6" type="button" @click.stop="emit('editName', accountIndex)">
+                  <button class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6" type="button" @click.stop="emit('editName', index)">
                     <img class="size-4 select-none transition duration-500 dark:invert" src="/ui/pencil.svg" alt="Edit account name" />
                   </button>
                 </span>
                 <span v-if="userStore.user.blueprints.length > 1" class="du-tooltip" data-tip="Delete">
-                  <button class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6" type="button" @click.stop="emit('delete', accountIndex)">
+                  <button class="fo-btn fo-btn-circle fo-btn-text size-6 min-h-6" type="button" @click.stop="emit('delete', index)">
                     <img class="size-4 select-none transition duration-500 dark:invert" src="/ui/trash.svg" alt="Delete account" />
                   </button>
                 </span>
@@ -106,7 +106,6 @@
 <script setup lang="ts">
 const props = defineProps<{
   close: boolean;
-  accountIndex: number;
   data: BlueprintAllShip[] | undefined;
   isOwner: boolean | undefined;
 }>();

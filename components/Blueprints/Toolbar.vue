@@ -6,7 +6,6 @@
   >
     <BlueprintsSettings
       :close="closeSettings"
-      :account-index="accountIndex"
       :data="data"
       :is-owner="isOwner"
       @edit-name="(acc) => (editName = acc)"
