@@ -63,6 +63,7 @@ onMounted(() => {
   document.body.style.display = "block";
 
   const isTemporaryUser = (!localStorage.getItem("uid") || !localStorage.getItem("token")) && Object.keys(route.query).length !== 0;
+  console.log(`isTemp: ${!isTemporaryUser}`);
   userStore.init(!isTemporaryUser);
 
   if (!isTemporaryUser) return;
@@ -70,6 +71,7 @@ onMounted(() => {
     () => route.query,
     (queries) => {
       if (Object.keys(queries).length !== 0) return;
+      console.log(`queries: ${Object.keys(queries).length !== 0}`);
       stop();
       void userStore.getUser(true);
     }

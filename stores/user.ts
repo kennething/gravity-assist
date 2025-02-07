@@ -12,28 +12,36 @@ export const useUserStore = defineStore("userStore", () => {
   const isUnsavedAccount = ref(false);
 
   async function getUser(createUserIfFail = true) {
+    console.log(`getUser createUser: ${createUserIfFail}`);
+    console.log(`localStorage: ${JSON.stringify(localStorage)}`);
     const uid = localStorage.getItem("uid");
     const accessToken = localStorage.getItem("token");
+    console.log(`uid: ${uid}, accessToken: ${accessToken}`);
 
     if (uid && accessToken) {
       const { success, error, content } = await $fetch("/api/getUser", { method: "POST", body: { uid, accessToken, updateOrigin: false } });
+      console.log(`getUser fetch: ${success}, ${error}, ${JSON.stringify(content)}`);
       if (!success && error !== "User not found.") return console.error(error);
       if (success && content) {
         user.value = content;
         localStorage.setItem("uid", content.uid);
         localStorage.setItem("token", content.accessToken);
+        console.log(`getUser uid: ${localStorage.getItem("uid")}, accessToken: ${localStorage.getItem("token")}`);
         return;
       }
     }
 
     if (!createUserIfFail) return;
+    console.log(`getUser createUser2: ${createUserIfFail}`);
 
     const { success, error, content } = await $fetch("/api/createUser");
+    console.log(`createUser fetch: ${success}, ${error}, ${JSON.stringify(content)}`);
     if (!success && error) return console.error(error);
     if (success && content) {
       user.value = content;
       localStorage.setItem("uid", content.uid);
       localStorage.setItem("token", content.accessToken);
+      console.log(`createUser uid: ${localStorage.getItem("uid")}, accessToken: ${localStorage.getItem("token")}`);
     }
   }
 
@@ -57,7 +65,9 @@ export const useUserStore = defineStore("userStore", () => {
   }
 
   function init(createUserIfFail = true) {
+    console.log(`init createUser: ${createUserIfFail}`);
     void getUser(createUserIfFail);
+    console.log(`init createUser done`);
     void fetchLatestAlert();
     void fetchShipData();
   }
