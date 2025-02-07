@@ -41,11 +41,9 @@
               </button>
             </div>
             <p class="mb-3 text-left text-sm text-blue-800 transition duration-500 dark:text-blue-200">{{ alert.description }}</p>
-            <ClientOnly>
-              <p class="text-left text-xs text-blue-900 transition duration-500 dark:text-blue-300">
-                {{ formatDate(alert.date, "numeric") }}
-              </p>
-            </ClientOnly>
+            <p class="text-left text-xs text-blue-900 transition duration-500 dark:text-blue-300">
+              {{ formatDate(alert.date, "numeric") }}
+            </p>
           </div>
         </Transition>
       </ul>
