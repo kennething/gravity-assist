@@ -19,7 +19,7 @@
         </p>
       </aside>
       <div class="flex h-5 w-1/6 justify-end gap-4 sm:w-1/4 md:w-1/3 lg:w-1/4">
-        <a href="https://github.com/DubNubz/gravity-assist" target="_blank" rel="noopener noreferrer" class="fo-link" aria-label="GitHub Link">
+        <a href="https://github.com/kennething/gravity-assist" target="_blank" rel="noopener noreferrer" class="fo-link" aria-label="GitHub Link">
           <img class="size-6 select-none transition duration-500 dark:invert" src="/logo/github.svg" aria-hidden="true" />
         </a>
         <a href="https://discord.com/invite/9mJ9b2Bbzx" target="_blank" rel="noopener noreferrer" class="fo-link" aria-label="Discord Link">
