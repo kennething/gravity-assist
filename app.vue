@@ -60,36 +60,11 @@ watch(isDarkMode, () => {
 
 // app init
 onMounted(() => {
-  if (localStorage.getItem("theme") === "dark") isDarkMode.value = true;
-  document.body.style.display = "block";
-
-  const isTemporaryUser = (!localStorage.getItem("uid") || !localStorage.getItem("token")) && Object.keys(route.query).length !== 0;
-  userStore.init(!isTemporaryUser);
-
-  if (!isTemporaryUser) return;
-  const stop = watch(
-    () => route.query,
-    (queries) => {
-      if (Object.keys(queries).length !== 0) return;
-      stop();
-      void userStore.getUser(true);
-    }
-  );
-});
+  window.location.href = "https://gravityassist.xyz/home";
+})
 
 // sidebar
 const showSidebar = ref(true);
-
-onMounted(() => {
-  let previousWidth = window.innerWidth;
-  window.addEventListener("resize", () => {
-    const newWidth = window.innerWidth;
-    if (previousWidth === newWidth) return;
-
-    showSidebar.value = window.innerWidth >= 768;
-    previousWidth = newWidth;
-  });
-});
 
 onBeforeMount(() => {
   if (window.innerWidth < 768) showSidebar.value = false;
@@ -131,7 +106,6 @@ watch(
   () => route.query,
   (query) => handleQueries(query)
 );
-onMounted(() => handleQueries(route.query));
 
 function closeSidebarMobile() {
   if (window.innerWidth < 768) showSidebar.value = false;
