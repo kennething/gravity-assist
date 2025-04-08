@@ -198,13 +198,13 @@ export const changelog: readonly Changelog[] = [
   },
   {
     type: "minor release",
-    version: "1.1.5.1",
+    version: "1.1.6",
     release: "2024-03-01",
     notes: ["Revamped the color pallete of Blue/Purple in Color Generator"]
   },
   {
     type: "release",
-    version: "1.1.6",
+    version: "1.1.7",
     release: "2024-03-02",
     notes: ["Added the ability to share links for Gravity Assist page options", "Added Eternal Heavens A2 to Module Library"]
   },
@@ -289,13 +289,13 @@ export const changelog: readonly Changelog[] = [
   },
   {
     type: "minor release",
-    version: "1.3.0.1",
+    version: "1.3.1",
     release: "2024-06-03",
     notes: ["Added Eternal Heavens A3"]
   },
   {
     type: "release",
-    version: "1.3.1",
+    version: "1.3.2",
     release: "2024-06-17",
     notes: [
       "Changed the primary font used on mobile devices",
@@ -311,31 +311,31 @@ export const changelog: readonly Changelog[] = [
   },
   {
     type: "minor release",
-    version: "1.3.1.1",
+    version: "1.3.3",
     release: "2024-06-25",
     notes: ["Added Eternal Heavens B2"]
   },
   {
     type: "bugfix",
-    version: "1.3.1.2",
+    version: "1.3.4",
     release: "2024-06-29",
     notes: ["Fixed the latest changes card not showing previous changes"]
   },
   {
     type: "minor release",
-    version: "1.3.1.3",
+    version: "1.3.5",
     release: "2024-07-01",
     notes: ["Added preloading for images in Module Library"]
   },
   {
     type: "minor release",
-    version: "1.3.1.4",
+    version: "1.3.6",
     release: "2024-07-06",
     notes: ["Fixed Ediacaran C1 showing as B2", "Added Ediacaran B2"]
   },
   {
     type: "release",
-    version: "1.3.2",
+    version: "1.3.7",
     release: "2024-07-11",
     notes: [
       "Added Eternal Heavens M2, M3, and C3",
@@ -346,7 +346,7 @@ export const changelog: readonly Changelog[] = [
   },
   {
     type: "release",
-    version: "1.3.3",
+    version: "1.3.8",
     release: "2024-07-19",
     notes: [
       "Decreased the default compression value from 3 to 2 in Color Generator",
@@ -357,7 +357,7 @@ export const changelog: readonly Changelog[] = [
   },
   {
     type: "release",
-    version: "1.3.4",
+    version: "1.3.9",
     release: "2024-07-27",
     notes: [
       "Made the side menu visible at all times for bigger screens",
@@ -368,7 +368,7 @@ export const changelog: readonly Changelog[] = [
   },
   {
     type: "release",
-    version: "1.3.5",
+    version: "1.3.10",
     release: "2024-09-22",
     notes: [
       "Added Hale-Bopp to RA Helper",
@@ -400,13 +400,24 @@ export const changelog: readonly Changelog[] = [
   },
   {
     type: "bugfix",
-    version: "2.0.0.1",
+    version: "2.0.1",
     release: "2025-02-02",
     notes: [
       "Fixed a bug where creating a new BP Tracker account before saving would cause problems",
       "Fixed a bug where accessing nonexistent BP Tracker accounts in the route query would cause problems",
       "Fixed a bug where not passing a BP Tracker account in the route query would not update the cards",
       "Fixed a bug where changing BP Tracker account names and deleting accounts would delete the current selected account"
+    ]
+  },
+  {
+    type: "minor release",
+    version: "2.0.2",
+    release: "2025-04-07",
+    notes: [
+      "Added an area for unassigned TP to Blueprint Tracker",
+      "Fixed bug where inputing a decimal in TP input would cause it to be interpreted wrong",
+      "Pressing enter or return while focusing a TP input will now cause it to blur",
+      "Added Shield of Plutus B2 and B3 to Module Library"
     ]
   }
 ];

@@ -14,5 +14,3 @@ body:
     attributes:
       label: Rationale
       description: Why should this be added?
-    validations:
-      required: true

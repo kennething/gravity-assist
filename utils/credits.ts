@@ -58,7 +58,7 @@ export const credits: readonly Credit[] = [
   },
   {
     name: "The Enlightened",
-    specific: ["Constantine the Great B3", "Solar Whale C3"],
+    specific: ["Constantine the Great B3", "Solar Whale C3", "Shield of Plutus B2"],
     dateAdded: "2025-01-25"
   },
   {
@@ -90,6 +90,11 @@ export const credits: readonly Credit[] = [
     name: "Draconia19",
     specific: ["Marshal Crux C3"],
     dateAdded: "2025-01-25"
+  },
+  {
+    name: "Garm",
+    specific: ["Shield of Plutus B3"],
+    dateAdded: "2025-04-07"
   },
   {
     name: "NullPointer",

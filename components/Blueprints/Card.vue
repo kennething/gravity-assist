@@ -50,6 +50,7 @@
               class="peer fo-input grow border-neutral-300 bg-white text-left text-black opacity-0 hover:border-neutral-400 focus:opacity-100 dark:border-neutral-700 dark:hover:border-neutral-600"
               placeholder="Tech Points"
               @blur="updateTp"
+              @keypress="handleEnter"
             />
             <div class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center overflow-hidden peer-focus:invisible">
               <p class="w-full px-3 text-left text-black">
@@ -200,7 +201,14 @@ const isGolden = computed(() => props.ship.techPoints >= ("modules" in props.shi
 
 function updateTp() {
   if (!tpInput.value) return;
-  techPoints.value = Number(tpInput.value.value);
+  techPoints.value = Number(tpInput.value.value.replace(".", ""));
+}
+
+function handleEnter(event: KeyboardEvent) {
+  if (event.key !== "Enter") return;
+
+  tpInput.value?.blur();
+  updateTp();
 }
 
 function unlock() {
