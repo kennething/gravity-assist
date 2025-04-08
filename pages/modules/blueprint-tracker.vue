@@ -12,6 +12,7 @@
       :data="data"
       :is-owner="isOwner"
       :account-index="accountIndex"
+      :unassigned-tp="unassignedTp"
       @list="isListLayout = !isListLayout"
       @variants="showVariants = !showVariants"
       @sort="(sorter) => (currentSorter = sorter)"
@@ -20,14 +21,17 @@
     />
 
     <ClientOnly>
-      <p v-if="lastSaved" class="mt-8 transition duration-500">Last updated: {{ formatDate(lastSaved, "full", true) }}</p>
-      <p v-if="data" class="text-sm transition duration-500">{{ getTotalTP(data).toLocaleString() }} total Tech Points</p>
+      <div v-if="lastSaved || data" class="mt-8 flex flex-col items-center justify-center">
+        <p v-if="lastSaved" class="transition duration-500">Last updated: {{ formatDate(lastSaved, "full", true) }}</p>
+        <p v-if="data" class="text-sm transition duration-500">{{ getTotalTP(data).toLocaleString() }} total Tech Points</p>
+      </div>
     </ClientOnly>
 
     <div v-if="displayedData" class="mt-4 flex w-full flex-col items-center justify-center">
       <BlueprintsCategory
-        v-for="type in shipTypes"
+        v-for="(type, index) in shipTypes"
         :key="type"
+        v-model="unassignedTp[index]"
         :ship-type="type"
         :is-owner="isOwner"
         :current-layout="currentLayout"
@@ -99,7 +103,8 @@ useSeoMeta({
     "Easily track your blueprint collection and share it with others! View your collection, add new blueprints, and save your changes. Never open Excel ever again to share your blueprints with others!"
 });
 
-const shipTypes = ["Fighter", "Corvette", "Frigate", "Destroyer", "Cruiser", "Battlecruiser", "Auxiliary Ship", "Carrier", "Battleship"];
+const shipTypes = ["Fighter", "Corvette", "Frigate", "Destroyer", "Cruiser", "Battlecruiser", "Auxiliary Ship", "Carrier", "Battleship"] as const;
+const unassignedTp = ref([0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
 const isListLayout = ref(false);
 watch(isListLayout, (val) => localStorage.setItem("layout", val ? "list" : "grid"));
@@ -141,7 +146,7 @@ onMounted(() => {
 
 async function getAccount(data: AllShip[]): Promise<BlueprintAllShip[] | undefined> {
   // prettier-ignore
-  const { success, error, content, lastSaved: bpLastSaved } =
+  const { success, error, content, lastSaved: bpLastSaved, unassignedTp: savedUnassignedTp } =
   await $fetch("/api/getBlueprints", { method: "POST", body: { uid: route.query.u ?? userStore.user?.uid, accountIndex: accountIndex.value } });
 
   if (!success && error) {
@@ -156,6 +161,8 @@ async function getAccount(data: AllShip[]): Promise<BlueprintAllShip[] | undefin
 
   if (success && content && bpLastSaved) {
     lastSaved.value = bpLastSaved;
+    unassignedTp.value = savedUnassignedTp ? savedUnassignedTp : [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    watch(unassignedTp, () => (userStore.hasUnsavedChanges = true), { deep: true });
     return data.map((ship) => {
       const ownedBlueprint = content.find(([id, variant]) => ship.id === id && ship.variant === variant);
 
@@ -237,13 +244,15 @@ onMounted(() => {
 function getTotalTP(ships: BlueprintAllShip[]) {
   const usedShips: string[] = [];
 
-  return ships.reduce((total, ship) => {
-    if (ship.hasVariants) {
-      if (usedShips.includes(ship.name)) return total;
-      usedShips.push(ship.name);
-    }
-    return total + ship.techPoints;
-  }, 0);
+  return (
+    ships.reduce((total, ship) => {
+      if (ship.hasVariants) {
+        if (usedShips.includes(ship.name)) return total;
+        usedShips.push(ship.name);
+      }
+      return total + ship.techPoints;
+    }, 0) + unassignedTp.value.reduce((total, shipType) => total + shipType, 0)
+  );
 }
 </script>
 

@@ -7,6 +7,7 @@ interface Body {
   uid: string;
   accessToken: string;
   blueprints: BlueprintAllShip[] | null;
+  unassignedTp: [fighter: number, corvette: number, frigate: number, destroyer: number, cruiser: number, battlecruiser: number, auxiliaryShip: number, carrier: number, battleship: number];
   accountIndex: number;
   accountName: string;
 }
@@ -40,6 +41,8 @@ export default defineEventHandler(async (event) => {
             return { [ship.id]: [ship.variant, ship.techPoints, ship.modules.filter((mod) => mod.unlocked).map((mod) => mod.system)].flat() };
           })
           .filter((obj) => getObjectValue(obj).length > 0) as Record<number, (string | number)[]>[]);
+
+    if (blueprints) blueprints.unshift({ "999": body.unassignedTp });
 
     existingBlueprints[body.accountIndex] = {
       [body.accountName]: blueprints ? blueprints : getObjectValue(existingBlueprints[body.accountIndex])

@@ -3741,8 +3741,83 @@ export default defineEventHandler(() => {
         },
         {
           type: "known",
-          img: "/weapons/icons/storage.png",
+          img: "/weapons/icons/armor.png",
           system: "B2",
+          name: `Additional Armor System`,
+          sourcedFrom: ["The Enlightened"],
+          stats: {
+            type: "armor",
+            armor: 240,
+            extraHP: null,
+            energyShield: 5,
+            hp: 27000
+          },
+          subsystems: [
+            {
+              type: "misc",
+              count: 1,
+              name: "Heavy Composite Armor",
+              title: "ASX-150",
+              attributes: null
+            }
+          ]
+        },
+        {
+          type: "known",
+          img: "/weapons/icons/cannon.png",
+          system: "B3",
+          name: "Anti-Missile System",
+          sourcedFrom: ["Garm"],
+          stats: {
+            type: "weapon",
+            antiship: 7200,
+            antiair: 840,
+            siege: null,
+            hp: 27000
+          },
+          subsystems: [
+            {
+              type: "weapon",
+              count: 3,
+              title: `BM-4x280T`,
+              name: "Missile Defense System",
+              damageType: "Projectile",
+              target: "Aircraft",
+              alpha: 100,
+              lockonEfficiency: 60,
+              attributes: ["Interception Capability", "Anti-Aircraft Support"],
+              stats: {
+                duration: 5,
+                attacksPerRound: [4, 1],
+                cooldown: 4,
+                lockOnTime: 2,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    damage: 7200,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ]
+                  },
+                  antiair: {
+                    position: 1,
+                    damage: 840,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          type: "known",
+          img: "/weapons/icons/storage.png",
+          system: "C1",
           name: `Comprehensive Maintenance System`,
           sourcedFrom: null,
           stats: {
@@ -3765,18 +3840,6 @@ export default defineEventHandler(() => {
               attributes: null
             }
           ]
-        },
-        {
-          unknown: true,
-          type: "unknown",
-          img: "/weapons/icons/unknown.png",
-          system: "B3"
-        },
-        {
-          unknown: true,
-          type: "unknown",
-          img: "/weapons/icons/unknown.png",
-          system: "C1"
         },
         {
           unknown: true,

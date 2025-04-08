@@ -96,6 +96,7 @@ const props = defineProps<{
   data: BlueprintAllShip[] | undefined;
   isOwner: boolean | undefined;
   accountIndex: number;
+  unassignedTp: number[];
 }>();
 
 const emit = defineEmits<{
@@ -194,7 +195,8 @@ async function saveBlueprints() {
       accessToken: userStore.user.accessToken,
       blueprints: props.data,
       accountIndex: props.accountIndex,
-      accountName: getObjectKey(userStore.user.blueprints[props.accountIndex]) ?? "Unnamed"
+      accountName: getObjectKey(userStore.user.blueprints[props.accountIndex]) ?? "Unnamed",
+      unassignedTp: props.unassignedTp
     }
   });
 

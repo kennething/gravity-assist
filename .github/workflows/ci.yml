@@ -31,6 +31,30 @@ jobs:
             !.github/workflows/ci.yml
             **.md
 
+  # typecheck:
+  #   needs: files
+  #   timeout-minutes: 10
+  #   runs-on: ubuntu-latest
+  #   name: Typecheck
+
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+
+  #     - name: Set Node.js version to 22
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
+
+  #     - name: Install dependencies
+  #       run: npm install
+
+  #     - name: Build
+  #       run: npm run build
+
+  #     - name: Typecheck
+  #       run: npm run typecheck
+
   lint:
     needs: files
     timeout-minutes: 10
