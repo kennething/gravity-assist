@@ -120,7 +120,7 @@
     </div>
 
     <div v-else class="flex w-full flex-col gap-2 transition duration-500" :class="{ 'pointer-events-none opacity-50 brightness-50': !ship.unlocked }">
-      <p class="px-3 text-xl font-semibold text-black">
+      <p class="px-3 text-xl font-semibold text-black dark:text-white">
         v{{
           Number(
             String(Number(tp) + 100)

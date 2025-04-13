@@ -2,7 +2,7 @@
   <div v-if="data && displayedData && displayedData.filter((ship) => ship.type === shipType).length > 0" class="flex w-full flex-col items-center justify-center">
     <Teleport to="body">
       <Transition name="menu">
-        <div v-if="showTPModal" class="fixed left-0 top-0 z-20 flex h-dvh w-dvw items-center justify-center bg-black/50" @click="showTPModal = false">
+        <div v-if="showTPModal && isOwner" class="fixed left-0 top-0 z-20 flex h-dvh w-dvw items-center justify-center bg-black/50" @click="showTPModal = false">
           <div id="menu" class="flex flex-col items-center justify-center gap-6 rounded-xl bg-body px-20 py-7" @click.stop>
             <h2 class="text-xl font-medium">
               How many unassigned <span class="text-2xl font-bold">{{ shipType }}</span> Tech Points do you have?
@@ -31,16 +31,28 @@
       </Transition>
     </Teleport>
 
-    <div class="mt-4 flex items-center justify-center gap-1">
+    <div class="mt-4 flex items-center justify-center gap-2">
       <h3 class="text-2xl font-bold transition duration-500">{{ shipType }}s</h3>
       <ClientOnly>
-        <button class="du-tooltip z-[1] translate-y-0.5" :data-tip="`${unassignedTp?.toLocaleString()} unassigned ${shipType} Tech Points`" type="button" @click="showTPModal = true">
-          <img class="size-7 transition duration-500 dark:invert" src="/ui/plusCircle.svg" :alt="`Declare unassigned ${shipType} Tech Points`" />
+        <button
+          class="du-tooltip z-[1] translate-y-0.5"
+          :class="{ 'unassigned-tp-hover cursor-help': !isOwner }"
+          :data-tip="`${unassignedTp?.toLocaleString()} unassigned ${shipType} Tech Points`"
+          type="button"
+          :disabled="!isOwner"
+          @click="showTPModal = true"
+        >
+          <img
+            class="size-7 transition duration-500 dark:invert"
+            :src="isOwner ? '/ui/plusCircle.svg' : `/ships/classes/${shipType.toLowerCase()}.svg`"
+            :alt="isOwner ? `Declare unassigned ${shipType} Tech Points` : ''"
+          />
         </button>
       </ClientOnly>
     </div>
     <p class="transition duration-500">{{ data.filter((ship) => ship.type === shipType && ship.unlocked).length }}/{{ data.filter((ship) => ship.type === shipType).length }} unlocked</p>
     <ClientOnly>
+      <p class="unassigned-tp-nohover hidden transition duration-500">{{ unassignedTp?.toLocaleString() }} unassigned TP</p>
       <p class="mb-4 transition duration-500">
         {{ (getTotalTP(displayedData.filter((ship) => ship.type === shipType)) + (unassignedTp ?? 0)).toLocaleString() }}
         total Tech Points
@@ -138,6 +150,15 @@ function getTotalTP(ships: BlueprintAllShip[]) {
 
   #menu {
     transform: scale(0);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .unassigned-tp-hover {
+    @apply hidden;
+  }
+  .unassigned-tp-nohover {
+    @apply block;
   }
 }
 </style>

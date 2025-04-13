@@ -419,5 +419,11 @@ export const changelog: readonly Changelog[] = [
       "Pressing enter or return while focusing a TP input will now cause it to blur",
       "Added Shield of Plutus B2 and B3 to Module Library"
     ]
+  },
+  {
+    type: "minor release",
+    version: "2.0.3",
+    release: "2025-04-13",
+    notes: ["Changed how unassigned TP appears for Blueprint Tracker viewers"]
   }
 ];
