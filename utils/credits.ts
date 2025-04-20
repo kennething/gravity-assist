@@ -48,7 +48,7 @@ export const credits: readonly Credit[] = [
   },
   {
     name: "Somnambulist",
-    specific: ["Eternal Heavens B2", "Ediacaran B2"],
+    specific: ["Eternal Heavens B2", "Ediacaran B2", "Shield of Plutus M2"],
     dateAdded: "2024-06-25"
   },
   {
