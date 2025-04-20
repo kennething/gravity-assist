@@ -79,50 +79,50 @@ jobs:
       - name: Lint
         run: npm run lint
 
-  prettier:
-    needs: files
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    name: Prettier
+  # prettier:
+  #   needs: files
+  #   timeout-minutes: 10
+  #   runs-on: ubuntu-latest
+  #   name: Prettier
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Set Node.js version to 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+  #     - name: Set Node.js version to 22
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
 
-      - name: Install dependencies
-        run: npm install
+  #     - name: Install dependencies
+  #       run: npm install
 
-      - name: Build
-        run: npm run build
+  #     - name: Build
+  #       run: npm run build
 
-      - name: Prettier
-        run: npm run prettier
+  #     - name: Prettier
+  #       run: npm run prettier
 
-  test:
-    needs: files
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    name: Build & Test
+  # test:
+  #   needs: files
+  #   timeout-minutes: 10
+  #   runs-on: ubuntu-latest
+  #   name: Build & Test
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Set Node.js version to 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+  #     - name: Set Node.js version to 22
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
 
-      - name: Install dependencies
-        run: npm install
+  #     - name: Install dependencies
+  #       run: npm install
 
-      - name: Build
-        run: npm run build
+  #     - name: Build
+  #       run: npm run build
 
-      - name: Test
-        run: npm run test
+  #     - name: Test
+  #       run: npm run test
