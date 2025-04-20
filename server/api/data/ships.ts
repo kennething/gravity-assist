@@ -3556,10 +3556,87 @@ export default defineEventHandler(() => {
           ]
         },
         {
-          unknown: true,
-          type: "unknown",
-          img: "/weapons/icons/unknown.png",
-          system: "M2"
+          type: "known",
+          img: "/weapons/icons/cannon.png",
+          system: "M2",
+          name: `Integrated Cannon System`,
+          sourcedFrom: ["Somnambulist"],
+          default: false,
+          stats: {
+            type: "weapon",
+            antiship: 19873,
+            antiair: 720,
+            siege: null,
+            hp: 23400
+          },
+          subsystems: [
+            {
+              type: "weapon",
+              count: 1,
+              title: `MK3-BG-2800 "Fortress"`,
+              name: `Generic Heavy Cannon`,
+              damageType: "Projectile",
+              target: "Large Ship",
+              lockonEfficiency: null,
+              alpha: 450,
+              attributes: null,
+              stats: {
+                duration: 4,
+                attacksPerRound: [1, 2],
+                cooldown: 15,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    priorities: [
+                      [1, "Battleship"],
+                      [1, "Carrier"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"],
+                      [2, "Auxiliary Ship"]
+                    ],
+                    damage: 16673
+                  }
+                }
+              }
+            },
+            {
+              type: "weapon",
+              count: 1,
+              title: `BG-150A`,
+              name: `Anti-Aircraft Cannon`,
+              damageType: "Projectile",
+              target: "Aircraft",
+              lockonEfficiency: null,
+              alpha: 50,
+              attributes: ["Anti-Aircraft Special Ammo", "Anti-Aircraft Counterattack"],
+              stats: {
+                duration: 2,
+                attacksPerRound: [1, 4],
+                cooldown: 10,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ],
+                    damage: 3200
+                  },
+                  antiair: {
+                    position: 1,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ],
+                    damage: 720
+                  }
+                }
+              }
+            }
+          ]
         },
         {
           unknown: true,
@@ -3690,54 +3767,10 @@ export default defineEventHandler(() => {
           ]
         },
         {
-          type: "known",
-          img: "/weapons/icons/cannon.png",
-          system: "B1",
-          name: `Heavy Projectile Weapon System`,
-          sourcedFrom: null,
-          stats: {
-            type: "weapon",
-            antiship: 13320,
-            antiair: null,
-            siege: 1215,
-            hp: 24950
-          },
-          subsystems: [
-            {
-              type: "weapon",
-              count: 3,
-              title: `BM-4x1800`,
-              name: `Anti-Ship Missile Array`,
-              damageType: "Projectile",
-              target: "Large Ship",
-              lockonEfficiency: null,
-              alpha: 750,
-              attributes: ["Crit", "Evasive Counterattack"],
-              stats: {
-                duration: 10,
-                attacksPerRound: [1, 4],
-                cooldown: 30,
-                lockOnTime: 5,
-                targetPriority: {
-                  antiship: {
-                    position: 1,
-                    priorities: [
-                      [1, "Battlecruiser"],
-                      [1, "Carrier"],
-                      [1, "Auxiliary Ship"],
-                      [1, "Battlecruiser"],
-                      [1, "Cruiser"]
-                    ],
-                    damage: 13320
-                  },
-                  siege: {
-                    position: 2,
-                    damage: 1215
-                  }
-                }
-              }
-            }
-          ]
+          unknown: true,
+          type: "unknown",
+          img: "/weapons/icons/unknown.png",
+          system: "B1"
         },
         {
           type: "known",
@@ -3848,10 +3881,54 @@ export default defineEventHandler(() => {
           system: "C2"
         },
         {
-          unknown: true,
-          type: "unknown",
-          img: "/weapons/icons/unknown.png",
-          system: "C3"
+          type: "known",
+          img: "/weapons/icons/cannon.png",
+          system: "C3",
+          name: `Heavy Projectile Weapon System`,
+          sourcedFrom: null,
+          stats: {
+            type: "weapon",
+            antiship: 13320,
+            antiair: null,
+            siege: 1215,
+            hp: 24950
+          },
+          subsystems: [
+            {
+              type: "weapon",
+              count: 3,
+              title: `BM-4x1800`,
+              name: `Anti-Ship Missile Array`,
+              damageType: "Projectile",
+              target: "Large Ship",
+              lockonEfficiency: null,
+              alpha: 750,
+              attributes: ["Crit", "Evasive Counterattack"],
+              stats: {
+                duration: 10,
+                attacksPerRound: [1, 4],
+                cooldown: 30,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    priorities: [
+                      [1, "Battlecruiser"],
+                      [1, "Carrier"],
+                      [1, "Auxiliary Ship"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"]
+                    ],
+                    damage: 13320
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 1215
+                  }
+                }
+              }
+            }
+          ]
         }
       ]
     },

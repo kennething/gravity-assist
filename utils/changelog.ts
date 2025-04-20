@@ -425,5 +425,11 @@ export const changelog: readonly Changelog[] = [
     version: "2.0.3",
     release: "2025-04-13",
     notes: ["Changed how unassigned TP appears for Blueprint Tracker viewers"]
+  },
+  {
+    type: "minor release",
+    version: "2.0.4",
+    release: "2025-04-20",
+    notes: ["Swapped Shield of Plutus B1 and C3 to be correct", "Added Shield of Plutus M2 to Module Library"]
   }
 ];
