@@ -53,7 +53,6 @@ export default defineNuxtConfig({
           async: true
         },
         {
-          hid: "gtag",
           innerHTML: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){ dataLayer.push(arguments); }
