@@ -6,7 +6,7 @@
     <p class="transition duration-500">Mails unused for more than 6 months may be automatically deleted</p>
 
     <div v-if="loadedMails" class="mt-4 flex w-full flex-col items-center justify-center gap-3 md:w-[25rem] lg:w-[40rem] xl:w-[50rem]">
-      <LazyMailSavedItem v-for="mail in loadedMails" v-if="loadedMails.length > 0" :key="mail.id" :mail="mail" @delete="(mail) => (deleteMail = mail)" />
+      <LazyMailSavedItem v-if="loadedMails.length > 0" v-for="mail in loadedMails" :key="mail.id" :mail="mail" @delete="(mail) => (deleteMail = mail)" />
       <p v-else class="text-2xl transition duration-500">You have no saved mail! Try drafting a mail and saving it.</p>
     </div>
     <div v-else class="mt-4 flex w-full flex-col items-center justify-center gap-3 md:w-[25rem] lg:w-[40rem] xl:w-[50rem]">

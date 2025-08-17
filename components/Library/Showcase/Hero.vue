@@ -4,7 +4,7 @@
     <h3 class="text-xl transition duration-500">
       <!-- eslint-disable-next-line vue/html-closing-bracket-newline -->
       <span class="text-2xl font-semibold transition duration-500">{{ mod?.system ?? "404" }}</span
-      >: <span v-for="part in italicize(mod.name)" v-if="mod?.type === 'known'" class="transition duration-500" :class="{ italic: part[1] }">{{ part[0] }}</span>
+      >: <span v-if="mod?.type === 'known'" v-for="part in italicize(mod.name)" class="transition duration-500" :class="{ italic: part[1] }">{{ part[0] }}</span>
       <span v-else class="transition duration-500">Unknown Module</span>
     </h3>
 

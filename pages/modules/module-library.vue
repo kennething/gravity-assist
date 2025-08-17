@@ -10,8 +10,8 @@
     <div class="mt-4 flex w-full flex-col items-center justify-center gap-4 lg:flex-row lg:items-start xl:gap-8">
       <!-- prettier-ignore -->
       <div class="flex w-[90vw] shrink-0 flex-col items-center justify-start gap-1 rounded-xl bg-neutral-100/25 p-2 transition duration-500 sm:w-80 lg:sticky lg:top-20 lg:w-64 xl:w-72 dark:bg-neutral-900">
-        <LibrarySelection v-for="ship in data" v-if="data" :key="Symbol(ship.name + ship.variant)" :ship="ship" :current-ship="currentShip" @click="currentShip = ship" />
-        <div v-for="i in 10" v-else :key="i" class="fo-skeleton fo-skeleton-animated h-12 w-full rounded-xl bg-neutral-100/50 px-2 py-1 transition duration-500 dark:bg-neutral-700"></div>
+        <LibrarySelection v-if="data" v-for="ship in data" :key="Symbol(ship.name + ship.variant)" :ship="ship" :current-ship="currentShip" @click="currentShip = ship" />
+        <div v-else v-for="i in 10" :key="i" class="fo-skeleton fo-skeleton-animated h-12 w-full rounded-xl bg-neutral-100/50 px-2 py-1 transition duration-500 dark:bg-neutral-700"></div>
       </div>
 
       <div class="w-[90vw] max-w-[50rem] grow-0 sm:w-auto sm:grow">

@@ -42,8 +42,8 @@
         <div v-else class="flex w-full flex-col items-start justify-center gap-1">
           <p v-if="filteredData.length === 0" class="text-sm italic text-neutral-700/75 dark:text-neutral-300">No results. Maybe search for something else?</p>
           <button
-            v-for="(ship, index) in filteredData.slice(0, 4)"
             v-else
+            v-for="(ship, index) in filteredData.slice(0, 4)"
             type="button"
             class="flex w-full items-center justify-start gap-3 rounded-xl py-0.5 hover:bg-neutral-100/50 focus:bg-neutral-100/50"
             :data-ship-name="ship.name"

@@ -1,7 +1,7 @@
 <template>
   <button
-    v-for="(ship, index) in ships"
     v-if="ships.length > 0"
+    v-for="(ship, index) in ships"
     :key="index"
     class="flex w-[90vw] items-center justify-between rounded-xl bg-neutral-100/50 p-2 px-10 transition duration-500 hover:bg-neutral-200/75 hover:duration-200 sm:w-96 lg:w-[35rem] xl:w-[31rem] min-[1338px]:w-[35rem] dark:hover:bg-neutral-800"
     :class="{
@@ -26,8 +26,8 @@
   </button>
 
   <div
-    v-for="i in 5"
     v-else
+    v-for="i in 5"
     :key="i"
     class="fo-skeleton fo-skeleton-animated flex h-16 w-[90vw] items-center justify-between rounded-xl bg-neutral-100/50 p-2 px-10 transition duration-500 sm:h-24 sm:w-96 lg:w-[35rem] xl:w-[31rem] min-[1338px]:w-[35rem]"
   ></div>

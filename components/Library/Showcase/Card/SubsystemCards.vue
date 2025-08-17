@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full flex-wrap items-stretch justify-center gap-5">
-    <LibraryShowcaseCardSubsystemCard v-for="subsystem in mod.subsystems" v-if="mod?.type === 'known'" :key="Symbol(subsystem.name)" :subsystem="subsystem" />
+    <LibraryShowcaseCardSubsystemCard v-if="mod?.type === 'known'" v-for="subsystem in mod.subsystems" :key="Symbol(subsystem.name)" :subsystem="subsystem" />
   </div>
 </template>
 
