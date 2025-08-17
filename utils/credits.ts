@@ -97,6 +97,16 @@ export const credits: readonly Credit[] = [
     dateAdded: "2025-04-07"
   },
   {
+    name: "Fenrir",
+    specific: ["Shield of Plutus C2"],
+    dateAdded: "2025-08-16"
+  },
+  {
+    name: "Kesh",
+    specific: ["Shield of Plutus M3"],
+    dateAdded: "2025-08-16"
+  },
+  {
     name: "NullPointer",
     specific: ["Ship data"],
     dateAdded: "2024-01-14"

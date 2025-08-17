@@ -530,6 +530,23 @@ export default defineEventHandler(() => {
       serviceLimit: 10
     },
     {
+      id: 133,
+      name: "RedBeast 7-13",
+      title: "Breacher Corvette",
+      img: "/ships/redbeast_713_b.png",
+      type: "Corvette",
+      variant: "B",
+      variantName: "Breacher Type",
+      hasVariants: true,
+      manufacturer: "Empty",
+      direction: [],
+      scope: "Empty",
+      weight: 0,
+      row: "Front",
+      commandPoints: 0,
+      serviceLimit: 10
+    },
+    {
       id: 28,
       name: "S-Levy 9",
       title: "Heavy Torpedo Escort Corvette",
@@ -593,6 +610,23 @@ export default defineEventHandler(() => {
       direction: ["Fighter & Corvette"],
       scope: "Direct-Fire Weapon",
       weight: 10,
+      row: "Front",
+      commandPoints: 2,
+      serviceLimit: 10
+    },
+    {
+      id: 132,
+      name: "Silent Assassin",
+      title: "High-Speed Corvette",
+      img: "/ships/silent_assassin_b.png",
+      type: "Corvette",
+      variant: "B",
+      variantName: "Defense Type",
+      hasVariants: false,
+      manufacturer: "Empty",
+      direction: [],
+      scope: "Empty",
+      weight: 0,
       row: "Front",
       commandPoints: 2,
       serviceLimit: 10
@@ -1159,6 +1193,57 @@ export default defineEventHandler(() => {
       serviceLimit: 10
     },
     {
+      id: 131,
+      name: "XenoStinger",
+      title: "UAV Landing Ship",
+      img: "/ships/xenostinger_c.png",
+      type: "Frigate",
+      variant: "C",
+      variantName: "Landing Type",
+      hasVariants: true,
+      manufacturer: "Empty",
+      direction: [],
+      scope: "Empty",
+      weight: 0,
+      row: "Back",
+      commandPoints: 6,
+      serviceLimit: 10
+    },
+    {
+      id: 135,
+      name: "Zircon",
+      title: "Assault Frigate",
+      img: "/ships/zircon_a.png",
+      type: "Frigate",
+      variant: "A",
+      variantName: "Assault Type",
+      hasVariants: true,
+      manufacturer: "Empty",
+      direction: [],
+      scope: "Empty",
+      weight: 0,
+      row: "Back",
+      commandPoints: 8,
+      serviceLimit: 10
+    },
+    {
+      id: 136,
+      name: "Zircon",
+      title: "Special Frigate",
+      img: "/ships/zircon_b.png",
+      type: "Frigate",
+      variant: "B",
+      variantName: "Special Type",
+      hasVariants: true,
+      manufacturer: "Empty",
+      direction: [],
+      scope: "Empty",
+      weight: 0,
+      row: "Back",
+      commandPoints: 8,
+      serviceLimit: 10
+    },
+    {
       id: 65,
       name: "AC721",
       title: "Heavy Logistics Destroyer",
@@ -1241,6 +1326,23 @@ export default defineEventHandler(() => {
       scope: "Direct-Fire Weapon",
       weight: 5,
       row: "Front",
+      commandPoints: 8,
+      serviceLimit: 10
+    },
+    {
+      id: 134,
+      name: "Aldabra",
+      title: "Heavy Anti-Aircraft Destroyer",
+      img: "/ships/aldabra_c.png",
+      type: "Destroyer",
+      variant: "C",
+      variantName: "Anti-Aircraft Type",
+      hasVariants: true,
+      manufacturer: "Empty",
+      direction: [],
+      scope: "Empty",
+      weight: 0,
+      row: "Back",
       commandPoints: 8,
       serviceLimit: 10
     },
@@ -3639,10 +3741,55 @@ export default defineEventHandler(() => {
           ]
         },
         {
-          unknown: true,
-          type: "unknown",
-          img: "/weapons/icons/unknown.png",
-          system: "M3"
+          type: "known",
+          img: "/weapons/icons/cannon.png",
+          system: "M3",
+          name: `"Minecart" Projectile Launching Array`,
+          sourcedFrom: ["Kesh"],
+          default: false,
+          stats: {
+            type: "weapon",
+            antiship: 12960,
+            antiair: null,
+            siege: 1584,
+            hp: 23400
+          },
+          subsystems: [
+            {
+              type: "weapon",
+              count: 4,
+              title: "AM-8x1350A",
+              name: "Anti-Ship Missile Array",
+              damageType: "Projectile",
+              target: "Large Ship",
+              lockonEfficiency: null,
+              alpha: 550,
+              attributes: null,
+              stats: {
+                duration: 10,
+                attacksPerRound: [1, 4],
+                cooldown: 30,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    priorities: [
+                      [1, "Battleship"],
+                      [1, "Carrier"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"],
+                      [2, "Auxiliary Ship"]
+                    ],
+                    damage: 12960
+                  },
+                  siege: {
+                    position: 2,
+                    damage: 1584
+                  }
+                }
+              }
+            }
+          ]
         },
         {
           type: "known",
@@ -3767,10 +3914,31 @@ export default defineEventHandler(() => {
           ]
         },
         {
-          unknown: true,
-          type: "unknown",
-          img: "/weapons/icons/unknown.png",
-          system: "B1"
+          type: "known",
+          img: "/weapons/icons/storage.png",
+          system: "B1",
+          name: `Comprehensive Maintenance System`,
+          sourcedFrom: null,
+          stats: {
+            type: "armor",
+            armor: null,
+            extraHP: null,
+            energyShield: null,
+            hpRecovery: 8100,
+            hp: 20800
+          },
+          subsystems: [
+            {
+              type: "hanger",
+              count: 2,
+              title: `CRT-3`,
+              name: `Engineering UAV Maintenance Pod`,
+              hanger: "Repair UAV",
+              capacity: 3,
+              repair: 8100,
+              attributes: null
+            }
+          ]
         },
         {
           type: "known",
@@ -3848,37 +4016,63 @@ export default defineEventHandler(() => {
           ]
         },
         {
-          type: "known",
-          img: "/weapons/icons/storage.png",
-          system: "C1",
-          name: `Comprehensive Maintenance System`,
-          sourcedFrom: null,
-          stats: {
-            type: "armor",
-            armor: null,
-            extraHP: null,
-            energyShield: null,
-            hpRecovery: 8100,
-            hp: 20800
-          },
-          subsystems: [
-            {
-              type: "hanger",
-              count: 2,
-              title: `CRT-3`,
-              name: `Engineering UAV Maintenance Pod`,
-              hanger: "Repair UAV",
-              capacity: 3,
-              repair: 8100,
-              attributes: null
-            }
-          ]
-        },
-        {
           unknown: true,
           type: "unknown",
           img: "/weapons/icons/unknown.png",
-          system: "C2"
+          system: "C1"
+        },
+        {
+          type: "known",
+          img: "/weapons/icons/cannon.png",
+          system: "C2",
+          name: "Anti-Aircraft Intercept System",
+          sourcedFrom: ["Somnambulist"],
+          default: false,
+          stats: {
+            type: "weapon",
+            antiship: 11400,
+            antiair: 756,
+            siege: null,
+            hp: 23400
+          },
+          subsystems: [
+            {
+              type: "weapon",
+              count: 6,
+              title: "BG-420C",
+              name: "Anti-Aircraft Cannon",
+              damageType: "Projectile",
+              target: "Aircraft",
+              lockonEfficiency: null,
+              alpha: 105,
+              attributes: ["Interception Capability", "Anti-Aircraft Cycle", "Anti-Aircraft Counterattack"],
+              stats: {
+                duration: 2,
+                attacksPerRound: [4, 1],
+                cooldown: 10,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ],
+                    damage: 10800
+                  },
+                  antiair: {
+                    position: 1,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ],
+                    damage: 720
+                  }
+                }
+              }
+            }
+          ]
         },
         {
           type: "known",

@@ -15,6 +15,7 @@
       :unassigned-tp="unassignedTp"
       @list="isListLayout = !isListLayout"
       @variants="showVariants = !showVariants"
+      @expose-modules="exposeModules = !exposeModules"
       @sort="(sorter) => (currentSorter = sorter)"
       @filter="(filter) => (currentFilters = filter)"
       @search="(term) => (currentSearch = term)"
@@ -29,13 +30,14 @@
 
     <div v-if="displayedData" class="mt-4 flex w-full flex-col items-center justify-center">
       <BlueprintsCategory
-        v-for="(type, index) in shipTypes"
+        v-for="(type, index) in shipTypes.toReversed()"
         :key="type"
         v-model="unassignedTp[index]"
         :ship-type="type"
         :is-owner="isOwner"
         :current-layout="currentLayout"
         :show-variants="showVariants"
+        :expose-modules="exposeModules"
         :data="data"
         :displayed-data="displayedData"
         @modules="(ship) => (currentShip = ship)"
@@ -108,10 +110,13 @@ const unassignedTp = ref([0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
 const isListLayout = ref(false);
 watch(isListLayout, (val) => localStorage.setItem("layout", val ? "list" : "grid"));
-
 const currentLayout = computed(() => (isListLayout.value ? "list" : "grid"));
+
 const showVariants = ref(false);
-watch(showVariants, (val) => localStorage.setItem("variants", JSON.stringify(val)));
+watch(showVariants, (val) => localStorage.setItem("variants", String(val)));
+
+const exposeModules = ref(false);
+watch(exposeModules, (val) => localStorage.setItem("modules", String(val)));
 
 const currentShip = ref<BlueprintSuperCapitalShip>();
 
@@ -142,6 +147,7 @@ watch(filteredData, (data) => (displayedData.value = data));
 onMounted(() => {
   isListLayout.value = localStorage.getItem("layout") === "list";
   showVariants.value = localStorage.getItem("variants") === "true";
+  exposeModules.value = localStorage.getItem("modules") === "true";
 });
 
 async function getAccount(data: AllShip[]): Promise<BlueprintAllShip[] | undefined> {

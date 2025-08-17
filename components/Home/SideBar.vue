@@ -144,7 +144,11 @@ const navButtons: NavButton[] = [
     displayName: "RA Helper",
     altName: "Research Agreement Helper",
     src: "/ui/researchAgreement.svg",
-    route: "/modules/research-agreement-helper"
+    route: "/modules/research-agreement-helper",
+    tag: {
+      name: "Deprecated",
+      color: "bg-red-100"
+    }
   }
   // {
   //   displayName: "Color Generator",

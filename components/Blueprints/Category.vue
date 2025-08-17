@@ -66,6 +66,7 @@
         :mirror="ship.mirrorTechPoints"
         :layout="currentLayout"
         :variants="showVariants"
+        :expose-modules="exposeModules"
         :all-variants="displayedData.filter((s) => ship.name === s.name)"
         :tp="ship.techPoints"
         :owner="isOwner"
@@ -84,6 +85,7 @@ const props = defineProps<{
   isOwner: boolean | undefined;
   currentLayout: "list" | "grid";
   showVariants: boolean;
+  exposeModules: boolean;
   data: BlueprintAllShip[] | undefined;
   displayedData: BlueprintAllShip[] | undefined;
 }>();

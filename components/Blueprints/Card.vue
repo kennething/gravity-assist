@@ -39,7 +39,7 @@
 
     <div v-if="owner" class="flex w-full flex-col gap-2 transition duration-500" :class="{ 'pointer-events-none opacity-50 brightness-50': !ship.unlocked }">
       <div class="flex w-full items-center justify-center gap-2">
-        <div class="fo-input-group max-w-sm">
+        <div class="fo-input-group max-w-sm bg-body transition duration-500">
           <label class="fo-input-group-text" :for="'techPoints' + ship.name + ship.variant">TP</label>
           <div class="relative grow">
             <input
@@ -47,13 +47,13 @@
               ref="tpInput"
               v-model="techPoints"
               type="text"
-              class="peer fo-input grow border-neutral-300 bg-white text-left text-black opacity-0 hover:border-neutral-400 focus:opacity-100 dark:border-neutral-700 dark:hover:border-neutral-600"
+              class="peer fo-input grow border-neutral-300 text-left text-black opacity-0 hover:border-neutral-400 focus:opacity-100 dark:border-neutral-700 dark:text-white dark:hover:border-neutral-600"
               placeholder="Tech Points"
               @blur="updateTp"
               @keypress="handleEnter"
             />
             <div class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center overflow-hidden peer-focus:invisible">
-              <p class="w-full px-3 text-left text-black">
+              <p class="w-full px-3 text-left text-black transition duration-500 dark:text-white">
                 v{{
                   Number(
                     String(Number(tp) + 100)
@@ -109,14 +109,36 @@
         />
         <label class="text-left transition duration-500" :for="ship.name + ship.variant">Match TP with variants</label>
       </div>
-      <button
-        v-if="'modules' in ship"
-        class="fo-btn grow border-blue-300 bg-blue-300 text-black transition duration-500 hover:border-blue-400 hover:bg-blue-400 dark:border-blue-600 dark:bg-blue-600 dark:text-white dark:hover:border-blue-700 dark:hover:bg-blue-700"
-        type="button"
-        @click="emit('modules', ship)"
-      >
-        Edit Modules ({{ ship.modules.filter((mod) => mod.unlocked).length }}/{{ ship.modules.length }})
-      </button>
+
+      <div v-if="'modules' in ship" :class="{ 'flex flex-wrap items-center justify-center gap-2': isExposedModules }">
+        <div v-if="isExposedModules" v-for="mod in ship.modules" :key="mod.system" class="relative w-[45%] grow" @click="toggleMod(mod)">
+          <button
+            class="fo-btn w-full border-blue-300 bg-blue-300 text-black transition duration-500 hover:border-blue-400 hover:bg-blue-400 dark:border-blue-600 dark:bg-blue-600 dark:text-white dark:hover:border-blue-700 dark:hover:bg-blue-700"
+            type="button"
+          >
+            {{ mod.system }}
+          </button>
+          <Transition name="unlock">
+            <button
+              v-if="!mod.unlocked"
+              class="overlay group absolute left-1/2 top-1/2 z-[1] flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-start rounded-lg bg-black/50 transition duration-200 hover:bg-black/60"
+              :class="{ 'dark:border dark:border-neutral-600': !mod.unlocked, 'cursor-auto': !owner }"
+              type="button"
+              @click.stop="toggleMod(mod, true)"
+            >
+              <img class="message size-8 select-none transition group-hover:brightness-110" src="/ui/lock.svg" aria-hidden="true" />
+            </button>
+          </Transition>
+        </div>
+        <button
+          v-else
+          class="fo-btn grow border-blue-300 bg-blue-300 text-black transition duration-500 hover:border-blue-400 hover:bg-blue-400 dark:border-blue-600 dark:bg-blue-600 dark:text-white dark:hover:border-blue-700 dark:hover:bg-blue-700"
+          type="button"
+          @click="emit('modules', ship)"
+        >
+          Edit Modules ({{ ship.modules.filter((mod) => mod.unlocked).length }}/{{ ship.modules.length }})
+        </button>
+      </div>
     </div>
 
     <div v-else class="flex w-full flex-col gap-2 transition duration-500" :class="{ 'pointer-events-none opacity-50 brightness-50': !ship.unlocked }">
@@ -146,6 +168,7 @@
           {{ variant.variant }}
         </div>
       </div>
+
       <button
         v-if="'modules' in ship"
         class="fo-btn grow border-blue-300 bg-blue-300 text-black transition duration-500 hover:border-blue-400 hover:bg-blue-400 dark:border-blue-600 dark:bg-blue-600 dark:text-white dark:hover:border-blue-700 dark:hover:bg-blue-700"
@@ -163,6 +186,7 @@ const props = defineProps<{
   ship: BlueprintAllShip;
   layout: "list" | "grid";
   variants: boolean;
+  exposeModules: boolean;
   allVariants: BlueprintAllShip[];
   tp: number;
   mirror: boolean;
@@ -196,6 +220,7 @@ const tpInput = useTemplateRef("tpInput");
 const showVariant = computed(() => !props.ship.hasVariants || (props.ship.hasVariants && props.ship.variant === "A"));
 const showVariantUnique = computed(() => props.ship.hasVariants && props.ship.variant === "A");
 const isListLayout = computed(() => props.layout === "list");
+const isExposedModules = computed(() => props.exposeModules);
 
 const isGolden = computed(() => props.ship.techPoints >= ("modules" in props.ship ? 200 : 100));
 
@@ -206,7 +231,6 @@ function updateTp() {
 
 function handleEnter(event: KeyboardEvent) {
   if (event.key !== "Enter") return;
-
   tpInput.value?.blur();
   updateTp();
 }
@@ -215,14 +239,12 @@ function unlock() {
   if (!props.owner) return;
   props.ship.unlocked = true;
   if ("modules" in props.ship) props.ship.modules.forEach((mod) => (mod.unlocked = Boolean(mod.default)));
-
   emit("change");
 }
 
 function remove() {
   if (!props.owner) return;
   props.ship.unlocked = false;
-
   emit("change");
 }
 
@@ -235,6 +257,12 @@ function unlockVariant(variant: BlueprintAllShip) {
 function removeVariant(variant: BlueprintAllShip) {
   if (!props.owner) return;
   variant.unlocked = false;
+  emit("change");
+}
+
+function toggleMod(mod: BlueprintUnknownModule | BlueprintWeaponModule | BlueprintPropulsionModule | BlueprintMiscModule, override?: boolean) {
+  if (!props.owner) return;
+  mod.unlocked = override ?? !mod.unlocked;
   emit("change");
 }
 </script>

@@ -106,7 +106,13 @@ export default [
       "vue/camelcase": "error",
       "vue/no-console": "error",
       "vue/no-constant-condition": "error",
-
+      "vue/attributes-order": [
+        "error",
+        {
+          order: ["DEFINITION", "CONDITIONALS", "LIST_RENDERING", "RENDER_MODIFIERS", "GLOBAL", ["UNIQUE", "SLOT"], "TWO_WAY_BINDING", "OTHER_DIRECTIVES", "OTHER_ATTR", "EVENTS", "CONTENT"],
+          alphabetical: false
+        }
+      ],
       "vue/html-self-closing": ["error", { html: { void: "always", normal: "never", component: "always" } }],
       "vue/max-attributes-per-line": "off",
       "vue/require-v-for-key": "off",

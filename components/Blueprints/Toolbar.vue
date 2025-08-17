@@ -12,6 +12,7 @@
       @delete="(acc) => (deleteModal = acc)"
       @list="emit('list')"
       @variants="emit('variants')"
+      @expose-modules="emit('exposeModules')"
       @click.stop="closeOptions(false)"
       @create-new="createNewAccount"
     />
@@ -102,6 +103,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   list: [void];
   variants: [void];
+  exposeModules: [void];
   sort: [ShipSorter | undefined];
   filter: [ShipFilter];
   search: [string];

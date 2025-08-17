@@ -431,5 +431,16 @@ export const changelog: readonly Changelog[] = [
     version: "2.0.4",
     release: "2025-04-20",
     notes: ["Swapped Shield of Plutus B1 and C3 to be correct", "Added Shield of Plutus M2 to Module Library"]
+  },
+  {
+    type: "release",
+    version: "2.1.0",
+    release: "2025-08-17",
+    notes: [
+      "Fixed swapped modules of Shield of Plutus",
+      "Added deprecation warning to RA Helper",
+      "Added an option to Blueprint Library to show each module in each ship card instead of in a modal",
+      "Reversed the order of Blueprint Library ships (the order is now battleship -> fighter)"
+    ]
   }
 ];

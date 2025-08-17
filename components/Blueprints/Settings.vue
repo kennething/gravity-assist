@@ -46,6 +46,20 @@
         <label class="transition duration-500" for="layoutType">Hide Variants</label>
       </div>
 
+      <div class="flex w-full items-center justify-center gap-2">
+        <label class="transition duration-500" for="layoutType">Hide Modules</label>
+        <!-- prettier-ignore -->
+        <input
+          id="layoutType"
+          type="checkbox"
+          class="fo-switch fo-switch-primary fo-switch-outline border-neutral-200 bg-neutral-900 transition duration-500 hover:border-neutral-400 hover:duration-200 dark:border-neutral-700 dark:bg-neutral-100 dark:hover:border-neutral-600"
+          :checked="modulesExposed"
+          style="box-shadow: var(--handleoffsetcalculator) 0 0 4px var(--bg-color) inset, 0 0 0 4px var(--bg-color) inset, var(--switchhandleborder);"
+          @change="emit('exposeModules')"
+        />
+        <label class="transition duration-500" for="layoutType">Expose Modules</label>
+      </div>
+
       <div v-if="isOwner && blueprints" class="mt-4 flex w-full flex-col items-center justify-center">
         <h3 class="text-lg font-semibold transition duration-500">Account Switcher</h3>
         <p class="mb-2 text-sm transition duration-500">{{ blueprints.length ?? 0 }}/10 accounts</p>
@@ -113,6 +127,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   list: [void];
   variants: [void];
+  exposeModules: [void];
   editName: [accountIndex: number];
   delete: [accountIndex: number];
   createNew: [void];
@@ -136,10 +151,12 @@ const blueprints = computed(() => {
 
 const listOn = ref<boolean>();
 const variantsOff = ref<boolean>();
+const modulesExposed = ref<boolean>();
 
 onMounted(() => {
   listOn.value = localStorage.getItem("layout") === "list";
   variantsOff.value = localStorage.getItem("variants") !== "true";
+  modulesExposed.value = localStorage.getItem("modules") === "true";
 });
 
 function getTotalTP(ships: Record<string, (string | number)[]>[]) {

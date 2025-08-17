@@ -1,5 +1,9 @@
 <template>
   <div class="flex h-full min-h-[calc(100dvh-8rem)] w-full flex-col items-center justify-start p-8">
+    <div class="mb-6 flex w-full flex-col items-center justify-center rounded-lg border-4 border-red-600 bg-red-200/50 px-10 py-2">
+      <h2 class="text-xl font-semibold">WARNING</h2>
+      <p class="font-medium">This module is deprecated due to Research Agreements not existing anymore :D</p>
+    </div>
     <div class="flex w-full flex-col items-center justify-center md:w-[25rem] lg:w-[30rem]">
       <h1 class="text-3xl font-bold transition duration-500">Research Agreement Helper</h1>
       <div class="fo-divider my-2 before:transition before:duration-500 after:transition after:duration-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
