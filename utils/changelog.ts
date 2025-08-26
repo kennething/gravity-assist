@@ -442,5 +442,11 @@ export const changelog: readonly Changelog[] = [
       "Added an option to Blueprint Library to show each module in each ship card instead of in a modal",
       "Reversed the order of Blueprint Library ships (the order is now battleship -> fighter)"
     ]
+  },
+  {
+    type: "minor release",
+    version: "2.1.1",
+    release: "2025-08-26",
+    notes: ["Added Shield of Plutus C1"]
   }
 ];

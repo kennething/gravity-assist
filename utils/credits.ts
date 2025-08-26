@@ -72,6 +72,11 @@ export const credits: readonly Credit[] = [
     dateAdded: "2024-03-13"
   },
   {
+    name: "Fenrir",
+    specific: ["Shield of Plutus C1, C2"],
+    dateAdded: "2025-08-16"
+  },
+  {
     name: "LunatiCorp",
     specific: ["Eternal Heavens A2"],
     dateAdded: "2024-03-01"
@@ -95,11 +100,6 @@ export const credits: readonly Credit[] = [
     name: "Garm",
     specific: ["Shield of Plutus B3"],
     dateAdded: "2025-04-07"
-  },
-  {
-    name: "Fenrir",
-    specific: ["Shield of Plutus C2"],
-    dateAdded: "2025-08-16"
   },
   {
     name: "Kesh",

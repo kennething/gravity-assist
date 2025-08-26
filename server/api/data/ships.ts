@@ -4016,10 +4016,87 @@ export default defineEventHandler(() => {
           ]
         },
         {
-          unknown: true,
-          type: "unknown",
-          img: "/weapons/icons/unknown.png",
-          system: "C1"
+          type: "known",
+          img: "/weapons/icons/cannon.png",
+          system: "C1",
+          name: "Weapon Multi-Target Counterattack System",
+          sourcedFrom: ["Fenrir"],
+          default: false,
+          stats: {
+            type: "weapon",
+            antiship: 12914,
+            antiair: 480,
+            siege: null,
+            hp: 27000
+          },
+          subsystems: [
+            {
+              type: "weapon",
+              count: 6,
+              title: `MK3-BG-2800U "Fortress"`,
+              name: "Generic Heavy Cannon",
+              damageType: "Projectile",
+              target: "Large Ship",
+              lockonEfficiency: null,
+              alpha: 450,
+              attributes: ["Evasive Counterattack"],
+              stats: {
+                duration: 8,
+                attacksPerRound: [1, 2],
+                cooldown: 20,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 1,
+                    priorities: [
+                      [1, "Battleship"],
+                      [1, "Carrier"],
+                      [1, "Battlecruiser"],
+                      [1, "Cruiser"],
+                      [2, "Auxiliary Ship"]
+                    ],
+                    damage: 11314
+                  }
+                }
+              }
+            },
+            {
+              type: "weapon",
+              count: 2,
+              title: "BG-300C",
+              name: "Anti-Aircraft Cannon",
+              damageType: "Projectile",
+              target: "Aircraft",
+              lockonEfficiency: null,
+              alpha: 50,
+              attributes: ["Anti-Aircraft Special Ammo", "Evasive Counterattack", "Anti-Aircraft Counterattack"],
+              stats: {
+                duration: 2,
+                attacksPerRound: [4, 1],
+                cooldown: 10,
+                lockOnTime: 5,
+                targetPriority: {
+                  antiship: {
+                    position: 2,
+                    priorities: [
+                      [4, "Destroyer"],
+                      [4, "Frigate"]
+                    ],
+                    damage: 1600
+                  },
+                  antiair: {
+                    position: 1,
+                    priorities: [
+                      [1, "Corvette"],
+                      [2, "Fighter"],
+                      [3, "Landing Ship"]
+                    ],
+                    damage: 480
+                  }
+                }
+              }
+            }
+          ]
         },
         {
           type: "known",
