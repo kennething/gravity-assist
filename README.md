@@ -40,6 +40,8 @@
 
 Feel free to use my data, which can be found in [`/server/api/data/ships.ts`](./server/api/data/ships.ts).
 
+To quickly convert the data to JSON, you can copy the array object and run `JSON.stringify(<data>)` in your browser console.
+
 Each ship follows the data structures in their type declarations in [`/utils/ships.ts`](./utils/ships.ts).
 
 ## Project Setup
@@ -51,8 +53,8 @@ If you wish to run the site locally:
 2. Create a `.env` file in the root of the project: (optional maybe? idk try it out)
 
 ```sh
-NUXT_BASE64_SERVICE_ACCOUNT = '...'
-NUXT_BASE_URL = ...
+NUXT_BASE64_SERVICE_ACCOUNT= # wrap the value in ''
+NUXT_BASE_URL=
 ```
 
 3. Install dependencies and run locally:
